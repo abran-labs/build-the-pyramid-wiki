@@ -1,9 +1,10 @@
 ---
+import { PetCalculator } from "@/components/calculator/pet-calculator";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Pets — Desert">
-  <main class="mx-auto flex w-full max-w-3xl flex-1 flex-col py-8">
-    <h1 class="text-2xl font-semibold tracking-[-0.02em] text-foreground">Desert</h1>
+  <main class="mx-auto w-full max-w-3xl py-8">
+    <PetCalculator client:load world="desert" />
   </main>
 </BaseLayout>

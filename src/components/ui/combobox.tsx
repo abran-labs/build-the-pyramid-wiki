@@ -13,6 +13,8 @@ export interface ComboboxOption {
   groupIcon?: string;
   /** Search-only text (e.g. dungeon codes like "DT" for Desert Temple). */
   keywords?: string;
+  /** When set, this option uses this test instead of the default text search. */
+  matches?: (query: string) => boolean;
 }
 
 export interface ComboboxProps {
@@ -58,13 +60,14 @@ export function Combobox({
 
   const filtered = React.useMemo(() => {
     if (!search) return options;
-    const lower = search.toLowerCase();
-    return options.filter(
-      (opt) =>
-        opt.label.toLowerCase().includes(lower) ||
-        opt.description?.toLowerCase().includes(lower) ||
-        opt.group?.toLowerCase().includes(lower) ||
-        opt.keywords?.toLowerCase().includes(lower),
+    const lower = search.trim().toLowerCase();
+    return options.filter((opt) =>
+      opt.matches !== undefined
+        ? opt.matches(lower)
+        : opt.label.toLowerCase().includes(lower) ||
+          opt.description?.toLowerCase().includes(lower) ||
+          opt.group?.toLowerCase().includes(lower) ||
+          opt.keywords?.toLowerCase().includes(lower),
     );
   }, [options, search]);
 

@@ -273,7 +273,7 @@ function StatSummary({
               <span className="font-semibold text-foreground">{oddsText(pet, luck)}</span>
             </div>
             <div className="flex justify-between gap-2 text-sm">
-              <span className="text-muted-foreground">Average time</span>
+              <span className="text-muted-foreground">Average hatch time</span>
               <span className="font-semibold text-foreground">{averageHatchTime(pet, luck, options.fast, options.triple)}</span>
             </div>
           </>

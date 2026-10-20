@@ -25,6 +25,11 @@ test("base odds match the egg roll", () => {
   expect(oneIn(pet("Grim Reaper"))).toBe(50000000);
 });
 
+test("chase odds scale by 1 plus luck", () => {
+  expect(oneIn(pet("Apophis"), 1)).toBe(12500000);
+  expect(oneIn(pet("Apophis"), 11.5)).toBe(2000000);
+});
+
 test("limited and event words are prefixes", () => {
   expect(petMatches(pet("Scarab"), "lim")).toBe(true);
   expect(petMatches(pet("Cat"), "lim")).toBe(false);

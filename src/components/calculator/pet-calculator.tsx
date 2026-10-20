@@ -99,14 +99,16 @@ export function PetCalculator() {
         return (
           <button
             aria-checked={on}
-            className="flex h-10 items-center justify-between gap-2 rounded-sm bg-surface-lowest px-2 text-sm shadow-none transition-colors hover:bg-surface-low focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="flex items-center justify-between gap-2 rounded-sm bg-surface-lowest px-2 py-1.5 text-left text-sm shadow-none transition-colors hover:bg-surface-low focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
             key={toggleDef.key}
             onClick={() => toggle(toggleDef.key)}
             role="switch"
-            title={toggleDef.title}
             type="button"
           >
-            <span className={cn("truncate", on ? "text-foreground" : "text-muted-foreground")}>{toggleDef.label}</span>
+            <span className="min-w-0">
+              <span className={cn("block truncate", on ? "text-foreground" : "text-muted-foreground")}>{toggleDef.label}</span>
+              <span className="block text-[0.65rem] leading-tight text-muted-foreground">{toggleDef.note}</span>
+            </span>
             <span
               aria-hidden
               className={cn(

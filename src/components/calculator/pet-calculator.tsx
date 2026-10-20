@@ -15,6 +15,7 @@ import {
   averageHatchTime,
   allPets,
   EGGS,
+  isHatchable,
   oddsText,
   petMatches,
   RARITY_COLOR,
@@ -49,8 +50,8 @@ export function PetCalculator() {
     return {
       color: RARITY_COLOR[entry.rarity],
       description: entry.rarity,
-      group: egg?.name ?? entry.eggId,
-      ...(egg === undefined ? {} : { groupIcon: egg.icon }),
+      group: egg?.name ?? "Exclusive",
+      groupIcon: egg?.icon ?? "/exclusive.svg",
       ...(egg?.id === "Cursed"
         ? { groupSuffix: "Halloween 2026", groupSuffixColor: "rgb(255, 145, 40)" }
         : {}),
@@ -166,14 +167,18 @@ function StatSummary({
             </span>
           </div>
         ))}
-        <div className="flex justify-between gap-2 text-sm">
-          <span className="text-muted-foreground">Odds</span>
-          <span className="font-semibold text-foreground">{oddsText(pet, luck)}</span>
-        </div>
-        <div className="flex justify-between gap-2 text-sm">
-          <span className="text-muted-foreground">Average</span>
-          <span className="font-semibold text-foreground">{averageHatchTime(pet, luck, options.fast, options.triple)}</span>
-        </div>
+        {isHatchable(pet) && (
+          <>
+            <div className="flex justify-between gap-2 text-sm">
+              <span className="text-muted-foreground">Odds</span>
+              <span className="font-semibold text-foreground">{oddsText(pet, luck)}</span>
+            </div>
+            <div className="flex justify-between gap-2 text-sm">
+              <span className="text-muted-foreground">Average</span>
+              <span className="font-semibold text-foreground">{averageHatchTime(pet, luck, options.fast, options.triple)}</span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

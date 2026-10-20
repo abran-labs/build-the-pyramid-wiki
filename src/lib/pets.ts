@@ -122,14 +122,19 @@ export const PETS: readonly Pet[] = [
   pet("Scarecrow", "Scarecrow", "Mythic", "Cursed", "/pets/scarecrow.png", 0.04, 44, 24, true, true),
   pet("Osiris", "Osiris", "Secret", "Cursed", "/pets/osiris.png", cursedTotal / 5000000, 99, 49, true, true),
   pet("GrimReaper", "Grim Reaper", "Secret", "Cursed", "/pets/grim-reaper.png", cursedTotal / 50000000, 199, 89, true, true),
+  pet("Bat", "Bat", "Exclusive", "Exclusive", "/pets/bat.png", 0, 2.75, 0.85, true),
 ];
 
 export function eggsFor(world: WorldId): readonly Egg[] {
   return EGGS.filter((egg) => egg.world === world);
 }
 
+export function isHatchable(entry: Pet): boolean {
+  return EGGS.some((egg) => egg.id === entry.eggId);
+}
+
 export function allPets(): readonly Pet[] {
-  return petsFor("desert").concat(petsFor("halloween"));
+  return petsFor("desert").concat(petsFor("halloween"), PETS.filter((entry) => !isHatchable(entry)));
 }
 
 export function petsFor(world: WorldId): readonly Pet[] {
@@ -215,6 +220,7 @@ export function rolledWeights(mates: readonly Pet[], luck: number): readonly num
 }
 
 export function trueChance(entry: Pet, luck = 0): number {
+  if (!isHatchable(entry)) return 0;
   const mates = eggMates(entry);
   const weights = rolledWeights(mates, luck);
   const total = mates.reduce((sum, other) => sum + other.weight, 0);

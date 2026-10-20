@@ -78,19 +78,20 @@ export function HomeHero() {
         <Stat label="Favorites" value={game === null ? "—" : formatCount(game.favorites)} />
         <Stat label="Playing" value={game === null ? "—" : formatCount(game.playing)} />
       </div>
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-1">
         <a
-          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="text-sm text-foreground underline decoration-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground"
           href={PLAY_URL}
           rel="noreferrer"
           target="_blank"
         >
-          Play on Roblox
+          Play on Roblox →
         </a>
         <a
-          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="text-xs transition-opacity hover:opacity-80"
           href={DISCORD_URL}
           rel="noreferrer"
+          style={{ color: "#5865F2" }}
           target="_blank"
         >
           Join the Discord

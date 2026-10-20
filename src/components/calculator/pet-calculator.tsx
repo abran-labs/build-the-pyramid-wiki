@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
 import {
   EMPTY_HATCH_OPTIONS,
@@ -64,29 +64,30 @@ export function PetCalculator() {
   });
 
   return (
-    <div className="flex items-stretch gap-3">
+    <div className="mx-auto flex w-full max-w-4xl items-stretch gap-3">
     <form
       autoComplete="off"
       className="flex min-h-[28rem] min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4"
       onSubmit={(event) => event.preventDefault()}
     >
-      <div className="space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <label className="text-sm font-medium text-foreground" htmlFor="pet-picker">
-            Pet
-          </label>
-          {petId !== "" && (
-            <Button
-              className="h-auto px-1 py-0 hover:bg-transparent"
-              onClick={() => setPetId("")}
-              size="sm"
-              type="button"
-              variant="ghost"
-            >
-              Clear
-            </Button>
-          )}
-        </div>
+      <div className="flex items-center gap-2">
+        {(browseId !== null || selected !== null) && (
+          <button
+            aria-label="Back"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-border text-foreground transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+            onClick={() => {
+              if (selected !== null) {
+                setPetId("");
+                return;
+              }
+              setBrowseId(null);
+            }}
+            type="button"
+          >
+            <ChevronLeft aria-hidden className="h-5 w-5" />
+          </button>
+        )}
+        <div className="min-w-0 flex-1">
         <Combobox
           id="pet-picker"
           onChange={setPetId}
@@ -95,6 +96,7 @@ export function PetCalculator() {
           searchPlaceholder="Search pets…"
           value={petId}
         />
+        </div>
       </div>
       {selected !== null ? (
         <StatSummary pet={selected} options={options} luck={luck} />
@@ -194,15 +196,17 @@ function Browse({
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
             <button
-              className="text-sm text-muted-foreground hover:text-foreground"
+              aria-label="Back to eggs"
+              className="inline-flex h-8 items-center gap-1 rounded-sm px-1 text-sm text-foreground transition-colors hover:bg-surface-high"
               onClick={() => onBrowse(null)}
               type="button"
             >
+              <ChevronLeft aria-hidden className="h-4 w-4" />
               Eggs
             </button>
-            <span className="text-sm text-foreground">{group.label}</span>
+            <span className="ml-auto text-sm text-muted-foreground">{group.label}</span>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {listed.map((entry) => (

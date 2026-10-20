@@ -1,4 +1,4 @@
-# Pyramid Odds — plan
+# Build the Pyramid Wiki — plan
 
 Odds reference for Build the Pyramid. Shell cloned from DQR-Calc. The DQR calculator, OCR, pot math, stats sidecar, and `docs/Info/` are leftover. Do not build on them. Strip them in a later pass.
 

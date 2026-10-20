@@ -4,7 +4,7 @@ These rules apply to Astro, Bun, TypeScript, and `src/pages` work. UI mechanics 
 
 ## Rendering and boundaries
 
-- Pyramid-Odds is a fully static client-side app: no adapter, no server output, no API routes.
+- Build the Pyramid Wiki is a fully static client-side app: no adapter, no server output, no API routes.
 - Use `.astro` components and static markup by default.
 - Hydrate React islands only for browser APIs, event handlers, state, effects, or client-only libraries (the luck controls are the island). Choose the narrowest suitable `client:*` directive. The OCR paste zone is leftover DQR-Calc code; do not extend it.
 - Read build-time content in Astro frontmatter rather than fetching it from a client effect.

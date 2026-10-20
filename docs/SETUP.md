@@ -1,6 +1,5 @@
 # Setup
 
-Local app. No database, no auth, no environment variables, no Pi checkout.
 
 ## Dependencies
 
@@ -12,9 +11,8 @@ curl -fsSL https://bun.sh/install | bash
 
 ## First-time setup
 
+
 ```bash
-bun install
-bun run dev
 ```
 
 ## Stack

@@ -1,5 +1,5 @@
-# Pyramid Odds
+# Build the Pyramid Wiki
 
-True hatch odds for Build the Pyramid. Pick the luck passes you own. See the real chance for every pet, by world and egg.
+Player-facing wiki for Build the Pyramid. First pages are true hatch odds: pick the luck passes you own, see the real chance for every pet, by world and egg.
 
 Not published yet.

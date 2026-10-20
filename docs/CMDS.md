@@ -1,6 +1,5 @@
 # Commands
 
-Run in this checkout. Bun on this machine.
 
 | Purpose | Command |
 |---|---|

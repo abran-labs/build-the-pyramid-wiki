@@ -61,10 +61,22 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         };
         const paint = (game) => {
           if (title) title.textContent = game.name;
-          if (icon && game.iconUrl) icon.src = game.iconUrl;
+          if (icon && game.iconData) icon.src = game.iconData;
           if (visits) visits.textContent = format(game.visits);
           if (favorites) favorites.textContent = format(game.favorites);
           if (playing) playing.textContent = format(game.playing);
+        };
+        const iconData = async (url) => {
+          if (!url) return null;
+          const path = new URL(url).pathname;
+          const res = await fetch(`/roblox-icon${path}`);
+          if (!res.ok) return null;
+          const blob = await res.blob();
+          return await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+          });
         };
         let cached = null;
         try {
@@ -74,7 +86,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         }
         if (cached && cached.game) paint(cached.game);
         if (hero) hero.hidden = false;
-        if (cached && Date.now() - cached.fetchedAt < maxAge) return;
+        if (cached && cached.game && cached.game.iconData && Date.now() - cached.fetchedAt < maxAge) return;
         const universe = "10765012427";
         Promise.all([
           fetch(`/roblox-games/v1/games?universeIds=${universe}`),
@@ -90,12 +102,14 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
               const thumbJson = await thumbRes.json();
               iconUrl = thumbJson.data && thumbJson.data[0] && thumbJson.data[0].imageUrl;
             }
+            const previous = cached && cached.game;
             const next = {
               name: row.name || "Build the Pyramid",
               visits: row.visits || 0,
               favorites: row.favoritedCount || 0,
               playing: row.playing || 0,
               iconUrl,
+              iconData: previous && previous.iconUrl === iconUrl ? previous.iconData : await iconData(iconUrl),
             };
             localStorage.setItem(key, JSON.stringify({ fetchedAt: Date.now(), game: next }));
             paint(next);

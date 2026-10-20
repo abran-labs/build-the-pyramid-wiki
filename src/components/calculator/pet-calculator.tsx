@@ -181,9 +181,6 @@ function StatSummary({
           <span className="font-semibold text-foreground">{averageHatchTime(pet, luck, options.fast, options.triple)}</span>
         </div>
       </div>
-      <p className="text-xs text-muted-foreground">
-        Average time uses the hatch animation. The server does not enforce that speed yet.
-      </p>
     </div>
   );
 }

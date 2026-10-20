@@ -2,7 +2,17 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
-import { eggsFor, petMatches, petsFor, RARITY_COLOR, statRows, type Pet, type WorldId } from "@/lib/pets";
+import {
+  averageHatchTime,
+  eggsFor,
+  oddsText,
+  petMatches,
+  petsFor,
+  RARITY_COLOR,
+  statRows,
+  type Pet,
+  type WorldId,
+} from "@/lib/pets";
 
 type PetCalculatorProps = {
   readonly world: WorldId;
@@ -25,6 +35,7 @@ export function PetCalculator({ world }: PetCalculatorProps) {
       description: entry.rarity,
       group: egg?.name ?? entry.eggId,
       ...(egg === undefined ? {} : { groupIcon: egg.icon }),
+      icon: entry.icon,
       label: entry.name,
       matches: (query) => petMatches(entry, query),
       value: entry.id,
@@ -71,20 +82,43 @@ export function PetCalculator({ world }: PetCalculatorProps) {
 function StatSummary({ pet, world }: { readonly pet: Pet; readonly world: WorldId }) {
   return (
     <div className="space-y-3 rounded-md border border-border bg-surface-low p-4">
-      <div
-        className="border-b border-foreground/20 pb-1 text-xs font-semibold uppercase tracking-widest"
-        style={{ color: RARITY_COLOR[pet.rarity] }}
-      >
-        {pet.name}
+      <div className="flex items-center gap-3 border-b border-foreground/20 pb-3">
+        <img alt="" className="h-16 w-16 object-contain" src={pet.icon} />
+        <div>
+          <div className="text-sm font-semibold text-foreground">{pet.name}</div>
+          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: RARITY_COLOR[pet.rarity] }}>
+            {pet.rarity}
+          </div>
+        </div>
       </div>
       <div className="space-y-1">
         {statRows(pet, world).map((row) => (
-          <div className="flex justify-between gap-2 text-sm" key={row.label}>
-            <span className="text-muted-foreground">{row.label}</span>
-            <span className="font-semibold text-foreground">{row.value}</span>
+          <div className="flex items-center justify-between gap-2 text-sm" key={row.label}>
+            <span className="flex items-center gap-1.5" style={{ color: row.color }}>
+              <img alt="" aria-hidden className="h-4 w-4 object-contain" src={row.icon} />
+              {row.label}
+            </span>
+            <span className="font-semibold" style={{ color: row.color }}>
+              {row.value}
+            </span>
           </div>
         ))}
+        <div className="flex justify-between gap-2 text-sm">
+          <span className="text-muted-foreground">Odds</span>
+          <span className="font-semibold text-foreground">{oddsText(pet)}</span>
+        </div>
+        <div className="flex justify-between gap-2 text-sm">
+          <span className="text-muted-foreground">Average, normal</span>
+          <span className="font-semibold text-foreground">{averageHatchTime(pet, false)}</span>
+        </div>
+        <div className="flex justify-between gap-2 text-sm">
+          <span className="text-muted-foreground">Average, Fast Hatch</span>
+          <span className="font-semibold text-foreground">{averageHatchTime(pet, true)}</span>
+        </div>
       </div>
+      <p className="text-xs text-muted-foreground">
+        Average time uses the current hatch animation, not a server limit. Luck is not applied.
+      </p>
     </div>
   );
 }

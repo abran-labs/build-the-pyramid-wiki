@@ -11,6 +11,7 @@ export interface ComboboxOption {
   group?: string;
   groupColor?: string;
   groupIcon?: string;
+  icon?: string;
   /** Search-only text (e.g. dungeon codes like "DT" for Desert Temple). */
   keywords?: string;
   /** When set, this option uses this test instead of the default text search. */
@@ -171,11 +172,16 @@ export function Combobox({
           !selected && "text-muted-foreground",
         )}
       >
-        <span
-          className="truncate"
-          style={(valueColor ?? selected?.color) ? { color: valueColor ?? selected?.color } : undefined}
-        >
-          {selected ? selected.label : placeholder}
+        <span className="flex min-w-0 items-center gap-2">
+          {selected?.icon && (
+            <img alt="" aria-hidden className="h-6 w-6 object-contain" src={selected.icon} />
+          )}
+          <span
+            className="truncate"
+            style={(valueColor ?? selected?.color) ? { color: valueColor ?? selected?.color } : undefined}
+          >
+            {selected ? selected.label : placeholder}
+          </span>
         </span>
         <ChevronDown
           aria-hidden
@@ -235,7 +241,7 @@ export function Combobox({
                               <img
                                 alt=""
                                 aria-hidden
-                                className="h-5 w-5 rounded-full object-cover"
+                                className="h-6 w-6 object-contain"
                                 src={option.groupIcon}
                               />
                             )}
@@ -258,13 +264,18 @@ export function Combobox({
                             option.value === value && "font-medium",
                           )}
                         >
-                          <div className="flex flex-col items-start">
+                          <div className="flex items-center gap-2">
+                            {option.icon && (
+                              <img alt="" aria-hidden className="h-8 w-8 object-contain" src={option.icon} />
+                            )}
+                            <span className="flex flex-col items-start">
                             <span style={option.color ? { color: option.color } : undefined}>
                               {option.label}
                             </span>
                             {option.description && (
                               <span className="text-xs text-muted-foreground">{option.description}</span>
                             )}
+                            </span>
                           </div>
                           {option.value === value && (
                             <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">

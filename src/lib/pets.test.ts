@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 
-import { petMatches, PETS } from "./pets";
+import { oneIn, petMatches, PETS } from "./pets";
 
 const pet = (name: string) => {
   const found = PETS.find((entry) => entry.name === name);
@@ -17,6 +17,12 @@ test("rarity match is a prefix, not a substring", () => {
   expect(petMatches(pet("Cat"), "rare")).toBe(false);
   expect(petMatches(pet("Cobra"), "rar")).toBe(true);
   expect(petMatches(pet("Cobra"), "are")).toBe(false);
+});
+
+test("base odds match the egg roll", () => {
+  expect(oneIn(pet("Apophis"))).toBe(25000000);
+  expect(oneIn(pet("Dragon of Ra"))).toBe(5000000);
+  expect(oneIn(pet("Grim Reaper"))).toBe(50000000);
 });
 
 test("limited and event words are prefixes", () => {

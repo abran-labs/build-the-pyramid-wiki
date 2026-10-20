@@ -26,7 +26,19 @@ export type Egg = {
   readonly name: string;
   readonly icon: string;
   readonly world: WorldId;
+  readonly eventName: string | null;
 };
+
+export const HALLOWEEN_EVENT = "Halloween 2026";
+
+const EVENT_COLOR: Record<string, string> = {
+  [HALLOWEEN_EVENT]: "rgb(255, 145, 40)",
+};
+
+/** Colour for a limited-time event label. `currentColor` keeps the inherited text colour. */
+export function eventColor(eventName: string): string {
+  return EVENT_COLOR[eventName] ?? "currentColor";
+}
 
 const HATCH_CYCLE_SECONDS = 2.6;
 const FAST_HATCH_SCALE = 0.42;
@@ -54,18 +66,16 @@ const RARITY_RANK: Record<Rarity, number> = {
 };
 
 export const EGGS: readonly Egg[] = [
-  { id: "Basic", name: "Basic Egg", icon: "/eggs/basic.png", world: "desert" },
-  { id: "Sacred", name: "Sacred Egg", icon: "/eggs/sacred.png", world: "desert" },
-  { id: "Nile", name: "Nile Egg", icon: "/eggs/nile.png", world: "desert" },
-  { id: "Cursed", name: "Cursed Egg", icon: "/eggs/cursed.png", world: "halloween" },
+  { id: "Basic", name: "Basic Egg", icon: "/eggs/basic.png", world: "desert", eventName: null },
+  { id: "Sacred", name: "Sacred Egg", icon: "/eggs/sacred.png", world: "desert", eventName: null },
+  { id: "Nile", name: "Nile Egg", icon: "/eggs/nile.png", world: "desert", eventName: null },
+  { id: "Cursed", name: "Cursed Egg", icon: "/eggs/cursed.png", world: "halloween", eventName: HALLOWEEN_EVENT },
 ];
 
 export const CURRENCY = {
   Coins: { label: "Coins", icon: "/currency/coins.png", color: "rgb(255, 215, 0)" },
   CandyCorn: { label: "Candy Corn", icon: "/currency/candy-corn.png", color: "rgb(255, 140, 40)" },
 } as const;
-
-const HALLOWEEN = "Halloween 2026";
 
 function pet(
   id: string,
@@ -88,7 +98,7 @@ function pet(
     weight,
     luckBoosted,
     limited,
-    eventName: limited ? HALLOWEEN : null,
+    eventName: limited ? HALLOWEEN_EVENT : null,
     coins,
     candyCorn,
   };

@@ -15,6 +15,7 @@ import {
   averageHatchTime,
   allPets,
   EGGS,
+  eventColor,
   hatchesText,
   isHatchable,
   oddsText,
@@ -54,8 +55,8 @@ export function PetCalculator() {
       description: entry.rarity,
       group: egg?.name ?? "Exclusive",
       groupIcon: egg?.icon ?? "/exclusive.svg",
-      ...(egg?.id === "Cursed"
-        ? { groupSuffix: "Halloween 2026", groupSuffixColor: "rgb(255, 145, 40)" }
+      ...(egg?.eventName
+        ? { groupSuffix: egg.eventName, groupSuffixColor: eventColor(egg.eventName) }
         : {}),
       icon: entry.icon,
       label: entry.name,
@@ -155,9 +156,10 @@ const BROWSE_GROUPS = [
     id: egg.id,
     icon: egg.icon,
     label: egg.name,
-    suffix: egg.id === "Cursed" ? "Halloween 2026" : null,
+    suffix: egg.eventName,
+    suffixColor: egg.eventName === null ? undefined : eventColor(egg.eventName),
   })),
-  { id: "Exclusive", icon: "/exclusive.svg", label: "Exclusive", suffix: null },
+  { id: "Exclusive", icon: "/exclusive.svg", label: "Exclusive", suffix: null, suffixColor: undefined },
 ];
 
 function Browse({
@@ -190,7 +192,7 @@ function Browse({
               <img alt="" className="h-14 w-14 object-contain" src={entry.icon} />
               <span className="text-foreground">{entry.label}</span>
               {entry.suffix !== null && (
-                <span className="text-[0.65rem] leading-tight" style={{ color: "rgb(255, 145, 40)" }}>
+                <span className="text-[0.65rem] leading-tight" style={{ color: entry.suffixColor }}>
                   {entry.suffix}
                 </span>
               )}
@@ -236,8 +238,20 @@ function StatSummary({
         <img alt="" className="h-16 w-16 object-contain" src={pet.icon} />
         <div>
           <div className="text-sm font-semibold text-foreground">{pet.name}</div>
-          <div className="text-xs font-semibold uppercase tracking-widest" style={{ color: RARITY_COLOR[pet.rarity] }}>
-            {pet.rarity}
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: RARITY_COLOR[pet.rarity] }}>
+              {pet.rarity}
+            </span>
+            {pet.eventName !== null && (
+              <>
+                <span aria-hidden className="text-xs text-muted-foreground/50">
+                  ·
+                </span>
+                <span className="text-xs font-semibold" style={{ color: eventColor(pet.eventName) }}>
+                  {pet.eventName}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>

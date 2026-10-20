@@ -64,7 +64,7 @@ export function PetCalculator() {
   });
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-3 md:flex-row md:items-start">
+    <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-3 md:flex-row">
     <form
       autoComplete="off"
       className="order-2 flex min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4 md:order-1"
@@ -98,6 +98,7 @@ export function PetCalculator() {
         />
         </div>
       </div>
+      <div className="flex min-h-[18rem] flex-1 flex-col">
       {selected !== null ? (
         <StatSummary pet={selected} options={options} luck={luck} />
       ) : (
@@ -108,6 +109,7 @@ export function PetCalculator() {
           onPick={setPetId}
         />
       )}
+      </div>
     </form>
     <div className="order-1 grid w-full shrink-0 grid-cols-2 gap-2 rounded-lg border border-border bg-surface-lowest p-2 md:order-2 md:flex md:w-52 md:flex-col">
       {HATCH_TOGGLES.map((toggleDef) => {
@@ -174,7 +176,7 @@ function Browse({
       ? []
       : pets.filter((entry) => (group.id === "Exclusive" ? !isHatchable(entry) : entry.eggId === group.id));
   return (
-    <div className="flex flex-col gap-4 rounded-md border border-border bg-surface-low p-4">
+    <div className="flex flex-1 flex-col gap-4 rounded-md border border-border bg-surface-low p-4">
       {group === null ? (
         <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3">
           {BROWSE_GROUPS.map((entry) => (
@@ -195,7 +197,7 @@ function Browse({
           ))}
         </div>
       ) : (
-        <div className="grid min-h-[16rem] grid-cols-2 content-start gap-2 sm:grid-cols-3">
+        <div className="grid content-start grid-cols-2 gap-2 sm:grid-cols-3">
             {listed.map((entry) => (
               <button
                 className="flex items-center gap-3 rounded-sm border border-border bg-surface-lowest px-3 py-3 text-left text-base transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
@@ -228,7 +230,7 @@ function StatSummary({
   readonly luck: number;
 }) {
   return (
-    <div className="space-y-3 rounded-md border border-border bg-surface-low p-4">
+    <div className="flex-1 space-y-3 rounded-md border border-border bg-surface-low p-4">
       <div className="flex items-center gap-3 border-b border-foreground/20 pb-3">
         <img alt="" className="h-16 w-16 object-contain" src={pet.icon} />
         <div>

@@ -102,13 +102,13 @@ export function PetCalculator({ world }: PetCalculatorProps) {
       </div>
       {selected !== null && <StatSummary pet={selected} world={world} options={options} luck={luck} />}
     </form>
-    <div className="flex w-44 shrink-0 flex-col gap-2">
+    <div className="flex w-44 shrink-0 flex-col gap-2 rounded-lg border border-border bg-surface-lowest p-2">
       {HATCH_TOGGLES.map((toggleDef) => {
         const on = options[toggleDef.key];
         return (
           <button
             aria-checked={on}
-            className="flex h-10 items-center justify-between gap-2 rounded-sm border border-border bg-transparent px-3 text-sm shadow-none transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="flex h-10 items-center justify-between gap-2 rounded-sm bg-surface-lowest px-2 text-sm shadow-none transition-colors hover:bg-surface-low focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
             key={toggleDef.key}
             onClick={() => toggle(toggleDef.key)}
             role="switch"

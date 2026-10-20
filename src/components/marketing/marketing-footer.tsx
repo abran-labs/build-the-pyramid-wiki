@@ -1,7 +1,5 @@
 import { IconBrandDiscord, IconBrandGithub, IconBrandYoutube } from "@tabler/icons-react";
-import { Heart } from "lucide-react";
 import type { ReactNode } from "react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export type MarketingFooterNavLink = {
@@ -85,29 +83,7 @@ export function MarketingFooter({ brandLine, rightsLine, navLinks, socialLinks }
       <div className="mx-auto grid w-full max-w-[1120px] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-x-2 gap-y-4 pt-7 sm:gap-x-6">
         <div className="grid gap-1.5 text-sm text-muted-foreground">
           <p>{brandLine}</p>
-          <p>
-            <a
-              href="https://github.com/abran-labs/dqr"
-              target="_blank"
-              rel="noreferrer"
-              className="underline underline-offset-4 decoration-muted-foreground/60 transition-colors duration-150 hover:text-foreground hover:decoration-foreground"
-            >
-              {rightsLine}
-            </a>
-          </p>
-        </div>
-
-        <div className="col-start-2 row-start-1 flex flex-col items-center text-center">
-          <Button
-            asChild
-            variant="secondary"
-            className="border-pink-500/30 bg-pink-500/10 text-pink-500 hover:border-pink-500/30 hover:bg-pink-500/20"
-          >
-            <a href="https://github.com/sponsors/abran-labs" target="_blank" rel="noopener noreferrer">
-              <Heart className="mr-2 h-4 w-4 fill-none stroke-pink-500" />
-              Support
-            </a>
-          </Button>
+          <p>{rightsLine}</p>
         </div>
 
         <div className="col-start-3 row-start-1 grid justify-items-end gap-3 sm:gap-4">

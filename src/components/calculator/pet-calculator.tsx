@@ -13,31 +13,22 @@ import {
 } from "@/lib/hatch-options";
 import {
   averageHatchTime,
-  eggsFor,
+  allPets,
+  EGGS,
   oddsText,
   petMatches,
-  petsFor,
   RARITY_COLOR,
   statRows,
   type Pet,
-  type WorldId,
 } from "@/lib/pets";
 import { cn } from "@/lib/utils";
 
-type PetCalculatorProps = {
-  readonly world: WorldId;
-};
-
-export function PetCalculator({ world }: PetCalculatorProps) {
+export function PetCalculator() {
   const [petId, setPetId] = React.useState("");
   const [options, setOptions] = React.useState<HatchOptions>(EMPTY_HATCH_OPTIONS);
-  const pets = React.useMemo(() => petsFor(world), [world]);
-  const eggs = React.useMemo(() => new Map(eggsFor(world).map((egg) => [egg.id, egg])), [world]);
+  const pets = React.useMemo(() => allPets(), []);
+  const eggs = React.useMemo(() => new Map(EGGS.map((egg) => [egg.id, egg])), []);
   const selected = pets.find((entry) => entry.id === petId) ?? null;
-
-  React.useEffect(() => {
-    setPetId("");
-  }, [world]);
 
   React.useEffect(() => {
     setOptions(readHatchOptions());
@@ -100,7 +91,7 @@ export function PetCalculator({ world }: PetCalculatorProps) {
           value={petId}
         />
       </div>
-      {selected !== null && <StatSummary pet={selected} world={world} options={options} luck={luck} />}
+      {selected !== null && <StatSummary pet={selected} options={options} luck={luck} />}
     </form>
     <div className="flex w-44 shrink-0 flex-col gap-2 rounded-lg border border-border bg-surface-lowest p-2">
       {HATCH_TOGGLES.map((toggleDef) => {
@@ -140,12 +131,10 @@ export function PetCalculator({ world }: PetCalculatorProps) {
 
 function StatSummary({
   pet,
-  world,
   options,
   luck,
 }: {
   readonly pet: Pet;
-  readonly world: WorldId;
   readonly options: HatchOptions;
   readonly luck: number;
 }) {
@@ -161,7 +150,7 @@ function StatSummary({
         </div>
       </div>
       <div className="space-y-1">
-        {statRows(pet, world).map((row) => (
+        {statRows(pet).map((row) => (
           <div className="flex items-center justify-between gap-2 text-sm" key={row.label}>
             <span className="flex items-center gap-1.5" style={{ color: row.color }}>
               <img alt="" aria-hidden className="h-4 w-4 object-contain" src={row.icon} />

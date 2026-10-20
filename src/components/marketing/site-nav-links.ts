@@ -7,9 +7,6 @@ export type SiteNavLink = {
 
 export function isMarketingNavLinkActive(pathname: string, link: SiteNavLink): boolean {
   const activePath = link.activePath ?? link.href;
-  if (activePath === "/pets") {
-    return pathname === "/" || pathname === "/halloween" || pathname.startsWith("/pets");
-  }
   if (activePath === "/") {
     return pathname === "/";
   }

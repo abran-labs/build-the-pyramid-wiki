@@ -10,12 +10,7 @@ import type { SiteNavLink } from "@/components/marketing/site-nav-links";
 import { StarsBackground } from "@/components/marketing/stars-background";
 import "@/styles/globals.css";
 
-const navLinks = [{ label: "Pets", href: "/", activePath: "/pets" }] as const satisfies ReadonlyArray<SiteNavLink>;
-
-const worldLinks = [
-  { label: "Desert", href: "/" },
-  { label: "Halloween", href: "/halloween" },
-] as const satisfies ReadonlyArray<SiteNavLink>;
+const navLinks = [{ label: "Pets", href: "/" }] as const satisfies ReadonlyArray<SiteNavLink>;
 
 const footerNavLinks: readonly MarketingFooterNavLink[] = [];
 
@@ -75,16 +70,6 @@ const pathname = Astro.url.pathname;
             transition:persist-props
             navLinks={navLinks}
             pathname={pathname}
-          />
-        </div>
-        <div class="pointer-events-auto flex justify-center pb-1 md:pb-2">
-          <MarketingNav
-            client:load
-            transition:persist="world-nav"
-            transition:persist-props
-            navLinks={worldLinks}
-            pathname={pathname}
-            label="Worlds"
           />
         </div>
       </header>

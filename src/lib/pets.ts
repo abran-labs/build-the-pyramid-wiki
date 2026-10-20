@@ -128,6 +128,10 @@ export function eggsFor(world: WorldId): readonly Egg[] {
   return EGGS.filter((egg) => egg.world === world);
 }
 
+export function allPets(): readonly Pet[] {
+  return petsFor("desert").concat(petsFor("halloween"));
+}
+
 export function petsFor(world: WorldId): readonly Pet[] {
   const eggIds = new Set(eggsFor(world).map((egg) => egg.id));
   return PETS.filter((entry) => eggIds.has(entry.eggId)).sort((left, right) => {
@@ -255,10 +259,10 @@ export function multiplier(bonus: number): string {
 
 export function statRows(
   entry: Pet,
-  world: WorldId,
 ): readonly { readonly label: string; readonly value: string; readonly icon: string; readonly color: string }[] {
   const coins = { ...CURRENCY.Coins, value: multiplier(entry.coins) };
   const candy = entry.candyCorn === null ? null : { ...CURRENCY.CandyCorn, value: multiplier(entry.candyCorn) };
+  const world = EGGS.find((egg) => egg.id === entry.eggId)?.world;
   if (world === "halloween" && candy !== null) return [candy, coins];
   return candy === null ? [coins] : [coins, candy];
 }

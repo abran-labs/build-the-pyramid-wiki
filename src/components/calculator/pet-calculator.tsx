@@ -195,7 +195,7 @@ function Browse({
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="grid min-h-[16rem] grid-cols-2 content-start gap-2 sm:grid-cols-3">
             {listed.map((entry) => (
               <button
                 className="flex items-center gap-3 rounded-sm border border-border bg-surface-lowest px-3 py-3 text-left text-base transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"

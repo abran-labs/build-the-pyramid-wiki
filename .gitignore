@@ -8,6 +8,9 @@ node_modules
 .astro
 dist
 
+# Published site directory
+/live
+
 # TypeScript
 *.tsbuildinfo
 

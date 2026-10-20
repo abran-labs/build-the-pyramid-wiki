@@ -37,7 +37,8 @@ The tree still contains the DQR calculator (OCR, pot math, stats sidecar, item C
 - Home page plus one page per world. Luck passes are checkboxes that recompute the tables.
 - Prefer extending the existing shell (layout, tokens, nav) before adding a new visual system.
 - `node_modules/`, `.astro/`, `dist/`, and `.env*` are runtime or generated. Never commit them.
-- No live site yet. Do not invent a public URL, nginx path, or deploy step.
+- `bun run build` writes `dist/` and never reaches the live site. Only `bun run publish` (build, then swap `live/`) publishes.
+- Develop on the dev server and leave the live site alone until the user says the change is ready to publish. Never run `publish` unprompted.
 - One fact has one canonical owner. Link to it instead of duplicating it.
 
 ## Verify

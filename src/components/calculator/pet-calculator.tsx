@@ -16,7 +16,6 @@ import {
   allPets,
   EGGS,
   eventColor,
-  hatchesText,
   isHatchable,
   oddsText,
   petMatches,
@@ -272,10 +271,6 @@ function StatSummary({
             <div className="flex justify-between gap-2 text-sm">
               <span className="text-muted-foreground">Odds</span>
               <span className="font-semibold text-foreground">{oddsText(pet, luck)}</span>
-            </div>
-            <div className="flex justify-between gap-2 text-sm">
-              <span className="text-muted-foreground">Average hatches</span>
-              <span className="font-semibold text-foreground">{hatchesText(pet, luck)}</span>
             </div>
             <div className="flex justify-between gap-2 text-sm">
               <span className="text-muted-foreground">Average time</span>

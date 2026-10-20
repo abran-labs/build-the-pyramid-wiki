@@ -92,6 +92,7 @@ export function PetCalculator() {
           id="pet-picker"
           onChange={setPetId}
           options={petOptions}
+          menuClassName="h-[calc(28rem-6.25rem)]"
           placeholder="Search pets…"
           searchPlaceholder="Search pets…"
           value={petId}

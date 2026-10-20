@@ -214,17 +214,32 @@ export function rolledWeights(mates: readonly Pet[], luck: number): readonly num
   return mates.map((other, index) => result[index] ?? (bottomWeight > 0 ? (rest * other.weight) / bottomWeight : 0));
 }
 
-export function oneIn(entry: Pet, luck = 0): number {
+export function trueChance(entry: Pet, luck = 0): number {
   const mates = eggMates(entry);
   const weights = rolledWeights(mates, luck);
   const total = mates.reduce((sum, other) => sum + other.weight, 0);
   const weight = weights[mates.indexOf(entry)] ?? 0;
-  if (weight <= 0 || total <= 0) return 1;
-  return Math.max(1, Math.floor(1 / (weight / total) + 0.5));
+  if (weight <= 0 || total <= 0) return 0;
+  return weight / total;
+}
+
+export function oneIn(entry: Pet, luck = 0): number {
+  const chance = trueChance(entry, luck);
+  if (chance <= 0) return 1;
+  return Math.max(1, Math.floor(1 / chance + 0.5));
 }
 
 export function oddsText(entry: Pet, luck = 0): string {
-  return `1 in ${oneIn(entry, luck).toLocaleString("en-US")}`;
+  const chance = trueChance(entry, luck);
+  if (chance <= 0) return "1 in ?";
+  const exact = 1 / chance;
+  if (exact < 100) {
+    const percent = chance * 100;
+    const digits = percent >= 10 ? 1 : 2;
+    const text = percent.toFixed(digits).replace(/\.0+$/, "");
+    return `${text}%`;
+  }
+  return `1 in ${Math.max(1, Math.round(exact)).toLocaleString("en-US")}`;
 }
 
 function duration(seconds: number): string {
@@ -246,9 +261,11 @@ function duration(seconds: number): string {
 
 /** Expected time at the animation cycle. Triple opens 3 eggs per cycle. The server does not enforce the speed yet. */
 export function averageHatchTime(entry: Pet, luck: number, fast: boolean, triple: boolean): string {
+  const chance = trueChance(entry, luck);
+  if (chance <= 0) return duration(0);
   const cycle = HATCH_CYCLE_SECONDS * (fast ? FAST_HATCH_SCALE : 1);
   const batch = triple ? 3 : 1;
-  return duration((oneIn(entry, luck) / batch) * cycle);
+  return duration((1 / chance / batch) * cycle);
 }
 
 export function multiplier(bonus: number): string {

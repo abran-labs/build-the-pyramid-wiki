@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 
-import { oneIn, petMatches, PETS } from "./pets";
+import { oddsText, oneIn, petMatches, PETS } from "./pets";
 
 const pet = (name: string) => {
   const found = PETS.find((entry) => entry.name === name);
@@ -17,6 +17,12 @@ test("rarity match is a prefix, not a substring", () => {
   expect(petMatches(pet("Cat"), "rare")).toBe(false);
   expect(petMatches(pet("Cobra"), "rar")).toBe(true);
   expect(petMatches(pet("Cobra"), "are")).toBe(false);
+});
+
+test("common pets show a real percent, not 1 in 1", () => {
+  expect(oddsText(pet("Cactus"))).toBe("68.8%");
+  expect(oddsText(pet("Cat"))).toBe("58%");
+  expect(oddsText(pet("Scarab"))).not.toBe("1 in 1");
 });
 
 test("base odds match the egg roll", () => {

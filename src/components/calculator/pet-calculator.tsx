@@ -63,10 +63,10 @@ export function PetCalculator() {
   });
 
   return (
-    <div className="flex items-start gap-3">
+    <div className="flex items-stretch gap-3">
     <form
       autoComplete="off"
-      className="min-w-0 flex-1 space-y-4 rounded-lg border border-border bg-surface-lowest p-4"
+      className="flex min-h-[28rem] min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4"
       onSubmit={(event) => event.preventDefault()}
     >
       <div className="space-y-2">
@@ -95,7 +95,11 @@ export function PetCalculator() {
           value={petId}
         />
       </div>
-      {selected !== null && <StatSummary pet={selected} options={options} luck={luck} />}
+      {selected !== null ? (
+        <StatSummary pet={selected} options={options} luck={luck} />
+      ) : (
+        <EmptySummary />
+      )}
     </form>
     <div className="flex w-52 shrink-0 flex-col gap-2 rounded-lg border border-border bg-surface-lowest p-2">
       {HATCH_TOGGLES.map((toggleDef) => {
@@ -135,6 +139,23 @@ export function PetCalculator() {
   );
 }
 
+function EmptySummary() {
+  const marks = [
+    ...EGGS.map((egg) => ({ id: egg.id, icon: egg.icon, label: egg.name })),
+    { id: "Exclusive", icon: "/exclusive.svg", label: "Exclusive" },
+  ];
+  return (
+    <div className="flex flex-1 flex-col items-center justify-center gap-6 rounded-md border border-border bg-surface-low px-6 py-10 text-center">
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        {marks.map((mark) => (
+          <img alt={mark.label} className="h-14 w-14 object-contain" key={mark.id} src={mark.icon} />
+        ))}
+      </div>
+      <p className="text-sm text-muted-foreground">Select a pet to see its stats and odds.</p>
+    </div>
+  );
+}
+
 function StatSummary({
   pet,
   options,
@@ -145,7 +166,7 @@ function StatSummary({
   readonly luck: number;
 }) {
   return (
-    <div className="space-y-3 rounded-md border border-border bg-surface-low p-4">
+    <div className="flex-1 space-y-3 rounded-md border border-border bg-surface-low p-4">
       <div className="flex items-center gap-3 border-b border-foreground/20 pb-3">
         <img alt="" className="h-16 w-16 object-contain" src={pet.icon} />
         <div>

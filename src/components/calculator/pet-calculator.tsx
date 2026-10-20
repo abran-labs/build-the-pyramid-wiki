@@ -64,10 +64,10 @@ export function PetCalculator() {
   });
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl items-start gap-3">
+    <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-3 md:flex-row md:items-start">
     <form
       autoComplete="off"
-      className="flex min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4"
+      className="order-2 flex min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4 md:order-1"
       onSubmit={(event) => event.preventDefault()}
     >
       <div className="flex items-center gap-2">
@@ -109,7 +109,7 @@ export function PetCalculator() {
         />
       )}
     </form>
-    <div className="flex w-52 shrink-0 flex-col gap-2 rounded-lg border border-border bg-surface-lowest p-2">
+    <div className="order-1 grid w-full shrink-0 grid-cols-2 gap-2 rounded-lg border border-border bg-surface-lowest p-2 md:order-2 md:flex md:w-52 md:flex-col">
       {HATCH_TOGGLES.map((toggleDef) => {
         const on = options[toggleDef.key];
         return (

@@ -8,12 +8,13 @@ import type { MarketingFooterNavLink, MarketingFooterSocialLink } from "@/compon
 import { MarketingNav } from "@/components/marketing/marketing-nav";
 import type { SiteNavLink } from "@/components/marketing/site-nav-links";
 import { StarsBackground } from "@/components/marketing/stars-background";
-import { StatsStrip } from "@/components/marketing/stats-strip";
 import "@/styles/globals.css";
 
-const navLinks = [
-  { label: "Pot Calculator", href: "/" },
-  { label: "Level Calculator", href: "/level" },
+const navLinks = [{ label: "Pets", href: "/", activePath: "/pets" }] as const satisfies ReadonlyArray<SiteNavLink>;
+
+const worldLinks = [
+  { label: "Main", href: "/" },
+  { label: "Halloween", href: "/halloween" },
 ] as const satisfies ReadonlyArray<SiteNavLink>;
 
 const footerNavLinks: readonly MarketingFooterNavLink[] = [];
@@ -36,10 +37,8 @@ interface Props {
 }
 
 
-const {
-  description = "Item potential calculator for Dungeon Quest Reborn.",
-} = Astro.props;
-const pageTitle = "DQR Calculator";
+const { title, description = "Pet hatch odds for Build the Pyramid." } = Astro.props;
+const pageTitle = title ?? "Build the Pyramid Wiki";
 const pathname = Astro.url.pathname;
 ---
 
@@ -78,8 +77,15 @@ const pathname = Astro.url.pathname;
             pathname={pathname}
           />
         </div>
-        <div class="pb-1 md:pb-2">
-          <StatsStrip client:load transition:persist="stats-strip" />
+        <div class="pointer-events-auto flex justify-center pb-1 md:pb-2">
+          <MarketingNav
+            client:load
+            transition:persist="world-nav"
+            transition:persist-props
+            navLinks={worldLinks}
+            pathname={pathname}
+            label="Worlds"
+          />
         </div>
       </header>
       <div class="relative z-[1] flex flex-1 flex-col px-4">

@@ -1,18 +1,18 @@
 import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { isMarketingNavLinkActive, type SiteNavLink } from "@/components/marketing/site-nav-links";
-import { requestCalculatorReset } from "@/lib/calculator-reset";
 import { cn } from "@/lib/utils";
 
 type MarketingNavProps = {
-  navLinks: readonly SiteNavLink[];
-  pathname: string;
+  readonly navLinks: readonly SiteNavLink[];
+  readonly pathname: string;
+  readonly label?: string;
 };
 
 const navLinkClass =
   "relative inline-flex h-11 items-center justify-center px-1 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-200 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[active=true]:text-foreground md:h-8";
 
-export function MarketingNav({ navLinks, pathname: initialPathname }: MarketingNavProps) {
+export function MarketingNav({ navLinks, pathname: initialPathname, label = "Primary" }: MarketingNavProps) {
   const navLinksRef = useRef<HTMLDivElement>(null);
   const hasMeasuredRef = useRef(false);
   const readyFrameRef = useRef<number | null>(null);
@@ -122,7 +122,7 @@ export function MarketingNav({ navLinks, pathname: initialPathname }: MarketingN
   }, []);
 
   return (
-    <nav className="relative" aria-label="Primary">
+    <nav className="relative" aria-label={label}>
       <div ref={navLinksRef} className="relative flex items-center gap-2 md:gap-3">
         {navLinks.map((link, index) => {
           const isActive = isMarketingNavLinkActive(pathname, link);
@@ -146,14 +146,8 @@ export function MarketingNav({ navLinks, pathname: initialPathname }: MarketingN
                 data-active={isActive ? "true" : "false"}
                 aria-current={isActive ? "page" : undefined}
                 className={navLinkClass}
-                onClick={(event) => {
-                  // Optimistic move so the bar slides before/during client navigation.
+                onClick={() => {
                   setPathname(link.href);
-                  if (link.href !== "/") return;
-                  requestCalculatorReset();
-                  // Same-route ClientRouter no-ops — stop the click so we
-                  // reset in place instead of keeping the filled island.
-                  if (window.location.pathname === "/") event.preventDefault();
                 }}
               >
                 {content}

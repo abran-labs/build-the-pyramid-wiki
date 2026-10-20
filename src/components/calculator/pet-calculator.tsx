@@ -195,20 +195,7 @@ function Browse({
           ))}
         </div>
       ) : (
-        <>
-          <div className="flex items-center gap-2">
-            <button
-              aria-label="Back to eggs"
-              className="inline-flex h-8 items-center gap-1 rounded-sm px-1 text-sm text-foreground transition-colors hover:bg-surface-high"
-              onClick={() => onBrowse(null)}
-              type="button"
-            >
-              <ChevronLeft aria-hidden className="h-4 w-4" />
-              Eggs
-            </button>
-            <span className="ml-auto text-sm text-muted-foreground">{group.label}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {listed.map((entry) => (
               <button
                 className="flex items-center gap-2 rounded-sm border border-border bg-surface-lowest px-2 py-2 text-left text-sm transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
@@ -226,7 +213,6 @@ function Browse({
               </button>
             ))}
           </div>
-        </>
       )}
     </div>
   );

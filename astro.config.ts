@@ -8,6 +8,7 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     server: {
+      allowedHosts: true,
       proxy: {
         "/api": "http://localhost:4322",
         "/roblox-games": {

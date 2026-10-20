@@ -11,6 +11,8 @@ export interface ComboboxOption {
   group?: string;
   groupColor?: string;
   groupIcon?: string;
+  groupSuffix?: string;
+  groupSuffixColor?: string;
   icon?: string;
   /** Search-only text (e.g. dungeon codes like "DT" for Desert Temple). */
   keywords?: string;
@@ -246,6 +248,16 @@ export function Combobox({
                               />
                             )}
                             {option.group}
+                            {option.groupSuffix && (
+                              <>
+                                <span aria-hidden className="text-muted-foreground/50">
+                                  ·
+                                </span>
+                                <span style={option.groupSuffixColor ? { color: option.groupSuffixColor } : undefined}>
+                                  {option.groupSuffix}
+                                </span>
+                              </>
+                            )}
                           </span>
                           <ChevronDown
                             aria-hidden

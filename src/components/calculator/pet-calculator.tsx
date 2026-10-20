@@ -51,6 +51,9 @@ export function PetCalculator() {
       description: entry.rarity,
       group: egg?.name ?? entry.eggId,
       ...(egg === undefined ? {} : { groupIcon: egg.icon }),
+      ...(egg?.id === "Cursed"
+        ? { groupSuffix: "Halloween 2026", groupSuffixColor: "rgb(255, 145, 40)" }
+        : {}),
       icon: entry.icon,
       label: entry.name,
       matches: (query) => petMatches(entry, query),

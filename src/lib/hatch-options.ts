@@ -11,11 +11,11 @@ export type HatchOptions = {
 
 export const HATCH_TOGGLES: readonly { readonly key: HatchOptionKey; readonly label: string; readonly note: string }[] = [
   { key: "fast", label: "Fast Hatch", note: "2.38× faster" },
-  { key: "triple", label: "Triple Hatch", note: "Hatch 3 eggs at once" },
-  { key: "luck", label: "Luck", note: "+1 hatch luck" },
-  { key: "superLuck", label: "Super Luck", note: "+3 hatch luck" },
-  { key: "ultraLuck", label: "Ultra Luck", note: "+7 hatch luck" },
-  { key: "jack", label: "Jack", note: "+0.5 hatch luck" },
+  { key: "triple", label: "Triple Hatch", note: "3 at once" },
+  { key: "luck", label: "Luck", note: "+1" },
+  { key: "superLuck", label: "Super Luck", note: "+3" },
+  { key: "ultraLuck", label: "Ultra Luck", note: "+7" },
+  { key: "jack", label: "Jack", note: "+0.5" },
 ];
 
 export const EMPTY_HATCH_OPTIONS: HatchOptions = {

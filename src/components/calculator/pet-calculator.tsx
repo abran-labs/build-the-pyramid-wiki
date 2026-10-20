@@ -64,10 +64,10 @@ export function PetCalculator() {
   });
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl items-stretch gap-3">
+    <div className="mx-auto flex w-full max-w-4xl items-start gap-3">
     <form
       autoComplete="off"
-      className="flex min-h-[28rem] min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4"
+      className="flex min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4"
       onSubmit={(event) => event.preventDefault()}
     >
       <div className="flex items-center gap-2">
@@ -174,7 +174,7 @@ function Browse({
       ? []
       : pets.filter((entry) => (group.id === "Exclusive" ? !isHatchable(entry) : entry.eggId === group.id));
   return (
-    <div className="flex flex-1 flex-col gap-4 rounded-md border border-border bg-surface-low p-4">
+    <div className="flex flex-col gap-4 rounded-md border border-border bg-surface-low p-4">
       {group === null ? (
         <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3">
           {BROWSE_GROUPS.map((entry) => (
@@ -228,7 +228,7 @@ function StatSummary({
   readonly luck: number;
 }) {
   return (
-    <div className="flex-1 space-y-3 rounded-md border border-border bg-surface-low p-4">
+    <div className="space-y-3 rounded-md border border-border bg-surface-low p-4">
       <div className="flex items-center gap-3 border-b border-foreground/20 pb-3">
         <img alt="" className="h-16 w-16 object-contain" src={pet.icon} />
         <div>

@@ -20,6 +20,11 @@ export default defineConfig({
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/roblox-thumbs/, ""),
         },
+        "/roblox-icon": {
+          target: "https://tr.rbxcdn.com",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/roblox-icon/, ""),
+        },
       },
     },
   },

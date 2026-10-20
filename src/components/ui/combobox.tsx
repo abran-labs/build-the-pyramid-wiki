@@ -33,8 +33,6 @@ export interface ComboboxProps {
   errorMessage?: string | undefined;
   /** Closed-button label color. Overrides the selected option's color. */
   valueColor?: string;
-  /** Extra classes for the open menu. Use this to make the list fill a panel. */
-  menuClassName?: string;
 }
 
 /*
@@ -52,7 +50,6 @@ export function Combobox({
   className,
   disabled = false,
   error = false,
-  menuClassName,
   errorMessage,
   valueColor,
 }: ComboboxProps) {
@@ -201,12 +198,7 @@ export function Combobox({
       )}
 
       {open && (
-        <div
-          className={cn(
-            "absolute z-50 mt-1 flex w-full flex-col animate-in fade-in-0 zoom-in-95 rounded-sm border border-border bg-surface-lowest text-popover-foreground shadow-lg",
-            menuClassName,
-          )}
-        >
+        <div className="absolute z-50 mt-1 w-full animate-in fade-in-0 zoom-in-95 rounded-sm border border-border bg-surface-lowest text-popover-foreground shadow-lg">
           <div className="flex items-center gap-2 border-b border-border px-3 py-2">
             <Search aria-hidden className="h-4 w-4 text-muted-foreground" />
             <input
@@ -220,7 +212,7 @@ export function Combobox({
             />
           </div>
 
-          <div className={cn("overflow-y-auto p-1", menuClassName ? "min-h-0 flex-1" : "max-h-[228px]")}>
+          <div className="max-h-[228px] overflow-y-auto p-1">
             {filtered.length === 0 ? (
               <div className="px-3 py-6 text-center text-sm text-muted-foreground">
                 No results found

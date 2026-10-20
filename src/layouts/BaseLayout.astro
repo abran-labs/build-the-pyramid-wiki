@@ -10,7 +10,10 @@ import type { SiteNavLink } from "@/components/marketing/site-nav-links";
 import { StarsBackground } from "@/components/marketing/stars-background";
 import "@/styles/globals.css";
 
-const navLinks = [{ label: "Pets", href: "/" }] as const satisfies ReadonlyArray<SiteNavLink>;
+const navLinks = [
+  { label: "Pets", href: "/" },
+  { label: "Items", href: "/items" },
+] as const satisfies ReadonlyArray<SiteNavLink>;
 
 const footerNavLinks: readonly MarketingFooterNavLink[] = [];
 

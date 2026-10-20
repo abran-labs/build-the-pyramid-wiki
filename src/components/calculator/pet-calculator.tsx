@@ -93,7 +93,7 @@ export function PetCalculator() {
       </div>
       {selected !== null && <StatSummary pet={selected} options={options} luck={luck} />}
     </form>
-    <div className="flex w-44 shrink-0 flex-col gap-2 rounded-lg border border-border bg-surface-lowest p-2">
+    <div className="flex w-52 shrink-0 flex-col gap-2 rounded-lg border border-border bg-surface-lowest p-2">
       {HATCH_TOGGLES.map((toggleDef) => {
         const on = options[toggleDef.key];
         return (
@@ -107,7 +107,7 @@ export function PetCalculator() {
           >
             <span className="min-w-0">
               <span className={cn("block truncate", on ? "text-foreground" : "text-muted-foreground")}>{toggleDef.label}</span>
-              <span className="block text-[0.6rem] leading-none text-muted-foreground/45">{toggleDef.note}</span>
+              <span className="mt-1.5 block text-[0.65rem] leading-tight text-muted-foreground/45">{toggleDef.note}</span>
             </span>
             <span
               aria-hidden

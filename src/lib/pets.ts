@@ -248,6 +248,20 @@ export function oddsText(entry: Pet, luck = 0): string {
   return `1 in ${Math.max(1, Math.round(exact)).toLocaleString("en-US")}`;
 }
 
+/** Expected egg hatches to see the pet once. Triple Hatch changes cycles, not the hatch count. */
+export function averageHatches(entry: Pet, luck = 0): number {
+  const chance = trueChance(entry, luck);
+  if (chance <= 0) return Infinity;
+  return 1 / chance;
+}
+
+export function hatchesText(entry: Pet, luck = 0): string {
+  const hatches = averageHatches(entry, luck);
+  if (!Number.isFinite(hatches)) return "?";
+  const rounded = hatches < 10 ? Math.round(hatches * 10) / 10 : Math.round(hatches);
+  return rounded.toLocaleString("en-US");
+}
+
 function duration(seconds: number): string {
   if (seconds >= 86400) {
     const days = Math.floor(seconds / 86400);

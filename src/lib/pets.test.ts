@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 
-import { oddsText, oneIn, petMatches, PETS } from "./pets";
+import { hatchesText, oddsText, oneIn, petMatches, PETS } from "./pets";
 
 const pet = (name: string) => {
   const found = PETS.find((entry) => entry.name === name);
@@ -34,6 +34,12 @@ test("base odds match the egg roll", () => {
 test("chase odds scale by 1 plus luck", () => {
   expect(oneIn(pet("Apophis"), 1)).toBe(12500000);
   expect(oneIn(pet("Apophis"), 11.5)).toBe(2000000);
+});
+
+test("average hatches is one over the chance", () => {
+  expect(hatchesText(pet("Apophis"))).toBe("25,000,000");
+  expect(hatchesText(pet("Apophis"), 11.5)).toBe("2,000,000");
+  expect(hatchesText(pet("Cat"))).toBe("1.7");
 });
 
 test("limited and event words are prefixes", () => {

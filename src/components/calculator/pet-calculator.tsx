@@ -198,12 +198,12 @@ function Browse({
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {listed.map((entry) => (
               <button
-                className="flex items-center gap-2 rounded-sm border border-border bg-surface-lowest px-2 py-2 text-left text-sm transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                className="flex items-center gap-3 rounded-sm border border-border bg-surface-lowest px-3 py-3 text-left text-base transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                 key={entry.id}
                 onClick={() => onPick(entry.id)}
                 type="button"
               >
-                <img alt="" className="h-10 w-10 shrink-0 object-contain" src={entry.icon} />
+                <img alt="" className="h-14 w-14 shrink-0 object-contain" src={entry.icon} />
                 <span className="min-w-0">
                   <span className="block truncate" style={{ color: RARITY_COLOR[entry.rarity] }}>
                     {entry.name}

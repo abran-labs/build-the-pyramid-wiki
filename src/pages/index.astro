@@ -1,10 +1,107 @@
 ---
-import { HomeHero } from "@/components/home/home-hero";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Build the Pyramid" description="Build the Pyramid wiki.">
   <main class="mx-auto flex w-full max-w-3xl flex-1 items-center justify-center px-4 py-16">
-    <HomeHero client:load />
+    <div class="flex flex-col items-center gap-8 text-center" id="home-hero" hidden>
+      <img alt="" class="h-32 w-32 rounded-2xl object-cover" id="home-icon" src="/favicon.png" />
+      <h1 class="text-3xl font-semibold tracking-[-0.02em] text-foreground md:text-4xl" id="home-title">
+        Build the Pyramid
+      </h1>
+      <div class="flex flex-wrap justify-center gap-3">
+        <div class="flex min-w-28 flex-col items-center gap-1 rounded-md border border-border bg-surface-lowest px-5 py-4">
+          <span class="text-2xl font-semibold text-foreground" id="home-visits">—</span>
+          <span class="text-xs font-medium uppercase tracking-wider text-muted-foreground">Visits</span>
+        </div>
+        <div class="flex min-w-28 flex-col items-center gap-1 rounded-md border border-border bg-surface-lowest px-5 py-4">
+          <span class="text-2xl font-semibold text-foreground" id="home-favorites">—</span>
+          <span class="text-xs font-medium uppercase tracking-wider text-muted-foreground">Favorites</span>
+        </div>
+        <div class="flex min-w-28 flex-col items-center gap-1 rounded-md border border-border bg-surface-lowest px-5 py-4">
+          <span class="text-2xl font-semibold text-foreground" id="home-playing">—</span>
+          <span class="text-xs font-medium uppercase tracking-wider text-muted-foreground">Playing</span>
+        </div>
+      </div>
+      <div class="flex flex-col items-center gap-1">
+        <a
+          class="text-sm text-foreground no-underline underline-offset-4 transition-colors hover:underline"
+          href="https://www.roblox.com/games/123720558354386/Build-the-Pyramid"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Play on Roblox →
+        </a>
+        <a
+          class="text-xs no-underline underline-offset-4 transition-colors hover:underline"
+          href="https://discord.gg/9sksDM6r8M"
+          rel="noreferrer"
+          style="color: #5865F2"
+          target="_blank"
+        >
+          Join the Discord
+        </a>
+      </div>
+    </div>
+    <script is:inline>
+      (() => {
+        const key = "btp-wiki-live-game";
+        const maxAge = 10 * 60 * 1000;
+        const hero = document.getElementById("home-hero");
+        const title = document.getElementById("home-title");
+        const icon = document.getElementById("home-icon");
+        const visits = document.getElementById("home-visits");
+        const favorites = document.getElementById("home-favorites");
+        const playing = document.getElementById("home-playing");
+        const format = (value) => {
+          if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1)}B`;
+          if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+          if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
+          return value.toLocaleString("en-US");
+        };
+        const paint = (game) => {
+          if (title) title.textContent = game.name;
+          if (icon && game.iconUrl) icon.src = game.iconUrl;
+          if (visits) visits.textContent = format(game.visits);
+          if (favorites) favorites.textContent = format(game.favorites);
+          if (playing) playing.textContent = format(game.playing);
+        };
+        let cached = null;
+        try {
+          cached = JSON.parse(localStorage.getItem(key) || "null");
+        } catch {
+          cached = null;
+        }
+        if (cached && cached.game) paint(cached.game);
+        if (hero) hero.hidden = false;
+        if (cached && Date.now() - cached.fetchedAt < maxAge) return;
+        const universe = "10765012427";
+        Promise.all([
+          fetch(`/roblox-games/v1/games?universeIds=${universe}`),
+          fetch(`/roblox-thumbs/v1/games/icons?universeIds=${universe}&size=512x512&format=Png&isCircular=false`),
+        ])
+          .then(async ([gameRes, thumbRes]) => {
+            if (!gameRes.ok) return;
+            const gameJson = await gameRes.json();
+            const row = gameJson.data && gameJson.data[0];
+            if (!row) return;
+            let iconUrl = null;
+            if (thumbRes.ok) {
+              const thumbJson = await thumbRes.json();
+              iconUrl = thumbJson.data && thumbJson.data[0] && thumbJson.data[0].imageUrl;
+            }
+            const next = {
+              name: row.name || "Build the Pyramid",
+              visits: row.visits || 0,
+              favorites: row.favoritedCount || 0,
+              playing: row.playing || 0,
+              iconUrl,
+            };
+            localStorage.setItem(key, JSON.stringify({ fetchedAt: Date.now(), game: next }));
+            paint(next);
+          })
+          .catch(() => undefined);
+      })();
+    </script>
   </main>
 </BaseLayout>

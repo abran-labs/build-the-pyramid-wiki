@@ -102,22 +102,35 @@ export function PetCalculator({ world }: PetCalculatorProps) {
       </div>
       {selected !== null && <StatSummary pet={selected} world={world} options={options} luck={luck} />}
     </form>
-    <div className="flex w-[4.5rem] shrink-0 flex-col gap-2">
+    <div className="flex w-44 shrink-0 flex-col gap-2">
       {HATCH_TOGGLES.map((toggleDef) => {
         const on = options[toggleDef.key];
         return (
-          <Button
-            aria-pressed={on}
-            className={cn("h-auto min-h-10 whitespace-normal px-1 py-1 text-[0.65rem] leading-tight", on && "border-primary text-primary")}
+          <button
+            aria-checked={on}
+            className="flex h-10 items-center justify-between gap-2 rounded-sm border border-border bg-transparent px-3 text-sm shadow-none transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
             key={toggleDef.key}
             onClick={() => toggle(toggleDef.key)}
-            size="sm"
+            role="switch"
             title={toggleDef.title}
             type="button"
-            variant={on ? "outline" : "secondary"}
           >
-            {toggleDef.label}
-          </Button>
+            <span className={cn("truncate", on ? "text-foreground" : "text-muted-foreground")}>{toggleDef.label}</span>
+            <span
+              aria-hidden
+              className={cn(
+                "relative h-5 w-9 shrink-0 rounded-full border transition-colors",
+                on ? "border-primary bg-primary" : "border-border bg-surface-high",
+              )}
+            >
+              <span
+                className={cn(
+                  "absolute top-0.5 h-3.5 w-3.5 rounded-full transition-transform",
+                  on ? "left-4 bg-primary-foreground" : "left-0.5 bg-muted-foreground",
+                )}
+              />
+            </span>
+          </button>
         );
       })}
     </div>

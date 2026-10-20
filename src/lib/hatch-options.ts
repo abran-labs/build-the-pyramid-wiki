@@ -10,12 +10,12 @@ export type HatchOptions = {
 };
 
 export const HATCH_TOGGLES: readonly { readonly key: HatchOptionKey; readonly label: string; readonly title: string }[] = [
-  { key: "fast", label: "Fast", title: "Fast Hatch" },
-  { key: "triple", label: "3x", title: "Three Times Hatch" },
-  { key: "luck", label: "Luck", title: "Luck, +1" },
-  { key: "superLuck", label: "Super", title: "Super Luck, +3" },
-  { key: "ultraLuck", label: "Ultra", title: "Ultra Luck, +7" },
-  { key: "jack", label: "Jack", title: "Jack, +0.5 hatch luck" },
+  { key: "fast", label: "Fast Hatch", title: "Eggs hatch faster" },
+  { key: "triple", label: "3x Hatch", title: "Hatch 3 eggs at once" },
+  { key: "luck", label: "Luck", title: "+1 hatch luck" },
+  { key: "superLuck", label: "Super Luck", title: "+3 hatch luck" },
+  { key: "ultraLuck", label: "Ultra Luck", title: "+7 hatch luck" },
+  { key: "jack", label: "Jack", title: "+0.5 hatch luck" },
 ];
 
 export const EMPTY_HATCH_OPTIONS: HatchOptions = {

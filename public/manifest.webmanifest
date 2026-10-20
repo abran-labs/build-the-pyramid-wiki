@@ -1,7 +1,7 @@
 {
-  "name": "DQR",
-  "short_name": "DQR",
-  "description": "Item potential calculator for Dungeon Quest Reborn.",
+  "name": "Build the Pyramid Wiki",
+  "short_name": "Pyramid",
+  "description": "Pet hatch odds for Build the Pyramid.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

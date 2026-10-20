@@ -1,10 +1,10 @@
 ---
-import { PetCalculator } from "@/components/calculator/pet-calculator";
+import { HomeHero } from "@/components/home/home-hero";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Pets">
-  <main class="mx-auto w-full max-w-4xl py-8">
-    <PetCalculator client:load />
+<BaseLayout title="Build the Pyramid" description="Build the Pyramid wiki.">
+  <main class="mx-auto flex w-full max-w-3xl flex-1 items-center justify-center px-4 py-16">
+    <HomeHero client:load />
   </main>
 </BaseLayout>

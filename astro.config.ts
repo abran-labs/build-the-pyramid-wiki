@@ -10,6 +10,16 @@ export default defineConfig({
     server: {
       proxy: {
         "/api": "http://localhost:4322",
+        "/roblox-games": {
+          target: "https://games.roblox.com",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/roblox-games/, ""),
+        },
+        "/roblox-thumbs": {
+          target: "https://thumbnails.roblox.com",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/roblox-thumbs/, ""),
+        },
       },
     },
   },

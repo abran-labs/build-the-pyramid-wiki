@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+
+# Local OCR benchmark from the DQR-Calc template. Not part of this app.
+/bench/
+
+# Astro build output
+.astro
+dist
+
+# TypeScript
+*.tsbuildinfo
+
+# Local OCR language data; public copy is served from /public.
+/eng.traineddata
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Stats sidecar state (SQLite db)
+server/data/
+
+# Debug logs
+*.log
+
+# Misc
+.DS_Store
+Thumbs.db
+.vercel
+
+# Local runtime caches
+.cache
+.playwright-mcp
+
+# Local sample screenshots (dev/test only)
+/assets/

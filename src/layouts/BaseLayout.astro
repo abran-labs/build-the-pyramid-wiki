@@ -1,0 +1,96 @@
+---
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/500.css";
+import "@fontsource/manrope/600.css";
+import { ClientRouter } from "astro:transitions";
+import { MarketingFooter } from "@/components/marketing/marketing-footer";
+import type { MarketingFooterNavLink, MarketingFooterSocialLink } from "@/components/marketing/marketing-footer";
+import { MarketingNav } from "@/components/marketing/marketing-nav";
+import type { SiteNavLink } from "@/components/marketing/site-nav-links";
+import { StarsBackground } from "@/components/marketing/stars-background";
+import { StatsStrip } from "@/components/marketing/stats-strip";
+import "@/styles/globals.css";
+
+const navLinks = [
+  { label: "Pot Calculator", href: "/" },
+  { label: "Level Calculator", href: "/level" },
+] as const satisfies ReadonlyArray<SiteNavLink>;
+
+const footerNavLinks: readonly MarketingFooterNavLink[] = [];
+
+const footerSocialLinks = [
+  { id: "github", label: "GitHub", href: "https://github.com/abran-labs" },
+  { id: "x", label: "X (Twitter)", href: "https://x.com/AbranLabs" },
+  {
+    id: "youtube",
+    label: "YouTube",
+    href: "https://www.youtube.com/channel/UC0hfIt7GFnGCer6tYnYsCag",
+  },
+  { id: "roblox", label: "Roblox", href: "https://www.roblox.com/users/2373175020" },
+  { id: "discord", label: "Discord", href: "https://discord.com/users/563879454493900821" },
+] as const satisfies ReadonlyArray<MarketingFooterSocialLink>;
+
+interface Props {
+  readonly title?: string | undefined;
+  readonly description?: string | undefined;
+}
+
+
+const {
+  description = "Item potential calculator for Dungeon Quest Reborn.",
+} = Astro.props;
+const pageTitle = "DQR Calculator";
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html
+  lang="en"
+  class="dark"
+  style="background-color: #09090b"
+  transition:name="root"
+  transition:animate="none"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#09090b" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>{pageTitle}</title>
+    <ClientRouter />
+  </head>
+  <body class="relative font-sans">
+    <StarsBackground client:load transition:persist="stars-background" />
+    <div class="relative flex min-h-dvh flex-col">
+      <header class="pointer-events-none relative z-[2] px-4">
+        <div class="pointer-events-auto relative mx-auto flex h-14 w-full max-w-3xl items-center justify-center">
+          <MarketingNav
+            client:load
+            transition:persist="marketing-nav"
+            transition:persist-props
+            navLinks={navLinks}
+            pathname={pathname}
+          />
+        </div>
+        <div class="pb-1 md:pb-2">
+          <StatsStrip client:load transition:persist="stats-strip" />
+        </div>
+      </header>
+      <div class="relative z-[1] flex flex-1 flex-col px-4">
+        <slot />
+      </div>
+      <MarketingFooter
+        brandLine="© 2026 Abran Labs"
+        rightsLine="MIT licensed"
+        navLinks={footerNavLinks}
+        socialLinks={footerSocialLinks}
+      />
+    </div>
+  </body>
+</html>

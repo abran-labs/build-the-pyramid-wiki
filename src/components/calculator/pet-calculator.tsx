@@ -107,7 +107,7 @@ export function PetCalculator() {
           >
             <span className="min-w-0">
               <span className={cn("block truncate", on ? "text-foreground" : "text-muted-foreground")}>{toggleDef.label}</span>
-              <span className="block text-[0.65rem] leading-tight text-muted-foreground">{toggleDef.note}</span>
+              <span className="block text-[0.6rem] leading-none text-muted-foreground/45">{toggleDef.note}</span>
             </span>
             <span
               aria-hidden

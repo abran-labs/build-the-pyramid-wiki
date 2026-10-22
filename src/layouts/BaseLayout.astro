@@ -34,14 +34,20 @@ const footerSocialLinks = [
 interface Props {
   readonly title?: string | undefined;
   readonly description?: string | undefined;
+  readonly section?: string | undefined;
+  readonly image?: string | undefined;
 }
 
+const SITE_URL = "https://build-the-pyramid.abran.dev";
+const SITE_NAME = "Build the Pyramid Wiki";
 
-const { title, description = "Pet hatch odds for Build the Pyramid." } = Astro.props;
+const { title, description = "Pet hatch odds for Build the Pyramid.", section, image } = Astro.props;
 const pageTitle = title ?? "Build the Pyramid Wiki";
 const pathname = Astro.url.pathname;
 const liveGame = await fetchLiveGameEmbed();
-const embedTitle = pathname === "/" ? liveGame.name : pageTitle;
+const embedTitle = liveGame.name;
+const embedSiteName = section ? `${section} · ${SITE_NAME}` : SITE_NAME;
+const embedImage = image ? `${SITE_URL}${image}` : liveGame.iconUrl;
 ---
 
 <!doctype html>
@@ -65,14 +71,14 @@ const embedTitle = pathname === "/" ? liveGame.name : pageTitle;
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>{pageTitle}</title>
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Build the Pyramid Wiki" />
+    <meta property="og:site_name" content={embedSiteName} />
     <meta property="og:title" content={embedTitle} />
     <meta property="og:description" content={description} />
-    {liveGame.iconUrl && <meta property="og:image" content={liveGame.iconUrl} />}
+    {embedImage && <meta property="og:image" content={embedImage} />}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={embedTitle} />
     <meta name="twitter:description" content={description} />
-    {liveGame.iconUrl && <meta name="twitter:image" content={liveGame.iconUrl} />}
+    {embedImage && <meta name="twitter:image" content={embedImage} />}
     <script
       is:inline
       defer

@@ -3,7 +3,12 @@ import { PetCalculator } from "@/components/calculator/pet-calculator";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Pets">
+<BaseLayout
+  title="Pets"
+  section="Pets"
+  description="Exact hatch chances for every pet in Build the Pyramid. Pick your luck passes to see your real odds."
+  image="/og/pets.png"
+>
   <main class="mx-auto flex w-full max-w-5xl flex-1 items-start justify-center py-4 md:items-center md:py-8">
     <PetCalculator client:load />
   </main>

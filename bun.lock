@@ -5,6 +5,7 @@
     "": {
       "name": "dqr-calc",
       "dependencies": {
+        "@abran-labs/rolink": "^0.1.0",
         "@astrojs/react": "^6.0.1",
         "@fontsource/manrope": "^5.2.7",
         "@radix-ui/react-slot": "^1.2.4",
@@ -36,6 +37,8 @@
     "tesseract.js",
   ],
   "packages": {
+    "@abran-labs/rolink": ["@abran-labs/rolink@0.1.0", "", {}, "sha512-npa7iUykq6z+9ycyHfuV3p64yalEvyvhu5hZ4PPYTlF694+SKJGhflxke1ZjkxOpxEfe+VEWZA/1nQ9a/+U30A=="],
+
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 
     "@astrojs/check": ["@astrojs/check@0.9.10", "", { "dependencies": { "@astrojs/language-server": "^2.16.7", "chokidar": "^4.0.3", "kleur": "^4.1.5", "yargs": "^18.0.0" }, "peerDependencies": { "typescript": "^5.0.0 || ^6.0.0" }, "bin": { "astro-check": "./bin/astro-check.js" } }, "sha512-zgx/UQMozdjOa3bOxjgeCFdtpE3c9rRX6xHwa+2QXvy8z8Akifu2AtubHyv/zzC2znO8dl8fFWL4K+Ba9kS8HQ=="],

@@ -1,4 +1,24 @@
+import { createRolink, fileStore, type Rolink } from "@abran-labs/rolink";
+
 import { fetchLiveGameEmbed, type LiveGameEmbed } from "../src/lib/live-game";
+import { ROLINK_BASE, ROLINK_PUBLIC_STATE } from "../src/lib/rolink";
+
+const LIVE_UNIVERSE_ID = 10765012427;
+
+// Game link. Off until ROLINK_KEY is set in .env (the game holds the same key as
+// its `rolink_key` secret).
+const rolinkKey = process.env.ROLINK_KEY;
+const rolink: Rolink | null = rolinkKey
+  ? createRolink({
+      key: rolinkKey,
+      universes: [LIVE_UNIVERSE_ID],
+      publicState: [...ROLINK_PUBLIC_STATE],
+      store: fileStore(new URL("./data/rolink.json", import.meta.url).pathname),
+      basePath: ROLINK_BASE,
+      rejectStudio: true,
+    })
+  : null;
+if (!rolink) console.warn("[backend] ROLINK_KEY not set; game link disabled");
 
 const PORT = Number(process.env.BACKEND_PORT ?? 4323);
 const LIVE_INDEX = new URL("../live/index.html", import.meta.url);
@@ -51,7 +71,11 @@ Bun.serve({
   port: PORT,
   hostname: "127.0.0.1",
   async fetch(req) {
-    const handler = routes[new URL(req.url).pathname];
+    const path = new URL(req.url).pathname;
+    if (path.startsWith(`${ROLINK_BASE}/`)) {
+      return rolink ? rolink.fetch(req) : new Response("Not found", { status: 404 });
+    }
+    const handler = routes[path];
     return handler ? handler() : new Response("Not found", { status: 404 });
   },
 });

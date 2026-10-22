@@ -1,5 +1,4 @@
 ---
-import { EggsHatchedLine } from "@/components/calculator/eggs-hatched-line";
 import { PetCalculator } from "@/components/calculator/pet-calculator";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
@@ -10,8 +9,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   description="Hatch eggs, collect pets, and find out everything about them."
   image="/og/pets.png"
 >
-  <main class="mx-auto flex w-full max-w-5xl flex-1 flex-col items-stretch justify-start gap-3 py-4 md:justify-center md:py-8">
+  <main class="mx-auto flex w-full max-w-5xl flex-1 items-start justify-center py-4 md:items-center md:py-8">
     <PetCalculator client:load />
-    <EggsHatchedLine client:load />
   </main>
 </BaseLayout>

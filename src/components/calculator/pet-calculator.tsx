@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { ChevronLeft } from "lucide-react";
+import { EggsHatchedLine } from "@/components/calculator/eggs-hatched-line";
 import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
 import {
   EMPTY_HATCH_OPTIONS,
@@ -65,7 +66,8 @@ export function PetCalculator() {
   });
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col items-stretch gap-3 md:flex-row">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-3">
+    <div className="flex w-full flex-col items-stretch gap-3 md:flex-row">
     <form
       autoComplete="off"
       className="order-2 flex min-w-0 flex-1 flex-col space-y-4 rounded-lg border border-border bg-surface-lowest p-4 md:order-1"
@@ -146,6 +148,8 @@ export function PetCalculator() {
         );
       })}
     </div>
+    </div>
+    <EggsHatchedLine browseId={selected === null ? browseId : null} pet={selected} />
     </div>
   );
 }

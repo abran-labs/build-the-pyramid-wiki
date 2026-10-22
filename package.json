@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "typecheck": "astro check",
-    "stats": "bun run server/index.ts"
+    "stats": "bun run server/index.ts",
+    "backend": "bun run server/backend.ts"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.1",

@@ -8,6 +8,7 @@ import type { MarketingFooterNavLink, MarketingFooterSocialLink } from "@/compon
 import { MarketingNav } from "@/components/marketing/marketing-nav";
 import type { SiteNavLink } from "@/components/marketing/site-nav-links";
 import { StarsBackground } from "@/components/marketing/stars-background";
+import { fetchLiveGameEmbed } from "@/lib/live-game";
 import "@/styles/globals.css";
 
 const navLinks = [
@@ -39,6 +40,8 @@ interface Props {
 const { title, description = "Pet hatch odds for Build the Pyramid." } = Astro.props;
 const pageTitle = title ?? "Build the Pyramid Wiki";
 const pathname = Astro.url.pathname;
+const liveGame = await fetchLiveGameEmbed();
+const embedTitle = pathname === "/" ? liveGame.name : pageTitle;
 ---
 
 <!doctype html>
@@ -61,6 +64,15 @@ const pathname = Astro.url.pathname;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <title>{pageTitle}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Build the Pyramid Wiki" />
+    <meta property="og:title" content={embedTitle} />
+    <meta property="og:description" content={description} />
+    {liveGame.iconUrl && <meta property="og:image" content={liveGame.iconUrl} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={embedTitle} />
+    <meta name="twitter:description" content={description} />
+    {liveGame.iconUrl && <meta name="twitter:image" content={liveGame.iconUrl} />}
     <script
       is:inline
       defer

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="380" viewBox="0 0 1800 380" role="img" aria-labelledby="title desc">
+  <title id="title">Build the Pyramid Wiki</title>
+  <desc id="desc">Build the Pyramid Wiki wordmark beside a pyramid emblem.</desc>
+  <defs>
+    <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f7ece7"/><stop offset="1" stop-color="#cbb4ad"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1800" height="380" fill="#0a0a0b"/>
+  <path d="M144 190H260M1540 190H1656" stroke="#4f4644" stroke-width="2"/>
+  <g transform="translate(354 78)">
+    <rect width="224" height="224" rx="8" fill="none" stroke="url(#frame)" stroke-width="7"/>
+    <rect x="22" y="22" width="180" height="180" rx="4" fill="none" stroke="#6b5a56" stroke-width="2"/>
+    <path d="M112 52 50 148 112 172 174 148Z" fill="none" stroke="#f7ece7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M112 52V172" fill="none" stroke="#f7ece7" stroke-width="7" stroke-linecap="round"/>
+    <path d="M112 52 174 148 112 172Z" fill="none" stroke="#f6a78f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" opacity=".34"/>
+    <path d="M112 52 174 148 112 172Z" fill="none" stroke="#f6a78f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g fill="#f7ece7">
+    <text x="646" y="186" font-family="Inter, Arial, sans-serif" font-size="78" font-weight="600" letter-spacing="-3">Build the Pyramid Wiki</text>
+    <text x="651" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="600" letter-spacing="2" fill="#cbb8b3">PLAYER-FACING WIKI FOR BUILD THE PYRAMID.</text>
+  </g>
+  <path d="M648 282H1400" stroke="#5c504d" stroke-width="2"/>
+  <path d="M648 282H870" stroke="#f6a78f" stroke-width="4"/>
+</svg>

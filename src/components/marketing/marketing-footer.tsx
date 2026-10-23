@@ -83,7 +83,16 @@ export function MarketingFooter({ brandLine, rightsLine, navLinks, socialLinks }
       <div className="mx-auto grid w-full max-w-[1120px] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-x-2 gap-y-4 pt-7 sm:gap-x-6">
         <div className="grid gap-1.5 text-sm text-muted-foreground">
           <p>{brandLine}</p>
-          <p>{rightsLine}</p>
+          <p>
+            <a
+              href="https://github.com/abran-labs/build-the-pyramid-wiki"
+              target="_blank"
+              rel="noreferrer"
+              className="underline underline-offset-4 decoration-muted-foreground/60 transition-colors duration-150 hover:text-foreground hover:decoration-foreground"
+            >
+              {rightsLine}
+            </a>
+          </p>
         </div>
 
         <div className="col-start-3 row-start-1 grid justify-items-end gap-3 sm:gap-4">

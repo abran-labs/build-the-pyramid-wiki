@@ -11,7 +11,6 @@
     "preview": "astro preview",
     "check": "astro check",
     "typecheck": "astro check",
-    "stats": "bun run server/index.ts",
     "backend": "bun run server/backend.ts"
   },
   "dependencies": {
@@ -27,8 +26,7 @@
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss-animate": "^1.0.7",
-    "tesseract.js": "^7.0.0"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
@@ -40,8 +38,5 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.14",
     "typescript": "^5"
-  },
-  "trustedDependencies": [
-    "tesseract.js"
-  ]
+  }
 }

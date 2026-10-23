@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Published site directory
+# Publish the built site to live/.
 # Dev work stays in dist/; only this script swaps live/.
 set -euo pipefail
 cd "$(dirname "$0")/.."

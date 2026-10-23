@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 /*
-  Dark theme tokens (single dark theme — DQR-Calc is dark-only).
-  Neutral ramp matches AbyssFishLog's near-black neutrals; primary stays the
-  DQR orange. Values are HSL triplets consumed via tailwind.config.ts hsl(var(--*)).
+  Dark theme tokens (single dark-only theme).
+  Neutral ramp is near-black; primary stays the site orange. Values are HSL
+  triplets consumed via tailwind.config.ts hsl(var(--*)).
 */
 @layer base {
   :root {

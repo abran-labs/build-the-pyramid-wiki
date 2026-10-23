@@ -14,7 +14,7 @@ export interface ComboboxOption {
   groupSuffix?: string;
   groupSuffixColor?: string;
   icon?: string;
-  /** Search-only text (e.g. dungeon codes like "DT" for Desert Temple). */
+  /** Search-only text (e.g. short codes). */
   keywords?: string;
   /** When set, this option uses this test instead of the default text search. */
   matches?: (query: string) => boolean;
@@ -36,8 +36,8 @@ export interface ComboboxProps {
 }
 
 /*
-  Searchable dropdown with collapsible groups and per-option colors.
-  Ported from AbyssFishLog, restyled to the DQR-Calc token scale.
+  Searchable dropdown with collapsible groups and per-option colors,
+  restyled to the site token scale.
 */
 
 export function Combobox({

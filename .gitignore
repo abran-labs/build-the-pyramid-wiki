@@ -1,9 +1,6 @@
 # Dependencies
 node_modules
 
-# Local OCR benchmark from the DQR-Calc template. Not part of this app.
-/bench/
-
 # Astro build output
 .astro
 dist
@@ -11,18 +8,19 @@ dist
 # Published site directory
 /live
 
+# Local agent notes
+AGENTS.local.md
+.opencode
+
 # TypeScript
 *.tsbuildinfo
-
-# Local OCR language data; public copy is served from /public.
-/eng.traineddata
 
 # Env files
 .env
 .env.*
 !.env.example
 
-# Stats sidecar state (SQLite db)
+# Runtime state
 server/data/
 
 # Debug logs

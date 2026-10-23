@@ -1,6 +1,6 @@
 # Build the Pyramid Wiki — Agent Guide
 
-Instructions for AI coding agents (ChatGPT Work / Codex, Claude Code on the web, OpenCode) working on Build the Pyramid Wiki.
+Instructions for AI coding agents working on Build the Pyramid Wiki.
 
 ## Workflow (Read First)
 
@@ -16,7 +16,7 @@ Before making edits, switching branches, committing, pushing, or opening a pull 
 
 ## Project
 
-Player-facing wiki for the Roblox game **Build the Pyramid** (`https://build-the-pyramid.abran.dev`).
+The official wiki for the Roblox game **Build the Pyramid** (`https://build-the-pyramid.abran.dev`).
 
 Stack: Astro 7 (static output) + React 19 islands, Tailwind CSS v3 with dark theme tokens, Bun, strict TypeScript.
 
@@ -33,8 +33,8 @@ Stack: Astro 7 (static output) + React 19 islands, Tailwind CSS v3 with dark the
 ## Rules
 
 - Preserve Astro static output, React islands, strict TypeScript, and Tailwind CSS v3 token patterns. Do not add an SSR server adapter.
-- **Reuse existing components and layouts.** Edit page content, data, and existing views first. Avoid creating new components or layouts unless the task genuinely cannot be expressed with existing ones.
-- **Never invent or hand-type game odds or weights.** Pet and egg numbers in `src/lib/pets.ts` and `src/lib/hatch-options.ts` mirror the game's `EggRoll`, `PetConfig`, `EggConfig`, and `PetPassConfig`. If a task needs game numbers, icons, or mechanics not yet in the repo, tell the contributor to request them from `@abran-labs` on Discord.
+- **Reuse existing components and layouts.** Edit page content, data, and existing views first. Avoid creating new components or layouts unless the task cannot be expressed with existing ones.
+- **Never invent game odds or weights.** Pet and egg numbers in `src/lib/pets.ts` and `src/lib/hatch-options.ts` mirror the game's data. If a task needs game numbers, icons, or mechanics not yet in the repo, tell the contributor to request them from **Suna** (`@abran.labs`) on Discord.
 - Publish true odds (`trueChance`, secrets included). In-game menu odds omit secrets and rescale; never label menu odds as true odds.
 - Luck passes (`Luck` +1, `Super Luck` +3, `Ultra Luck` +7, plus `Jack` +0.5) add together rather than flat-multiplying every pet. Chase pets (`luckBoosted`) scale by `1 + luck`, middle tiers ramp, and the bottom tier absorbs the difference down to a 10% weight floor.
 - Do not commit `node_modules/`, `.astro/`, `dist/`, `live/`, or `.env*`.

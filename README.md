@@ -14,4 +14,4 @@
 
 ## Join the wiki team
 
-Want to help keep the wiki updated? No coding experience is required. Join the [Build the Pyramid Discord](https://discord.gg/9sksDM6r8M) and message **Suna (`@abran.labs`)** to apply.
+Want to help keep the wiki updated? No coding experience is required. Be active in the [Build the Pyramid Discord](https://discord.gg/9sksDM6r8M), help out in the community, and show interest in contributing to the wiki—you might be picked to join the team.

@@ -36,6 +36,25 @@ async function currentGame(): Promise<LiveGameEmbed | null> {
   return cached?.game ?? null;
 }
 
+function formatCount(value: number): string {
+  if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1)}B`;
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
+  return value.toLocaleString("en-US");
+}
+
+function badgeResponse(label: string, value: number | undefined, color: string): Response {
+  return Response.json(
+    {
+      schemaVersion: 1,
+      label,
+      message: value === undefined ? "—" : formatCount(value),
+      color,
+    },
+    { headers: { "cache-control": "public, max-age=120" } },
+  );
+}
+
 function escapeAttr(value: string): string {
   return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 }
@@ -65,6 +84,9 @@ const routes: Readonly<Record<string, () => Promise<Response> | Response>> = {
   "/": homePage,
   "/index.html": homePage,
   "/api/health": () => Response.json({ ok: true }),
+  "/api/badges/visits": async () => badgeResponse("visits", (await currentGame())?.visits, "blue"),
+  "/api/badges/favorites": async () => badgeResponse("favorites", (await currentGame())?.favorites, "orange"),
+  "/api/badges/playing": async () => badgeResponse("playing", (await currentGame())?.playing, "brightgreen"),
 };
 
 Bun.serve({

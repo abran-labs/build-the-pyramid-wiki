@@ -2,24 +2,12 @@
 
 # Build the Pyramid Wiki
 
-![license](https://img.shields.io/github/license/abran-labs/build-the-pyramid-wiki)
+[![visits](https://img.shields.io/endpoint?url=https%3A%2F%2Fbuild-the-pyramid.abran.dev%2Fapi%2Fbadges%2Fvisits)](https://www.roblox.com/games/123720558354386/Build-the-Pyramid)
+[![favorites](https://img.shields.io/endpoint?url=https%3A%2F%2Fbuild-the-pyramid.abran.dev%2Fapi%2Fbadges%2Ffavorites)](https://www.roblox.com/games/123720558354386/Build-the-Pyramid)
+[![playing](https://img.shields.io/endpoint?url=https%3A%2F%2Fbuild-the-pyramid.abran.dev%2Fapi%2Fbadges%2Fplaying)](https://www.roblox.com/games/123720558354386/Build-the-Pyramid)
 
-**Player-facing wiki for Build the Pyramid.**
+**The official wiki for Build the Pyramid.**
 
-## Use it here
+## Check it out here
 
-```
-https://build-the-pyramid.abran.dev
-```
-
-## Pages
-
-| Page | Route | What it covers |
-| --- | --- | --- |
-| Home | `/` | Live game stats, Roblox link, and Discord |
-| Pets | `/pets` | Eggs, pets, luck pass toggles, true hatch odds, and average hatch time |
-| Items | `/items` | Upcoming item reference |
-
-## Contributing
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+[https://build-the-pyramid.abran.dev](https://build-the-pyramid.abran.dev)

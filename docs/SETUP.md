@@ -1,5 +1,6 @@
 # Setup
 
+Static Astro 7 site with React 19 islands, Tailwind CSS v3, and strict TypeScript.
 
 ## Dependencies
 
@@ -11,11 +12,11 @@ curl -fsSL https://bun.sh/install | bash
 
 ## First-time setup
 
-
 ```bash
+bun install
+bun run dev
 ```
 
 ## Stack
 
-
-The stats sidecar and Tesseract language pack are leftover from DQR-Calc. The odds pages do not need them.
+Astro 7 with static output, React 19 islands, Tailwind CSS v3 with dark theme tokens (`src/styles/globals.css`), and strict TypeScript. See `docs/ai/dev-rules-astro.md`.

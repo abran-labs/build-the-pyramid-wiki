@@ -1,25 +1,15 @@
 # Build the Pyramid Wiki — plan
 
-Odds reference for Build the Pyramid. Shell cloned from DQR-Calc. The DQR calculator, OCR, pot math, stats sidecar, and `docs/Info/` are leftover. Do not build on them. Strip them in a later pass.
+Player-facing wiki and hatch-odds reference for Build the Pyramid.
 
 ## Pages
 
-- Home: how luck adds, how it changes a roll, links to each world. No hatch-speed number until the game server enforces the cadence.
-- One page per world. Eggs in that world, pets in each egg, true odds.
-- Luck passes are checkboxes (Luck, Super Luck, Ultra Luck). The tables recompute. Eight combinations, not a slider.
+- Home: live game overview, player/visit/favorite stats, and links to play and join Discord.
+- Pets (`/pets`): browse eggs and pets, search by name/rarity/event, toggle hatch passes (Fast Hatch, Triple Hatch, Luck, Super Luck, Ultra Luck, Jack), and inspect true odds and average hatch time.
+- Items (`/items`): upcoming item reference.
 
 ## Numbers
 
+Source of truth is the Build the Pyramid game config (`EggRoll`, `EggConfig`, `PetConfig`, `PetPassConfig`), mirrored in `src/lib/pets.ts` and `src/lib/hatch-options.ts`.
 
-- `src/ReplicatedStorage/Shared/Pets/EggRoll.lua` — the roll. Port or generate from this. Do not invent a second formula.
-- `src/ReplicatedStorage/Shared/Config/EggConfig.lua` — eggs, weights, worlds, prices.
-- `src/ReplicatedStorage/Shared/Config/PetConfig.lua` — names, rarities, boosts.
-- `src/ReplicatedStorage/Shared/Config/PetPassConfig.lua` — luck pass values (+1 / +3 / +7).
-
-True odds include secrets. The in-game menu drops secrets and rescales. The site shows the true number, and says so.
-
-## Not yet
-
-- Hatch speed in seconds. Fast Hatch is the only speed boost, but the server still only rejects requests under 0.5s and does not check the pass. A separate session is fixing that. Do not print a speed until it lands.
-- Strip of DQR OCR, pot, stats, and item data.
-- Hosting. No domain yet.
+True odds include secrets. The in-game menu drops secrets and rescales; the wiki shows the true chance.

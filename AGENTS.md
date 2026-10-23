@@ -1,46 +1,46 @@
-# Build the Pyramid Wiki agent guide
+# Build the Pyramid Wiki — Agent Guide
 
-## Mounted workspace
+Instructions for AI coding agents (ChatGPT Work / Codex, Claude Code on the web, OpenCode) working on Build the Pyramid Wiki.
 
-      allowedHosts: true,
-- Read, edit, search, and inspect Git read-only through the mounted path like a normal repo.
-- Edits already write to the server repo. Never copy, upload, `scp`, or sync the repo.
+## Workflow (Read First)
 
-Remote pattern:
+Before making edits, switching branches, committing, pushing, or opening a pull request, read and follow [`.agents/skills/git-workflow/SKILL.md`](.agents/skills/git-workflow/SKILL.md).
 
-```bash
-```
-
+- **Never push to `master`.** `master` is locked to `@abran-labs` via required pull request and Code Owner review.
+- **Work on `dev` or a `wiki/<topic>` branch off `dev`.** Prefer `wiki/<topic>` when making multi-step edits so teammates do not collide on `dev`.
+- **Push after each meaningful edit and share the preview link.** Every push to `dev` or `wiki/<topic>` deploys a private preview behind Cloudflare Access (GitHub login):
+  - `dev` → `https://dev.build-the-pyramid-wiki.pages.dev`
+  - `wiki/<topic>` → `https://wiki-<topic>.build-the-pyramid-wiki.pages.dev`
+  - Give the user the preview link after pushing (and open it if your environment supports opening links).
+- **Never run `bun run publish`.** Publishing to `https://build-the-pyramid.abran.dev` is performed only by the repository owner.
 
 ## Project
 
-Player-facing wiki for Build the Pyramid. First pages: true hatch odds. Players pick the luck passes they own and see the real chance for every pet, grouped by world and egg. Later pages cover the rest of the game. Not a developer docs site.
+Player-facing wiki for the Roblox game **Build the Pyramid** (`https://build-the-pyramid.abran.dev`).
 
-
-The tree still contains the DQR calculator (OCR, pot math, stats sidecar, item CSV). That is leftover template code. Do not extend it, and do not delete it until a deliberate strip pass.
+Stack: Astro 7 (static output) + React 19 islands, Tailwind CSS v3 with dark theme tokens, Bun, strict TypeScript.
 
 ## Route
 
-- UI and implementation rules: `docs/ai/design-system.md`.
-- Astro and Bun conventions: `docs/ai/dev-rules-astro.md`.
-- Reuse and optimization guidance: `docs/ai/optimization-principles.md`.
-- Commands: `docs/CMDS.md`.
-- Setup: `docs/SETUP.md`.
-- What to build: `docs/PLAN.md`. Treat `docs/Info/` as leftover DQR notes, not this game.
+- Git & preview workflow: `.agents/skills/git-workflow/SKILL.md`
+- UI and design rules: `docs/ai/design-system.md`
+- Astro and Bun conventions: `docs/ai/dev-rules-astro.md`
+- Reuse and optimization guidance: `docs/ai/optimization-principles.md`
+- Commands: `docs/CMDS.md`
+- Setup: `docs/SETUP.md`
+- Site plan: `docs/PLAN.md`
 
-## Laws
+## Rules
 
-- Preserve Astro static output, React islands, TypeScript strict, and Tailwind CSS v3 + TweakCN token patterns. Do not add a server adapter.
-- Publish true odds (`EggRoll.trueChance`, secrets included). Menu odds drop secrets and rescale. Do not label those as true.
-- Luck is three passes, added, not a flat multiply of every pet. Chase pets (`LuckBoosted`) get `1 + luck`. Middle tiers ramp. The common tier pays, down to 10% of its base weight. Explain that on the home page. Do not simplify it to "2x luck".
-- Do not print a hatch speed until the game server enforces the cadence. The animated cycle is not the enforced interval yet. Until that lands, the page may describe the rule and must not state a seconds number as fact.
-- Home page plus one page per world. Luck passes are checkboxes that recompute the tables.
-- Prefer extending the existing shell (layout, tokens, nav) before adding a new visual system.
-- `node_modules/`, `.astro/`, `dist/`, and `.env*` are runtime or generated. Never commit them.
-- `bun run build` writes `dist/` and never reaches the live site. Only `bun run publish` (build, then swap `live/`) publishes.
-- Develop on the dev server and leave the live site alone until the user says the change is ready to publish. Never run `publish` unprompted.
+- Preserve Astro static output, React islands, strict TypeScript, and Tailwind CSS v3 token patterns. Do not add an SSR server adapter.
+- **Reuse existing components and layouts.** Edit page content, data, and existing views first. Avoid creating new components or layouts unless the task genuinely cannot be expressed with existing ones.
+- **Never invent or hand-type game odds or weights.** Pet and egg numbers in `src/lib/pets.ts` and `src/lib/hatch-options.ts` mirror the game's `EggRoll`, `PetConfig`, `EggConfig`, and `PetPassConfig`. If a task needs game numbers, icons, or mechanics not yet in the repo, tell the contributor to request them from `@abran-labs` on Discord.
+- Publish true odds (`trueChance`, secrets included). In-game menu odds omit secrets and rescale; never label menu odds as true odds.
+- Luck passes (`Luck` +1, `Super Luck` +3, `Ultra Luck` +7, plus `Jack` +0.5) add together rather than flat-multiplying every pet. Chase pets (`luckBoosted`) scale by `1 + luck`, middle tiers ramp, and the bottom tier absorbs the difference down to a 10% weight floor.
+- Do not commit `node_modules/`, `.astro/`, `dist/`, `live/`, or `.env*`.
 - One fact has one canonical owner. Link to it instead of duplicating it.
 
 ## Verify
 
 - Documentation-only changes need no build.
+- For code or page changes, run `bun test`, `bun run check`, and `bun run build` before pushing.

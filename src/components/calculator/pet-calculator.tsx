@@ -29,6 +29,12 @@ import {
 import { POTIONS, type PotionTier } from "@/lib/potions";
 import { cn } from "@/lib/utils";
 
+/** Same wording as the pass toggles: "+0.3 hatch luck", "1.2× faster". */
+function potionNote(kind: "Luck" | "HatchSpeed", bonusPercent: number): string {
+  const value = Number((bonusPercent / 100).toFixed(2));
+  return kind === "Luck" ? `+${value} hatch luck` : `${Number((1 + value).toFixed(2))}× faster`;
+}
+
 export function PetCalculator() {
   const [petId, setPetId] = React.useState("");
   const [browseId, setBrowseId] = React.useState<string | null>(null);
@@ -159,7 +165,8 @@ export function PetCalculator() {
         );
       })}
     </div>
-    <div className="order-1 flex w-full shrink-0 flex-col gap-3 rounded-lg border border-border bg-surface-lowest p-2 md:order-3 md:w-52">
+    </div>
+    <div className="grid w-full grid-cols-1 gap-3 rounded-lg border border-border bg-surface-lowest p-2 sm:grid-cols-2">
       {POTION_TOGGLES.map((row) => {
         const picked = options[row.key];
         const tiers = POTIONS.filter((potion) => potion.kind === row.kind);
@@ -171,9 +178,7 @@ export function PetCalculator() {
                 {row.label}
               </span>
               <span className="mt-1.5 block text-[0.65rem] leading-tight text-muted-foreground/45">
-                {active === undefined
-                  ? "None"
-                  : `Tier ${active.tier} · +${active.bonusPercent}% ${row.kind === "Luck" ? "luck" : "hatch speed"}`}
+                {active === undefined ? "None" : potionNote(row.kind, active.bonusPercent)}
               </span>
             </span>
             <div className="grid grid-cols-5 gap-1" role="radiogroup" aria-label={row.label}>
@@ -201,7 +206,6 @@ export function PetCalculator() {
           </div>
         );
       })}
-    </div>
     </div>
     <EggsHatchedLine browseId={selected === null ? browseId : null} pet={selected} />
     </div>

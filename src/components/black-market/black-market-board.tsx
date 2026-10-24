@@ -96,9 +96,9 @@ function previewMarket(nowSec: number): BlackMarketState {
         id: "hints",
         title: "Maze Hints",
         slots: [
-          { slot: 1, kind: "Hint", id: "Maze", name: "Maze Hint II", tier: 2, bonus: "Reveals 6% of the maze", price: 5_000, stock: 30_000, remaining: 21_340 },
-          { slot: 2, kind: "Hint", id: "Maze", name: "Maze Hint IV", tier: 4, bonus: "Reveals 15% of the maze", price: 75_000, stock: 10_000, remaining: 3_118 },
-          { slot: 3, kind: "Hint", id: "Maze", name: "Maze Hint I", tier: 1, bonus: "Reveals 3% of the maze", price: 1_000, stock: 50_000, remaining: 47_902 },
+          { slot: 1, kind: "Hint", id: "Maze", name: "Maze Hint II", tier: 2, bonus: "Reveals 0.5% of the maze", price: 5_000, stock: 30_000, remaining: 21_340 },
+          { slot: 2, kind: "Hint", id: "Maze", name: "Maze Hint IV", tier: 4, bonus: "Reveals 1.5% of the maze", price: 75_000, stock: 10_000, remaining: 3_118 },
+          { slot: 3, kind: "Hint", id: "Maze", name: "Maze Hint I", tier: 1, bonus: "Reveals 0.25% of the maze", price: 1_000, stock: 50_000, remaining: 47_902 },
         ],
       },
     ],

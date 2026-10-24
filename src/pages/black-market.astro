@@ -1,0 +1,30 @@
+---
+import { BlackMarketBoard } from "@/components/black-market/black-market-board";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Black Market"
+  section="Black Market"
+  description="Live Black Market stock for Build the Pyramid: what is on sale, what is left, and when it restocks."
+>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-8">
+    <div class="flex flex-col gap-2">
+      <h1 class="text-3xl font-semibold tracking-[-0.02em] text-foreground md:text-4xl">Black Market</h1>
+      <p class="text-sm text-muted-foreground">
+        Live stock from the game. Candy corn is the currency — when an item sells out, it is gone until the
+        next restock.
+      </p>
+    </div>
+    <BlackMarketBoard client:load />
+    <section aria-label="How the Black Market works" class="flex flex-col gap-3 rounded-lg border border-border bg-surface-lowest p-4">
+      <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">How it works</h2>
+      <ul class="flex list-disc flex-col gap-2 pl-5 text-sm text-muted-foreground">
+        <li>Restocks every hour, at the top of the hour.</li>
+        <li>Stock is shared by every server — popular items can sell out fast.</li>
+        <li>Sold-out items can still be bought for Robux in game.</li>
+        <li>Potions stack: the highest tier runs first. Potion time only runs while you are in a server — AFK counts.</li>
+      </ul>
+    </section>
+  </main>
+</BaseLayout>

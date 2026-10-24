@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { watchState } from "@abran-labs/rolink/client";
+import { Bell, BellOff } from "lucide-react";
 import { CURRENCY, PETS, RARITY_COLOR, type Rarity } from "@/lib/pets";
 import { ROLINK_BASE, type BlackMarketSlot, type BlackMarketState } from "@/lib/rolink";
 import { cn } from "@/lib/utils";
@@ -9,6 +10,13 @@ const POLL_MS = 30_000;
 const STALE_AFTER_S = 5 * 60;
 const NOTIFY_KEY = "btp-wiki-black-market-notify";
 const ROMAN = ["I", "II", "III", "IV", "V"] as const;
+const POTION_FILE: Readonly<Record<string, string>> = { Luck: "luck", HatchSpeed: "hatch-speed", Currency: "currency" };
+
+/** Game art in public/potions, e.g. /potions/luck-5.png. */
+function potionIcon(kind: string, tier: number | undefined): string | undefined {
+  const file = POTION_FILE[kind];
+  return file !== undefined && tier !== undefined && tier >= 1 && tier <= 5 ? `/potions/${file}-${tier}.png` : undefined;
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -89,6 +97,8 @@ export function BlackMarketBoard() {
   const [now, setNow] = React.useState(() => Date.now());
   const [notify, setNotify] = React.useState(false);
   const [notifyBlocked, setNotifyBlocked] = React.useState(false);
+  // Bumped on each toggle so the bell replays its ring.
+  const [ring, setRing] = React.useState(0);
   const [supported] = React.useState(() => typeof window !== "undefined" && "Notification" in window);
   const seenRotation = React.useRef<number | null>(null);
   const firedRotation = React.useRef<number | null>(null);
@@ -143,6 +153,7 @@ export function BlackMarketBoard() {
   }, [market, now, notify]);
 
   const toggleNotify = () => {
+    setRing((count) => count + 1);
     void (async () => {
       if (notify) {
         setNotify(false);
@@ -202,17 +213,19 @@ export function BlackMarketBoard() {
         )}
         {supported && (
           <button
+            aria-label={notify ? "Restock alerts on" : "Restock alerts off"}
             aria-pressed={notify}
-            className={cn(
-              "ml-auto inline-flex items-center gap-2 rounded-sm border px-3 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
-              notify
-                ? "border-foreground/70 bg-foreground/80 text-surface-lowest"
-                : "border-border text-foreground hover:bg-surface-low",
-            )}
+            className="ml-auto inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border text-foreground transition-colors hover:bg-surface-low focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
             onClick={toggleNotify}
+            title={notify ? "Restock alerts on" : "Get a notification when the market restocks"}
             type="button"
           >
-            {notify ? "Restock alerts on" : "Notify me on restock"}
+            <span
+              className={cn("inline-flex origin-top", ring > 0 && "animate-bell-ring motion-reduce:animate-none")}
+              key={ring}
+            >
+              {notify ? <Bell aria-hidden className="h-4 w-4" /> : <BellOff aria-hidden className="h-4 w-4" />}
+            </span>
           </button>
         )}
       </div>
@@ -250,7 +263,11 @@ function SlotCard({ slot }: { readonly slot: BlackMarketSlot }) {
       )}
     >
       <div className="flex items-center gap-3">
-        <SlotArt name={slot.name} petIcon={pet?.icon} tier={slot.tier} />
+        <SlotArt
+          icon={slot.kind === "Pet" ? pet?.icon : potionIcon(slot.id, slot.tier)}
+          name={slot.name}
+          tier={slot.tier}
+        />
         <div className="min-w-0">
           <h3 className="truncate text-sm font-semibold text-foreground">{slot.name}</h3>
           <SlotMeta slot={slot} />
@@ -279,10 +296,7 @@ function SlotCard({ slot }: { readonly slot: BlackMarketSlot }) {
         />
       </div>
       {soldOut && (
-        <p className="text-xs text-muted-foreground">
-          <span className="font-semibold uppercase tracking-widest text-foreground">Sold out</span>
-          {" — buy with Robux in game."}
-        </p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-foreground">Sold out</p>
       )}
     </article>
   );
@@ -306,16 +320,16 @@ function SlotMeta({ slot }: { readonly slot: BlackMarketSlot }) {
 }
 
 function SlotArt({
+  icon,
   name,
-  petIcon,
   tier,
 }: {
+  readonly icon: string | null | undefined;
   readonly name: string;
-  readonly petIcon: string | null | undefined;
   readonly tier?: number | undefined;
 }) {
-  if (petIcon !== null && petIcon !== undefined) {
-    return <img alt="" className="h-16 w-16 shrink-0 object-contain" src={petIcon} />;
+  if (icon !== null && icon !== undefined) {
+    return <img alt="" className="h-16 w-16 shrink-0 object-contain" src={icon} />;
   }
   return (
     <div
@@ -331,3 +345,4 @@ function SlotArt({
     </div>
   );
 }
+

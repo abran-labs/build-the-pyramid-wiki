@@ -1,7 +1,7 @@
 // Snapshot of PotionConfig. The game repo owns the numbers.
 //
 // A Luck potion's bonus adds to hatch luck on the same scale as the luck
-// passes: +10% counts as +0.1 luck, up to +150% counting as +1.5. Luck is
+// passes: +50% counts as +0.5 luck, up to +500% counting as +5. Luck is
 // not applied here; see `luckTotal` in hatch-options.ts and `trueChance` in
 // pets.ts.
 
@@ -55,13 +55,10 @@ const ROMAN: readonly string[] = ["I", "II", "III", "IV", "V"];
 const TIER_MINUTES: readonly number[] = [5, 10, 15, 20, 30];
 
 const TIER_BONUS: Record<PotionKindId, readonly number[]> = {
-  Luck: [10, 20, 30, 65, 150],
+  Luck: [50, 100, 200, 300, 500],
   HatchSpeed: [10, 15, 20, 25, 40],
   Currency: [15, 35, 100, 150, 225],
 };
-
-/** Cap on banked time per potion kind. */
-export const MAX_BANKED_HOURS = 6;
 
 export const POTIONS: readonly Potion[] = POTION_KINDS.flatMap((kind) =>
   TIER_MINUTES.map((minutes, index) => {
@@ -78,15 +75,3 @@ export const POTIONS: readonly Potion[] = POTION_KINDS.flatMap((kind) =>
     };
   }),
 );
-
-export function potionsFor(kind: PotionKindId): readonly Potion[] {
-  return POTIONS.filter((potion) => potion.kind === kind);
-}
-
-export function bonusText(potion: Potion): string {
-  return `+${potion.bonusPercent}%`;
-}
-
-export function durationText(minutes: number): string {
-  return minutes === 1 ? "1 minute" : `${minutes} minutes`;
-}

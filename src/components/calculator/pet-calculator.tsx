@@ -14,9 +14,11 @@ import {
   type HatchOptionKey,
   type HatchOptions,
 } from "@/lib/hatch-options";
+import { fetchBlackMarket, type BlackMarketState } from "@/lib/rolink";
 import {
   averageHatchTime,
   allPets,
+  CURRENCY,
   EGGS,
   eventColor,
   isHatchable,
@@ -284,6 +286,47 @@ function Browse({
   );
 }
 
+/** Live Black Market listing for a pet: price and stock left, or "Not on sale". */
+function BlackMarketRow({ pet }: { readonly pet: Pet }) {
+  const [market, setMarket] = React.useState<BlackMarketState | null>(null);
+
+  React.useEffect(() => {
+    let active = true;
+    const load = () =>
+      void fetchBlackMarket().then((next) => {
+        if (active && next !== null) setMarket(next);
+      });
+    load();
+    const timer = setInterval(load, 60_000);
+    return () => {
+      active = false;
+      clearInterval(timer);
+    };
+  }, []);
+
+  if (market === null) return null;
+  const slot = market.stalls
+    .flatMap((stall) => stall.slots)
+    .find((entry) => entry.kind === "Pet" && entry.id === pet.id);
+
+  return (
+    <div className="flex justify-between gap-2 text-sm">
+      <span className="text-muted-foreground">Black Market price</span>
+      {slot === undefined ? (
+        <span className="font-semibold text-muted-foreground">Not on sale</span>
+      ) : (
+        <span className="flex items-center gap-1.5 font-semibold" style={{ color: CURRENCY.CandyCorn.color }}>
+          <img alt="" aria-hidden className="h-4 w-4 object-contain" src={CURRENCY.CandyCorn.icon} />
+          {slot.price.toLocaleString("en-US")}
+          <span className="text-xs font-normal text-muted-foreground">
+            ({Math.max(0, slot.remaining).toLocaleString("en-US")} left)
+          </span>
+        </span>
+      )}
+    </div>
+  );
+}
+
 function StatSummary({
   pet,
   options,
@@ -328,6 +371,7 @@ function StatSummary({
             </span>
           </div>
         ))}
+        <BlackMarketRow pet={pet} />
         {isHatchable(pet) && (
           <>
             <div className="flex justify-between gap-2 text-sm">

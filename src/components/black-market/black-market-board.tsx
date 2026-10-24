@@ -87,6 +87,15 @@ function previewMarket(nowSec: number): BlackMarketState {
           { slot: 3, kind: "Potion", id: "HatchSpeed", name: "Hatch Speed Potion I", tier: 1, bonus: "+10% Hatch Speed", price: 100, stock: 15_000, remaining: 14_871 },
         ],
       },
+      {
+        id: "hints",
+        title: "Maze Hints",
+        slots: [
+          { slot: 1, kind: "Hint", id: "Maze", name: "Maze Hint II", tier: 2, bonus: "Reveals 6% of the maze", price: 5_000, stock: 30_000, remaining: 21_340 },
+          { slot: 2, kind: "Hint", id: "Maze", name: "Maze Hint IV", tier: 4, bonus: "Reveals 15% of the maze", price: 75_000, stock: 10_000, remaining: 3_118 },
+          { slot: 3, kind: "Hint", id: "Maze", name: "Maze Hint I", tier: 1, bonus: "Reveals 3% of the maze", price: 1_000, stock: 50_000, remaining: 47_902 },
+        ],
+      },
     ],
   };
 }
@@ -257,7 +266,8 @@ function SlotCard({ slot }: { readonly slot: BlackMarketSlot }) {
     >
       <div className="flex items-center gap-3">
         <SlotArt
-          icon={slot.kind === "Pet" ? pet?.icon : potionIcon(slot.id, slot.tier)}
+          icon={slot.kind === "Pet" ? pet?.icon : slot.kind === "Potion" ? potionIcon(slot.id, slot.tier) : undefined}
+          label={slot.kind === "Hint" ? "Hint" : "Potion"}
           name={slot.name}
           tier={slot.tier}
         />
@@ -296,11 +306,11 @@ function SlotCard({ slot }: { readonly slot: BlackMarketSlot }) {
 }
 
 function SlotMeta({ slot }: { readonly slot: BlackMarketSlot }) {
-  if (slot.kind === "Potion") {
+  if (slot.kind === "Potion" || slot.kind === "Hint") {
     const tier = slot.tier === undefined ? null : `Tier ${romanTier(slot.tier)}`;
     return (
       <p className="text-xs text-muted-foreground">
-        {[tier, slot.bonus].filter((part) => part !== null && part !== undefined).join(" · ") || "Potion"}
+        {[tier, slot.bonus].filter((part) => part !== null && part !== undefined).join(" · ") || slot.kind}
       </p>
     );
   }
@@ -314,10 +324,12 @@ function SlotMeta({ slot }: { readonly slot: BlackMarketSlot }) {
 
 function SlotArt({
   icon,
+  label,
   name,
   tier,
 }: {
   readonly icon: string | null | undefined;
+  readonly label: string;
   readonly name: string;
   readonly tier?: number | undefined;
 }) {
@@ -333,7 +345,7 @@ function SlotArt({
         {tier === undefined ? name.slice(0, 1).toUpperCase() : romanTier(tier)}
       </span>
       <span className="mt-1 text-[0.65rem] font-medium uppercase tracking-widest text-muted-foreground">
-        Potion
+        {label}
       </span>
     </div>
   );

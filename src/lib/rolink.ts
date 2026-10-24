@@ -22,7 +22,7 @@ export async function fetchGlobalStats(): Promise<GlobalStats | null> {
 
 export type BlackMarketSlot = {
   readonly slot: number;
-  readonly kind: "Pet" | "Potion";
+  readonly kind: "Pet" | "Potion" | "Hint";
   readonly id: string;
   readonly name: string;
   readonly rarity?: string;
@@ -35,7 +35,7 @@ export type BlackMarketSlot = {
 };
 
 export type BlackMarketStall = {
-  readonly id: "pets" | "potions";
+  readonly id: "pets" | "potions" | "hints";
   readonly title: string;
   readonly slots: readonly BlackMarketSlot[];
 };

@@ -7,7 +7,6 @@ import { ROLINK_BASE, type BlackMarketSlot, type BlackMarketState } from "@/lib/
 import { cn } from "@/lib/utils";
 
 const POLL_MS = 30_000;
-const STALE_AFTER_S = 5 * 60;
 const NOTIFY_KEY = "btp-wiki-black-market-notify";
 const ROMAN = ["I", "II", "III", "IV", "V"] as const;
 const POTION_FILE: Readonly<Record<string, string>> = { Luck: "luck", HatchSpeed: "hatch-speed", Currency: "currency" };
@@ -192,7 +191,6 @@ export function BlackMarketBoard() {
   }
 
   const agoSec = Math.max(0, Math.floor(now / 1000 - market.updatedAt));
-  const stale = agoSec > STALE_AFTER_S;
 
   return (
     <div className="flex flex-col gap-4">
@@ -206,11 +204,6 @@ export function BlackMarketBoard() {
         <p className="text-sm text-muted-foreground">
           Last updated <span className="font-semibold text-foreground">{formatAgo(agoSec)}</span>
         </p>
-        {stale && (
-          <p className="text-sm text-muted-foreground">
-            Data may be stale — the game has not reported for a while.
-          </p>
-        )}
         {supported && (
           <button
             aria-label={notify ? "Restock alerts on" : "Restock alerts off"}

@@ -276,10 +276,10 @@ function duration(seconds: number): string {
 }
 
 /** Expected time at the animation cycle. Triple opens 3 eggs per cycle. The server does not enforce the speed yet. */
-export function averageHatchTime(entry: Pet, luck: number, fast: boolean, triple: boolean): string {
+export function averageHatchTime(entry: Pet, luck: number, fast: boolean, triple: boolean, speed = 1): string {
   const chance = trueChance(entry, luck);
   if (chance <= 0) return duration(0);
-  const cycle = HATCH_CYCLE_SECONDS * (fast ? FAST_HATCH_SCALE : 1);
+  const cycle = (HATCH_CYCLE_SECONDS * (fast ? FAST_HATCH_SCALE : 1)) / Math.max(1, speed);
   const batch = triple ? 3 : 1;
   return duration((1 / chance / batch) * cycle);
 }

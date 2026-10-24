@@ -42,3 +42,10 @@ test("limited and event words are prefixes", () => {
   expect(petMatches(pet("Osiris"), "halloween")).toBe(true);
   expect(petMatches(pet("Osiris"), "2026")).toBe(true);
 });
+
+test("potions add to hatch luck and speed up the cycle", async () => {
+  const { EMPTY_HATCH_OPTIONS, hatchSpeed, luckTotal } = await import("./hatch-options");
+  expect(luckTotal({ ...EMPTY_HATCH_OPTIONS, luck: true, luckPotion: 5 })).toBeCloseTo(2.5);
+  expect(hatchSpeed(EMPTY_HATCH_OPTIONS)).toBe(1);
+  expect(hatchSpeed({ ...EMPTY_HATCH_OPTIONS, speedPotion: 5 })).toBeCloseTo(1.4);
+});

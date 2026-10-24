@@ -6,7 +6,9 @@ import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
 import {
   EMPTY_HATCH_OPTIONS,
   HATCH_TOGGLES,
+  hatchSpeed,
   luckTotal,
+  POTION_TOGGLES,
   readHatchOptions,
   writeHatchOptions,
   type HatchOptionKey,
@@ -24,7 +26,14 @@ import {
   statRows,
   type Pet,
 } from "@/lib/pets";
+import { POTIONS, type PotionTier } from "@/lib/potions";
 import { cn } from "@/lib/utils";
+
+/** Same wording as the pass toggles: "+0.3 hatch luck", "1.2× faster". */
+function potionNote(kind: "Luck" | "HatchSpeed", bonusPercent: number): string {
+  const value = Number((bonusPercent / 100).toFixed(2));
+  return kind === "Luck" ? `+${value} hatch luck` : `${Number((1 + value).toFixed(2))}× faster`;
+}
 
 export function PetCalculator() {
   const [petId, setPetId] = React.useState("");
@@ -41,6 +50,14 @@ export function PetCalculator() {
   const toggle = (key: HatchOptionKey) => {
     setOptions((current) => {
       const next = { ...current, [key]: !current[key] };
+      writeHatchOptions(next);
+      return next;
+    });
+  };
+
+  const pickPotion = (key: "luckPotion" | "speedPotion", tier: PotionTier | 0) => {
+    setOptions((current) => {
+      const next = { ...current, [key]: current[key] === tier ? 0 : tier };
       writeHatchOptions(next);
       return next;
     });
@@ -148,6 +165,47 @@ export function PetCalculator() {
         );
       })}
     </div>
+    </div>
+    <div className="grid w-full grid-cols-1 gap-3 rounded-lg border border-border bg-surface-lowest p-2 sm:grid-cols-2">
+      {POTION_TOGGLES.map((row) => {
+        const picked = options[row.key];
+        const tiers = POTIONS.filter((potion) => potion.kind === row.kind);
+        const active = tiers.find((potion) => potion.tier === picked);
+        return (
+          <div className="flex flex-col gap-1.5 px-2 py-1.5" key={row.key}>
+            <span className="min-w-0">
+              <span className={cn("block truncate text-sm", picked !== 0 ? "text-foreground" : "text-muted-foreground")}>
+                {row.label}
+              </span>
+              <span className="mt-1.5 block text-[0.65rem] leading-tight text-muted-foreground/45">
+                {active === undefined ? "None" : potionNote(row.kind, active.bonusPercent)}
+              </span>
+            </span>
+            <div className="grid grid-cols-5 gap-1" role="radiogroup" aria-label={row.label}>
+              {tiers.map((potion) => {
+                const on = picked === potion.tier;
+                return (
+                  <button
+                    aria-checked={on}
+                    aria-label={potion.name}
+                    className={cn(
+                      "flex aspect-square items-center justify-center rounded-sm border p-0.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
+                      on ? "border-foreground/70 bg-surface-high" : "border-border opacity-50 hover:opacity-100",
+                    )}
+                    key={potion.tier}
+                    onClick={() => pickPotion(row.key, potion.tier)}
+                    role="radio"
+                    title={`${potion.name} · +${potion.bonusPercent}%`}
+                    type="button"
+                  >
+                    <img alt="" className="h-full w-full object-contain" src={potion.icon} />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
     <EggsHatchedLine browseId={selected === null ? browseId : null} pet={selected} />
     </div>
@@ -278,7 +336,7 @@ function StatSummary({
             </div>
             <div className="flex justify-between gap-2 text-sm">
               <span className="text-muted-foreground">Average hatch time</span>
-              <span className="font-semibold text-foreground">{averageHatchTime(pet, luck, options.fast, options.triple)}</span>
+              <span className="font-semibold text-foreground">{averageHatchTime(pet, luck, options.fast, options.triple, hatchSpeed(options))}</span>
             </div>
           </>
         )}

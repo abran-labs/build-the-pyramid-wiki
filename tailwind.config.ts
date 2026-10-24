@@ -6,6 +6,19 @@ const config: Config = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        "bell-ring": {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "15%": { transform: "rotate(18deg)" },
+          "30%": { transform: "rotate(-16deg)" },
+          "45%": { transform: "rotate(12deg)" },
+          "60%": { transform: "rotate(-8deg)" },
+          "75%": { transform: "rotate(4deg)" },
+        },
+      },
+      animation: {
+        "bell-ring": "bell-ring 0.6s ease-in-out",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

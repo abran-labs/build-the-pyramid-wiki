@@ -152,7 +152,10 @@ export function petsFor(world: WorldId): readonly Pet[] {
   return PETS.filter((entry) => eggIds.has(entry.eggId)).sort((left, right) => {
     const eggOrder = EGGS.findIndex((egg) => egg.id === left.eggId) - EGGS.findIndex((egg) => egg.id === right.eggId);
     if (eggOrder !== 0) return eggOrder;
-    return RARITY_RANK[right.rarity] - RARITY_RANK[left.rarity];
+    const rarityOrder = RARITY_RANK[right.rarity] - RARITY_RANK[left.rarity];
+    if (rarityOrder !== 0) return rarityOrder;
+    // Same rarity in the same egg: rarest hatch first (lowest roll weight).
+    return left.weight - right.weight;
   });
 }
 
@@ -276,10 +279,10 @@ function duration(seconds: number): string {
 }
 
 /** Expected time at the animation cycle. Triple opens 3 eggs per cycle. The server does not enforce the speed yet. */
-export function averageHatchTime(entry: Pet, luck: number, fast: boolean, triple: boolean): string {
+export function averageHatchTime(entry: Pet, luck: number, fast: boolean, triple: boolean, speed = 1): string {
   const chance = trueChance(entry, luck);
   if (chance <= 0) return duration(0);
-  const cycle = HATCH_CYCLE_SECONDS * (fast ? FAST_HATCH_SCALE : 1);
+  const cycle = (HATCH_CYCLE_SECONDS * (fast ? FAST_HATCH_SCALE : 1)) / Math.max(1, speed);
   const batch = triple ? 3 : 1;
   return duration((1 / chance / batch) * cycle);
 }

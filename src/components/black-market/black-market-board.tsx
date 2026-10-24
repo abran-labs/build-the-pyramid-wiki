@@ -11,6 +11,11 @@ const NOTIFY_KEY = "btp-wiki-black-market-notify";
 const ROMAN = ["I", "II", "III", "IV", "V"] as const;
 const POTION_FILE: Readonly<Record<string, string>> = { Luck: "luck", HatchSpeed: "hatch-speed", Currency: "currency" };
 
+/** Game art in public/hints, e.g. /hints/maze-3.png. */
+function hintIcon(tier: number | undefined): string | undefined {
+  return tier !== undefined && tier >= 1 && tier <= 5 ? `/hints/maze-${tier}.png` : undefined;
+}
+
 /** Game art in public/potions, e.g. /potions/luck-5.png. */
 function potionIcon(kind: string, tier: number | undefined): string | undefined {
   const file = POTION_FILE[kind];
@@ -266,7 +271,7 @@ function SlotCard({ slot }: { readonly slot: BlackMarketSlot }) {
     >
       <div className="flex items-center gap-3">
         <SlotArt
-          icon={slot.kind === "Pet" ? pet?.icon : slot.kind === "Potion" ? potionIcon(slot.id, slot.tier) : undefined}
+          icon={slot.kind === "Pet" ? pet?.icon : slot.kind === "Potion" ? potionIcon(slot.id, slot.tier) : hintIcon(slot.tier)}
           label={slot.kind === "Hint" ? "Hint" : "Potion"}
           name={slot.name}
           tier={slot.tier}

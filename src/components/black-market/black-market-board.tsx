@@ -53,6 +53,37 @@ function romanTier(tier: number): string {
   return ROMAN[tier - 1] ?? String(tier);
 }
 
+/** Sample stock for `?preview=1`, mirroring a real rotation's shape. */
+function previewMarket(nowSec: number): BlackMarketState {
+  const hour = 3600;
+  const rotation = Math.floor(nowSec / hour);
+  return {
+    rotation,
+    endsAt: (rotation + 1) * hour,
+    updatedAt: nowSec - 12,
+    stalls: [
+      {
+        id: "pets",
+        title: "Pets",
+        slots: [
+          { slot: 1, kind: "Pet", id: "Scarecrow", name: "Scarecrow", rarity: "Mythic", price: 37_500_000, stock: 250, remaining: 61 },
+          { slot: 2, kind: "Pet", id: "WitchsPot", name: "Witch's Pot", rarity: "Legendary", price: 1_250_000, stock: 2_500, remaining: 1_904 },
+          { slot: 3, kind: "Pet", id: "Sandstorm", name: "Sandstorm", rarity: "Rare", price: 4_500, stock: 25_000, remaining: 0 },
+        ],
+      },
+      {
+        id: "potions",
+        title: "Potions",
+        slots: [
+          { slot: 1, kind: "Potion", id: "Luck", name: "Luck Potion V", tier: 5, bonus: "+150% Luck", price: 60_000, stock: 2_000, remaining: 412 },
+          { slot: 2, kind: "Potion", id: "Currency", name: "Currency Potion III", tier: 3, bonus: "+100% Currency", price: 2_500, stock: 6_000, remaining: 5_230 },
+          { slot: 3, kind: "Potion", id: "HatchSpeed", name: "Hatch Speed Potion I", tier: 1, bonus: "+10% Hatch Speed", price: 100, stock: 15_000, remaining: 14_871 },
+        ],
+      },
+    ],
+  };
+}
+
 export function BlackMarketBoard() {
   const [market, setMarket] = React.useState<BlackMarketState | null | undefined>(undefined);
   const [now, setNow] = React.useState(() => Date.now());
@@ -70,18 +101,22 @@ export function BlackMarketBoard() {
     }
   }, []);
 
-  React.useEffect(
-    () =>
-      watchState<BlackMarketState>(
-        "black_market",
-        (entry) => {
-          const value = entry?.value ?? null;
-          setMarket(value !== null && isMarket(value) ? value : null);
-        },
-        { baseUrl: ROLINK_BASE, intervalMs: POLL_MS },
-      ),
-    [],
-  );
+  React.useEffect(() => {
+    // `?preview=1` shows sample stock so the board can be reviewed before the
+    // game publishes; it never mixes with live data.
+    if (new URLSearchParams(window.location.search).has("preview")) {
+      setMarket(previewMarket(Math.floor(Date.now() / 1000)));
+      return;
+    }
+    return watchState<BlackMarketState>(
+      "black_market",
+      (entry) => {
+        const value = entry?.value ?? null;
+        setMarket(value !== null && isMarket(value) ? value : null);
+      },
+      { baseUrl: ROLINK_BASE, intervalMs: POLL_MS },
+    );
+  }, []);
 
   React.useEffect(() => {
     const timer = window.setInterval(() => setNow(Date.now()), 1000);
@@ -141,9 +176,6 @@ export function BlackMarketBoard() {
     return (
       <div className="flex flex-col items-center gap-2 rounded-lg border border-border bg-surface-lowest p-8 text-center">
         <p className="text-sm font-semibold text-foreground">Waiting for the game to report the market…</p>
-        <p className="text-sm text-muted-foreground">
-          The Black Market publishes from the live game about every 30 seconds.
-        </p>
       </div>
     );
   }

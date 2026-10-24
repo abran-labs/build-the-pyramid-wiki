@@ -11,6 +11,11 @@ const NOTIFY_KEY = "btp-wiki-black-market-notify";
 const ROMAN = ["I", "II", "III", "IV", "V"] as const;
 const POTION_FILE: Readonly<Record<string, string>> = { Luck: "luck", HatchSpeed: "hatch-speed", Currency: "currency" };
 
+/** Game art in public/hints, e.g. /hints/maze-3.png. */
+function hintIcon(tier: number | undefined): string | undefined {
+  return tier !== undefined && tier >= 1 && tier <= 5 ? `/hints/maze-${tier}.png` : undefined;
+}
+
 /** Game art in public/potions, e.g. /potions/luck-5.png. */
 function potionIcon(kind: string, tier: number | undefined): string | undefined {
   const file = POTION_FILE[kind];
@@ -82,9 +87,18 @@ function previewMarket(nowSec: number): BlackMarketState {
         id: "potions",
         title: "Potions",
         slots: [
-          { slot: 1, kind: "Potion", id: "Luck", name: "Luck Potion V", tier: 5, bonus: "+500% Luck", price: 60_000, stock: 2_000, remaining: 412 },
-          { slot: 2, kind: "Potion", id: "Currency", name: "Currency Potion III", tier: 3, bonus: "+100% Currency", price: 2_500, stock: 6_000, remaining: 5_230 },
-          { slot: 3, kind: "Potion", id: "HatchSpeed", name: "Hatch Speed Potion I", tier: 1, bonus: "+10% Hatch Speed", price: 100, stock: 15_000, remaining: 14_871 },
+          { slot: 1, kind: "Potion", id: "Luck", name: "Luck Potion V", tier: 5, bonus: "+5 hatch luck", price: 60_000, stock: 2_000, remaining: 412 },
+          { slot: 2, kind: "Potion", id: "Currency", name: "Currency Potion III", tier: 3, bonus: "+100% currency", price: 2_500, stock: 6_000, remaining: 5_230 },
+          { slot: 3, kind: "Potion", id: "HatchSpeed", name: "Hatch Speed Potion I", tier: 1, bonus: "1.1× faster", price: 100, stock: 15_000, remaining: 14_871 },
+        ],
+      },
+      {
+        id: "hints",
+        title: "Maze Hints",
+        slots: [
+          { slot: 1, kind: "Hint", id: "Maze", name: "Maze Hint II", tier: 2, bonus: "Reveals 0.5% of the maze", price: 5_000, stock: 30_000, remaining: 21_340 },
+          { slot: 2, kind: "Hint", id: "Maze", name: "Maze Hint IV", tier: 4, bonus: "Reveals 1.5% of the maze", price: 75_000, stock: 10_000, remaining: 3_118 },
+          { slot: 3, kind: "Hint", id: "Maze", name: "Maze Hint I", tier: 1, bonus: "Reveals 0.25% of the maze", price: 1_000, stock: 50_000, remaining: 47_902 },
         ],
       },
     ],
@@ -257,7 +271,8 @@ function SlotCard({ slot }: { readonly slot: BlackMarketSlot }) {
     >
       <div className="flex items-center gap-3">
         <SlotArt
-          icon={slot.kind === "Pet" ? pet?.icon : potionIcon(slot.id, slot.tier)}
+          icon={slot.kind === "Pet" ? pet?.icon : slot.kind === "Potion" ? potionIcon(slot.id, slot.tier) : hintIcon(slot.tier)}
+          label={slot.kind === "Hint" ? "Hint" : "Potion"}
           name={slot.name}
           tier={slot.tier}
         />
@@ -296,11 +311,11 @@ function SlotCard({ slot }: { readonly slot: BlackMarketSlot }) {
 }
 
 function SlotMeta({ slot }: { readonly slot: BlackMarketSlot }) {
-  if (slot.kind === "Potion") {
+  if (slot.kind === "Potion" || slot.kind === "Hint") {
     const tier = slot.tier === undefined ? null : `Tier ${romanTier(slot.tier)}`;
     return (
       <p className="text-xs text-muted-foreground">
-        {[tier, slot.bonus].filter((part) => part !== null && part !== undefined).join(" · ") || "Potion"}
+        {[tier, slot.bonus].filter((part) => part !== null && part !== undefined).join(" · ") || slot.kind}
       </p>
     );
   }
@@ -314,10 +329,12 @@ function SlotMeta({ slot }: { readonly slot: BlackMarketSlot }) {
 
 function SlotArt({
   icon,
+  label,
   name,
   tier,
 }: {
   readonly icon: string | null | undefined;
+  readonly label: string;
   readonly name: string;
   readonly tier?: number | undefined;
 }) {
@@ -333,7 +350,7 @@ function SlotArt({
         {tier === undefined ? name.slice(0, 1).toUpperCase() : romanTier(tier)}
       </span>
       <span className="mt-1 text-[0.65rem] font-medium uppercase tracking-widest text-muted-foreground">
-        Potion
+        {label}
       </span>
     </div>
   );

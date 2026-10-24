@@ -87,9 +87,9 @@ function previewMarket(nowSec: number): BlackMarketState {
         id: "potions",
         title: "Potions",
         slots: [
-          { slot: 1, kind: "Potion", id: "Luck", name: "Luck Potion V", tier: 5, bonus: "+500% Luck", price: 60_000, stock: 2_000, remaining: 412 },
-          { slot: 2, kind: "Potion", id: "Currency", name: "Currency Potion III", tier: 3, bonus: "+100% Currency", price: 2_500, stock: 6_000, remaining: 5_230 },
-          { slot: 3, kind: "Potion", id: "HatchSpeed", name: "Hatch Speed Potion I", tier: 1, bonus: "+10% Hatch Speed", price: 100, stock: 15_000, remaining: 14_871 },
+          { slot: 1, kind: "Potion", id: "Luck", name: "Luck Potion V", tier: 5, bonus: "+5 hatch luck", price: 60_000, stock: 2_000, remaining: 412 },
+          { slot: 2, kind: "Potion", id: "Currency", name: "Currency Potion III", tier: 3, bonus: "+100% currency", price: 2_500, stock: 6_000, remaining: 5_230 },
+          { slot: 3, kind: "Potion", id: "HatchSpeed", name: "Hatch Speed Potion I", tier: 1, bonus: "1.1× faster", price: 100, stock: 15_000, remaining: 14_871 },
         ],
       },
       {

@@ -152,7 +152,10 @@ export function petsFor(world: WorldId): readonly Pet[] {
   return PETS.filter((entry) => eggIds.has(entry.eggId)).sort((left, right) => {
     const eggOrder = EGGS.findIndex((egg) => egg.id === left.eggId) - EGGS.findIndex((egg) => egg.id === right.eggId);
     if (eggOrder !== 0) return eggOrder;
-    return RARITY_RANK[right.rarity] - RARITY_RANK[left.rarity];
+    const rarityOrder = RARITY_RANK[right.rarity] - RARITY_RANK[left.rarity];
+    if (rarityOrder !== 0) return rarityOrder;
+    // Same rarity in the same egg: rarest hatch first (lowest roll weight).
+    return left.weight - right.weight;
   });
 }
 

@@ -49,3 +49,10 @@ test("potions add to hatch luck and speed up the cycle", async () => {
   expect(hatchSpeed(EMPTY_HATCH_OPTIONS)).toBe(1);
   expect(hatchSpeed({ ...EMPTY_HATCH_OPTIONS, speedPotion: 5 })).toBeCloseTo(1.4);
 });
+
+test("same-rarity pets in an egg list rarest hatch first", async () => {
+  const { petsFor } = await import("./pets");
+  const cursed = petsFor("halloween").map((entry) => entry.name);
+  expect(cursed.indexOf("Grim Reaper")).toBeLessThan(cursed.indexOf("Osiris"));
+  expect(cursed.indexOf("Ghost Mummy")).toBeLessThan(cursed.indexOf("Witch's Pot"));
+});

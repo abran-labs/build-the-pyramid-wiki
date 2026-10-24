@@ -1,0 +1,15 @@
+---
+import { BlackMarketBoard } from "@/components/black-market/black-market-board";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Black Market"
+  section="Black Market"
+  image="/og/black-market.png"
+  description="Live Black Market stock for Build the Pyramid: what is on sale, what is left, and when it restocks."
+>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-8">
+    <BlackMarketBoard client:load />
+  </main>
+</BaseLayout>

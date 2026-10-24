@@ -42,3 +42,17 @@ test("limited and event words are prefixes", () => {
   expect(petMatches(pet("Osiris"), "halloween")).toBe(true);
   expect(petMatches(pet("Osiris"), "2026")).toBe(true);
 });
+
+test("potions add to hatch luck and speed up the cycle", async () => {
+  const { EMPTY_HATCH_OPTIONS, hatchSpeed, luckTotal } = await import("./hatch-options");
+  expect(luckTotal({ ...EMPTY_HATCH_OPTIONS, luck: true, luckPotion: 5 })).toBeCloseTo(6);
+  expect(hatchSpeed(EMPTY_HATCH_OPTIONS)).toBe(1);
+  expect(hatchSpeed({ ...EMPTY_HATCH_OPTIONS, speedPotion: 5 })).toBeCloseTo(1.4);
+});
+
+test("same-rarity pets in an egg list rarest hatch first", async () => {
+  const { petsFor } = await import("./pets");
+  const cursed = petsFor("halloween").map((entry) => entry.name);
+  expect(cursed.indexOf("Grim Reaper")).toBeLessThan(cursed.indexOf("Osiris"));
+  expect(cursed.indexOf("Ghost Mummy")).toBeLessThan(cursed.indexOf("Witch's Pot"));
+});

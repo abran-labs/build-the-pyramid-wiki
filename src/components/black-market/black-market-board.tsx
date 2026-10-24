@@ -175,7 +175,7 @@ export function BlackMarketBoard() {
   if (market === undefined || market === null) {
     return (
       <div className="flex flex-col items-center gap-2 rounded-lg border border-border bg-surface-lowest p-8 text-center">
-        <p className="text-sm font-semibold text-foreground">Waiting for the game to report the market…</p>
+        <p className="text-sm font-semibold text-foreground">Waiting for the game…</p>
       </div>
     );
   }

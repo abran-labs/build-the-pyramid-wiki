@@ -66,7 +66,7 @@ function romanTier(tier: number): string {
 }
 
 /** Sample stock for `?preview=1`, mirroring a real rotation's shape. */
-export function previewMarket(nowSec: number): BlackMarketState {
+function previewMarket(nowSec: number): BlackMarketState {
   const hour = 3600;
   const rotation = Math.floor(nowSec / hour);
   return {

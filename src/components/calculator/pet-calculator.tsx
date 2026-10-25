@@ -14,11 +14,10 @@ import {
   type HatchOptionKey,
   type HatchOptions,
 } from "@/lib/hatch-options";
-import { previewMarket } from "@/components/black-market/black-market-board";
-import { fetchBlackMarket, type BlackMarketState } from "@/lib/rolink";
 import {
   averageHatchTime,
   allPets,
+  blackMarketListing,
   CURRENCY,
   EGGS,
   eventColor,
@@ -287,48 +286,36 @@ function Browse({
   );
 }
 
-/** Live Black Market listing for a pet: price and stock left, or "Not on sale". */
-function BlackMarketRow({ pet }: { readonly pet: Pet }) {
-  const [market, setMarket] = React.useState<BlackMarketState | null>(null);
-
-  React.useEffect(() => {
-    if (new URLSearchParams(window.location.search).has("preview")) {
-      setMarket(previewMarket(Math.floor(Date.now() / 1000)));
-      return;
-    }
-    let active = true;
-    const load = () =>
-      void fetchBlackMarket().then((next) => {
-        if (active && next !== null) setMarket(next);
-      });
-    load();
-    const timer = setInterval(load, 60_000);
-    return () => {
-      active = false;
-      clearInterval(timer);
-    };
-  }, []);
-
-  if (market === null) return null;
-  const slot = market.stalls
-    .flatMap((stall) => stall.slots)
-    .find((entry) => entry.kind === "Pet" && entry.id === pet.id);
-
+function BlackMarketRows({ pet }: { readonly pet: Pet }) {
+  const listing = blackMarketListing(pet);
+  if (listing === null) {
+    return (
+      <div className="flex justify-between gap-2 text-sm">
+        <span className="text-muted-foreground">Black Market</span>
+        <span className="font-semibold text-muted-foreground">Not sold</span>
+      </div>
+    );
+  }
   return (
-    <div className="flex justify-between gap-2 text-sm">
-      <span className="text-muted-foreground">Black Market price</span>
-      {slot === undefined ? (
-        <span className="font-semibold text-muted-foreground">Not on sale</span>
-      ) : (
+    <>
+      <div className="flex justify-between gap-2 text-sm">
+        <span className="text-muted-foreground">Black Market price</span>
         <span className="flex items-center gap-1.5 font-semibold" style={{ color: CURRENCY.CandyCorn.color }}>
           <img alt="" aria-hidden className="h-4 w-4 object-contain" src={CURRENCY.CandyCorn.icon} />
-          {slot.price.toLocaleString("en-US")}
-          <span className="text-xs font-normal text-muted-foreground">
-            ({Math.max(0, slot.remaining).toLocaleString("en-US")} left)
-          </span>
+          {listing.price.toLocaleString("en-US")}
         </span>
-      )}
-    </div>
+      </div>
+      <div className="flex justify-between gap-2 text-sm">
+        <span className="text-muted-foreground">Black Market chance</span>
+        <span className="font-semibold text-foreground">
+          ~{Number((listing.hourlyChance * 100).toFixed(1))}% of hours
+        </span>
+      </div>
+      <div className="flex justify-between gap-2 text-sm">
+        <span className="text-muted-foreground">Black Market stock</span>
+        <span className="font-semibold text-foreground">{listing.stock.toLocaleString("en-US")} per hour</span>
+      </div>
+    </>
   );
 }
 
@@ -376,7 +363,7 @@ function StatSummary({
             </span>
           </div>
         ))}
-        <BlackMarketRow pet={pet} />
+        <BlackMarketRows pet={pet} />
         {isHatchable(pet) && (
           <>
             <div className="flex justify-between gap-2 text-sm">

@@ -17,6 +17,8 @@ import {
 import {
   averageHatchTime,
   allPets,
+  blackMarketListing,
+  CURRENCY,
   EGGS,
   eventColor,
   isHatchable,
@@ -24,6 +26,7 @@ import {
   petMatches,
   RARITY_COLOR,
   statRows,
+  type BlackMarketListing,
   type Pet,
 } from "@/lib/pets";
 import { POTIONS, type PotionTier } from "@/lib/potions";
@@ -284,6 +287,44 @@ function Browse({
   );
 }
 
+function BlackMarketSection({ pet }: { readonly pet: Pet }) {
+  const listing = blackMarketListing(pet);
+  return (
+    <div className="space-y-1 border-t border-foreground/20 pt-3">
+      <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Black Market</div>
+      {listing === null ? (
+        <div className="text-sm text-muted-foreground">Not sold</div>
+      ) : (
+        <BlackMarketRows listing={listing} />
+      )}
+    </div>
+  );
+}
+
+function BlackMarketRows({ listing }: { readonly listing: BlackMarketListing }) {
+  return (
+    <>
+      <div className="flex justify-between gap-2 text-sm">
+        <span className="text-muted-foreground">Price</span>
+        <span className="flex items-center gap-1.5 font-semibold" style={{ color: CURRENCY.CandyCorn.color }}>
+          <img alt="" aria-hidden className="h-4 w-4 object-contain" src={CURRENCY.CandyCorn.icon} />
+          {listing.price.toLocaleString("en-US")}
+        </span>
+      </div>
+      <div className="flex justify-between gap-2 text-sm">
+        <span className="text-muted-foreground">Chance</span>
+        <span className="font-semibold text-foreground">
+          {Number((listing.hourlyChance * 100).toFixed(1))}%
+        </span>
+      </div>
+      <div className="flex justify-between gap-2 text-sm">
+        <span className="text-muted-foreground">Stock</span>
+        <span className="font-semibold text-foreground">{listing.stock.toLocaleString("en-US")}</span>
+      </div>
+    </>
+  );
+}
+
 function StatSummary({
   pet,
   options,
@@ -341,6 +382,7 @@ function StatSummary({
           </>
         )}
       </div>
+      <BlackMarketSection pet={pet} />
     </div>
   );
 }

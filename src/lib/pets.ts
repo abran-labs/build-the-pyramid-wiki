@@ -135,6 +135,42 @@ export const PETS: readonly Pet[] = [
   pet("Bat", "Bat", "Exclusive", "Exclusive", "/pets/bat.png", 0, 2.75, 0.85, true),
 ];
 
+export type BlackMarketListing = {
+  /** Candy Corn. */
+  readonly price: number;
+  /** Units per hourly rotation, shared by every server. */
+  readonly stock: number;
+  /** Share of hourly rotations the pet appears in (simulated, game comment values). */
+  readonly hourlyChance: number;
+};
+
+// Snapshot of BlackMarketConfig petOffers. Pets not listed are never sold.
+const BLACK_MARKET: Readonly<Record<string, BlackMarketListing>> = {
+  Sandstorm: { price: 4_500, stock: 25_000, hourlyChance: 0.42 },
+  SkeletonCamel: { price: 25_000, stock: 10_000, hourlyChance: 0.37 },
+  WitchsPot: { price: 1_250_000, stock: 2_500, hourlyChance: 0.27 },
+  GhostMummy: { price: 12_500_000, stock: 750, hourlyChance: 0.17 },
+  Scarecrow: { price: 37_500_000, stock: 250, hourlyChance: 0.1 },
+  Bat: { price: 15_000, stock: 2_500, hourlyChance: 0.17 },
+  Cobra: { price: 1_500, stock: 25_000, hourlyChance: 0.22 },
+  OilLamp: { price: 2_750, stock: 25_000, hourlyChance: 0.22 },
+  Mummy: { price: 8_000, stock: 25_000, hourlyChance: 0.22 },
+  HermitCrab: { price: 3_750, stock: 10_000, hourlyChance: 0.17 },
+  Ankh: { price: 25_000, stock: 10_000, hourlyChance: 0.17 },
+  Scorpion: { price: 112_500, stock: 10_000, hourlyChance: 0.17 },
+  Sarcophagus: { price: 125_000, stock: 2_500, hourlyChance: 0.11 },
+  Anubis: { price: 3_750_000, stock: 1_000, hourlyChance: 0.085 },
+  Mimic: { price: 22_500_000, stock: 400, hourlyChance: 0.05 },
+  DragonOfRa: { price: 1_000_000_000, stock: 15, hourlyChance: 0.03 },
+  Apophis: { price: 2_000_000_000, stock: 5, hourlyChance: 0.03 },
+  Osiris: { price: 1_000_000_000, stock: 25, hourlyChance: 0.03 },
+  GrimReaper: { price: 5_000_000_000, stock: 3, hourlyChance: 0.015 },
+};
+
+export function blackMarketListing(entry: Pet): BlackMarketListing | null {
+  return BLACK_MARKET[entry.id] ?? null;
+}
+
 export function eggsFor(world: WorldId): readonly Egg[] {
   return EGGS.filter((egg) => egg.world === world);
 }

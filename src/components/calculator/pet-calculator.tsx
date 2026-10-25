@@ -26,6 +26,7 @@ import {
   petMatches,
   RARITY_COLOR,
   statRows,
+  type BlackMarketListing,
   type Pet,
 } from "@/lib/pets";
 import { POTIONS, type PotionTier } from "@/lib/potions";
@@ -286,33 +287,38 @@ function Browse({
   );
 }
 
-function BlackMarketRows({ pet }: { readonly pet: Pet }) {
+function BlackMarketSection({ pet }: { readonly pet: Pet }) {
   const listing = blackMarketListing(pet);
-  if (listing === null) {
-    return (
-      <div className="flex justify-between gap-2 text-sm">
-        <span className="text-muted-foreground">Black Market</span>
-        <span className="font-semibold text-muted-foreground">Not sold</span>
-      </div>
-    );
-  }
+  return (
+    <div className="space-y-1 border-t border-foreground/20 pt-3">
+      <div className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Black Market</div>
+      {listing === null ? (
+        <div className="text-sm text-muted-foreground">Not sold</div>
+      ) : (
+        <BlackMarketRows listing={listing} />
+      )}
+    </div>
+  );
+}
+
+function BlackMarketRows({ listing }: { readonly listing: BlackMarketListing }) {
   return (
     <>
       <div className="flex justify-between gap-2 text-sm">
-        <span className="text-muted-foreground">Black Market price</span>
+        <span className="text-muted-foreground">Price</span>
         <span className="flex items-center gap-1.5 font-semibold" style={{ color: CURRENCY.CandyCorn.color }}>
           <img alt="" aria-hidden className="h-4 w-4 object-contain" src={CURRENCY.CandyCorn.icon} />
           {listing.price.toLocaleString("en-US")}
         </span>
       </div>
       <div className="flex justify-between gap-2 text-sm">
-        <span className="text-muted-foreground">Black Market chance</span>
+        <span className="text-muted-foreground">Chance</span>
         <span className="font-semibold text-foreground">
           ~{Number((listing.hourlyChance * 100).toFixed(1))}% of hours
         </span>
       </div>
       <div className="flex justify-between gap-2 text-sm">
-        <span className="text-muted-foreground">Black Market stock</span>
+        <span className="text-muted-foreground">Stock</span>
         <span className="font-semibold text-foreground">{listing.stock.toLocaleString("en-US")} per hour</span>
       </div>
     </>
@@ -363,7 +369,6 @@ function StatSummary({
             </span>
           </div>
         ))}
-        <BlackMarketRows pet={pet} />
         {isHatchable(pet) && (
           <>
             <div className="flex justify-between gap-2 text-sm">
@@ -377,6 +382,7 @@ function StatSummary({
           </>
         )}
       </div>
+      <BlackMarketSection pet={pet} />
     </div>
   );
 }

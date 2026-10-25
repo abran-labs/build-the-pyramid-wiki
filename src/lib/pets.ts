@@ -161,10 +161,10 @@ const BLACK_MARKET: Readonly<Record<string, BlackMarketListing>> = {
   Sarcophagus: { price: 125_000, stock: 2_500, hourlyChance: 0.11 },
   Anubis: { price: 3_750_000, stock: 1_000, hourlyChance: 0.085 },
   Mimic: { price: 22_500_000, stock: 400, hourlyChance: 0.05 },
-  DragonOfRa: { price: 500_000_000, stock: 25, hourlyChance: 0.03 },
-  Apophis: { price: 1_000_000_000, stock: 8, hourlyChance: 0.03 },
-  Osiris: { price: 500_000_000, stock: 25, hourlyChance: 0.03 },
-  GrimReaper: { price: 2_500_000_000, stock: 3, hourlyChance: 0.015 },
+  DragonOfRa: { price: 1_000_000_000, stock: 15, hourlyChance: 0.03 },
+  Apophis: { price: 2_000_000_000, stock: 5, hourlyChance: 0.03 },
+  Osiris: { price: 1_000_000_000, stock: 25, hourlyChance: 0.03 },
+  GrimReaper: { price: 5_000_000_000, stock: 3, hourlyChance: 0.015 },
 };
 
 export function blackMarketListing(entry: Pet): BlackMarketListing | null {

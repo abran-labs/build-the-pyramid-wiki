@@ -14,6 +14,7 @@ import {
   type HatchOptionKey,
   type HatchOptions,
 } from "@/lib/hatch-options";
+import { previewMarket } from "@/components/black-market/black-market-board";
 import { fetchBlackMarket, type BlackMarketState } from "@/lib/rolink";
 import {
   averageHatchTime,
@@ -291,6 +292,10 @@ function BlackMarketRow({ pet }: { readonly pet: Pet }) {
   const [market, setMarket] = React.useState<BlackMarketState | null>(null);
 
   React.useEffect(() => {
+    if (new URLSearchParams(window.location.search).has("preview")) {
+      setMarket(previewMarket(Math.floor(Date.now() / 1000)));
+      return;
+    }
     let active = true;
     const load = () =>
       void fetchBlackMarket().then((next) => {

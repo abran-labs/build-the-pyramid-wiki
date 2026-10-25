@@ -14,7 +14,7 @@
     "backend": "bun run server/backend.ts"
   },
   "dependencies": {
-    "@abran-labs/rolink": "^0.1.0",
+    "@abran-labs/rolink": "^0.1.2",
     "@astrojs/react": "^6.0.1",
     "@fontsource/manrope": "^5.2.7",
     "@radix-ui/react-slot": "^1.2.4",

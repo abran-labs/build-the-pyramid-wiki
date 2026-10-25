@@ -314,12 +314,12 @@ function BlackMarketRows({ listing }: { readonly listing: BlackMarketListing }) 
       <div className="flex justify-between gap-2 text-sm">
         <span className="text-muted-foreground">Chance</span>
         <span className="font-semibold text-foreground">
-          ~{Number((listing.hourlyChance * 100).toFixed(1))}% of hours
+          {Number((listing.hourlyChance * 100).toFixed(1))}%
         </span>
       </div>
       <div className="flex justify-between gap-2 text-sm">
         <span className="text-muted-foreground">Stock</span>
-        <span className="font-semibold text-foreground">{listing.stock.toLocaleString("en-US")} per hour</span>
+        <span className="font-semibold text-foreground">{listing.stock.toLocaleString("en-US")}</span>
       </div>
     </>
   );

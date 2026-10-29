@@ -3,7 +3,7 @@
 
 export type WorldId = "desert" | "halloween";
 
-export type Rarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary" | "Mythic" | "Secret" | "Exclusive" | "Sophie is tuff";
+export type Rarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary" | "Mythic" | "Secret" | "Exclusive";
 
 export type PetStat = "Coins" | "CandyCorn";
 
@@ -52,7 +52,6 @@ export const RARITY_COLOR: Record<Rarity, string> = {
   Mythic: "rgb(195, 95, 255)",
   Secret: "rgb(255, 105, 200)",
   Exclusive: "rgb(255, 140, 140)",
-  "Sophie is tuff": "rgb(255, 80, 180)",
 };
 
 const RARITY_RANK: Record<Rarity, number> = {
@@ -64,7 +63,6 @@ const RARITY_RANK: Record<Rarity, number> = {
   Legendary: 5,
   Mythic: 6,
   Secret: 7,
-  "Sophie is tuff": 8,
 };
 
 export const EGGS: readonly Egg[] = [
@@ -111,7 +109,7 @@ const dragonOfRaWeight = 10000 / 4999999;
 const cursedTotal = 10000 / (1 - 1 / 5000000 - 1 / 50000000);
 
 export const PETS: readonly Pet[] = [
-  pet("Cat", "Cat", "Sophie is tuff", "Basic", "/pets/cat.png", 5800, 0.1),
+  pet("Cat", "Cat", "Common", "Basic", "/pets/cat.png", 5800, 0.1),
   pet("Tumbleweed", "Tumbleweed", "Uncommon", "Basic", "/pets/tumbleweed.png", 2800, 0.2),
   pet("Cobra", "Cobra", "Rare", "Basic", "/pets/cobra.png", 1000, 0.4),
   pet("HermitCrab", "Hermit Crab", "Epic", "Basic", "/pets/hermit-crab.png", 400, 1, null, false, true),

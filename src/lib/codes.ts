@@ -93,7 +93,6 @@ export type LiveCode = {
 
 /** Shape of the game's `codes` Rolink state (`CodeFeed.build`). */
 export type CodesState = {
-  readonly updatedAt: number;
   readonly codes: Readonly<Record<string, LiveCode>>;
 };
 
@@ -132,7 +131,7 @@ function optNumber(value: unknown): number | undefined {
 
 /** Null for anything that is not a game `codes` snapshot; the page then keeps its hardcoded values. */
 export function parseCodesState(value: unknown): CodesState | null {
-  if (!isRecord(value) || !isFiniteNumber(value.updatedAt) || !isRecord(value.codes)) return null;
+  if (!isRecord(value) || !isRecord(value.codes)) return null;
   const codes: Record<string, LiveCode> = {};
   for (const [code, raw] of Object.entries(value.codes)) {
     if (!isRecord(raw) || typeof raw.enabled !== "boolean") continue;
@@ -148,7 +147,7 @@ export function parseCodesState(value: unknown): CodesState | null {
       ...(claimed !== undefined ? { claimed } : {}),
     };
   }
-  return { updatedAt: value.updatedAt, codes };
+  return { codes };
 }
 
 function count(value: number): string {

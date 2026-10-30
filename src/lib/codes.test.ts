@@ -5,7 +5,7 @@ import { CODE_ENTRIES, codeViews, parseCodesState, type CodesState } from "./cod
 const NOW = 1_760_000_000;
 
 function state(codes: CodesState["codes"]): CodesState {
-  return { updatedAt: NOW - 30, codes };
+  return { codes };
 }
 
 describe("parseCodesState", () => {

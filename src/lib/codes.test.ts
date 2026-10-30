@@ -43,13 +43,16 @@ describe("codeViews", () => {
     expect(views.every((view) => view.status === "Working")).toBe(true);
   });
 
-  test("orders tallest reward lists first, then by code name", () => {
-    const codes = codeViews(null, NOW).map((view) => view.code);
-    const expected = [...CODE_ENTRIES]
-      .sort((left, right) => right.rewards.length - left.rewards.length || left.code.localeCompare(right.code))
-      .map((entry) => entry.code);
-    expect(codes).toEqual(expected);
+  test("pairs equal reward counts so each row lines up, then by code name", () => {
+    const views = codeViews(null, NOW);
+    const codes = views.map((view) => view.code);
     expect(codes.slice(0, 4)).toEqual(["DEADEND", "MAZERUNNER", "UPDATEDELAY3", "WHATISTHISPLACE"]);
+    expect(new Set(codes).size).toBe(CODE_ENTRIES.length);
+
+    const counts = views.map((view) => view.rewards.length);
+    for (let index = 0; index < counts.length - 2; index += 2) {
+      expect(counts[index]).toBe(counts[index + 1]);
+    }
   });
 
   test("ignores live codes the wiki does not list", () => {

@@ -203,13 +203,33 @@ function statusFor(code: LiveCode | undefined, nowSeconds: number): CodeStatus {
   return "Disabled";
 }
 
+/** Pairs neighboring cards so each row holds two cards of equal height where possible. */
+function pairByCount<T extends { readonly rewards: readonly unknown[] }>(entries: readonly T[]): readonly T[] {
+  const pool = [...entries];
+  const paired: T[] = [];
+  const leftovers: T[] = [];
+  while (pool.length > 0) {
+    const first = pool.shift();
+    if (first === undefined) break;
+    const mate = pool.findIndex((entry) => entry.rewards.length === first.rewards.length);
+    if (mate >= 0) {
+      paired.push(first, ...pool.splice(mate, 1));
+    } else {
+      leftovers.push(first);
+    }
+  }
+  for (let index = 0; index < leftovers.length; index += 2) {
+    const first = leftovers[index];
+    const second = leftovers[index + 1];
+    if (first !== undefined) paired.push(first);
+    if (second !== undefined) paired.push(second);
+  }
+  return paired;
+}
+
 /** Joins the handwritten list to the live snapshot by code name. Unknown live codes are ignored. */
 export function codeViews(state: CodesState | null, nowSeconds: number): readonly CodeView[] {
-  // Tallest cards first so equal-height cards sit together; code name breaks ties.
-  const ordered = [...CODE_ENTRIES].sort(
-    (left, right) => right.rewards.length - left.rewards.length || left.code.localeCompare(right.code),
-  );
-  return ordered.map((entry) => {
+  const resolved: CodeView[] = CODE_ENTRIES.map((entry) => {
     const live = state?.codes[entry.code];
     return {
       code: entry.code,
@@ -217,6 +237,11 @@ export function codeViews(state: CodesState | null, nowSeconds: number): readonl
       rewards: liveRewards(live) ?? entry.rewards,
     };
   });
+  // Tallest cards first so equal-height cards sit together; code name breaks ties.
+  const sorted = [...resolved].sort(
+    (left, right) => right.rewards.length - left.rewards.length || left.code.localeCompare(right.code),
+  );
+  return pairByCount(sorted);
 }
 
 export const STATUS_STYLE: Readonly<Record<CodeStatus, { readonly pill: string; readonly dot: string }>> = {

@@ -120,7 +120,7 @@ export function CodesBoard() {
         </div>
       </div>
 
-      <section aria-label="Build the Pyramid codes" className="grid grid-cols-1 items-start gap-4 md:grid-cols-2">
+      <section aria-label="Build the Pyramid codes" className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {views.map(({ code, status, rewards }) => (
           <article className="flex flex-col gap-4 rounded-lg border border-border bg-surface-lowest p-5" key={code}>
             <div className="flex flex-wrap items-center justify-between gap-3">

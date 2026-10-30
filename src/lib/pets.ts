@@ -72,6 +72,21 @@ export const EGGS: readonly Egg[] = [
   { id: "Cursed", name: "Cursed Egg", icon: "/eggs/cursed.png", world: "halloween", eventName: HALLOWEEN_EVENT },
 ];
 
+/** URL segment for a pet or egg id: "HermitCrab" → "hermit-crab". */
+export function slug(id: string): string {
+  return id.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
+/** Pet page path, e.g. "/pets/hermit-crab". */
+export function petPath(id: string): string {
+  return `/pets/${slug(id)}`;
+}
+
+/** Egg page path, e.g. "/pets/eggs/cursed". */
+export function eggPath(id: string): string {
+  return `/pets/eggs/${slug(id)}`;
+}
+
 export const CURRENCY = {
   Coins: { label: "Coins", icon: "/currency/coins.png", color: "rgb(255, 215, 0)" },
   CandyCorn: { label: "Candy Corn", icon: "/currency/candy-corn.png", color: "rgb(255, 140, 40)" },

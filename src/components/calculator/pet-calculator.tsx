@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { navigate } from "astro:transitions/client";
 import { ChevronLeft } from "lucide-react";
 import { EggsHatchedLine } from "@/components/calculator/eggs-hatched-line";
 import { Combobox, type ComboboxOption } from "@/components/ui/combobox";
@@ -20,10 +21,12 @@ import {
   blackMarketListing,
   CURRENCY,
   EGGS,
+  eggPath,
   eventColor,
   isHatchable,
   oddsText,
   petMatches,
+  petPath,
   RARITY_COLOR,
   statRows,
   type BlackMarketListing,
@@ -38,13 +41,21 @@ function potionNote(kind: "Luck" | "HatchSpeed", bonusPercent: number): string {
   return kind === "Luck" ? `+${value} hatch luck` : `${Number((1 + value).toFixed(2))}× faster`;
 }
 
-export function PetCalculator() {
-  const [petId, setPetId] = React.useState("");
-  const [browseId, setBrowseId] = React.useState<string | null>(null);
+export function PetCalculator({
+  initialPetId = "",
+  initialBrowseId = null,
+}: {
+  readonly initialPetId?: string;
+  readonly initialBrowseId?: string | null;
+}) {
+  const [petId, setPetId] = React.useState(initialPetId);
+  const browseId = initialBrowseId;
   const [options, setOptions] = React.useState<HatchOptions>(EMPTY_HATCH_OPTIONS);
   const pets = React.useMemo(() => allPets(), []);
   const eggs = React.useMemo(() => new Map(EGGS.map((egg) => [egg.id, egg])), []);
   const selected = pets.find((entry) => entry.id === petId) ?? null;
+  const backHref =
+    selected !== null && isHatchable(selected) ? eggPath(selected.eggId) : "/pets";
 
   React.useEffect(() => {
     setOptions(readHatchOptions());
@@ -95,25 +106,21 @@ export function PetCalculator() {
     >
       <div className="flex items-center gap-2">
         {(browseId !== null || selected !== null) && (
-          <button
+          <a
             aria-label="Back"
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-border text-foreground transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-            onClick={() => {
-              if (selected !== null) {
-                setPetId("");
-                return;
-              }
-              setBrowseId(null);
-            }}
-            type="button"
+            href={backHref}
           >
             <ChevronLeft aria-hidden className="h-5 w-5" />
-          </button>
+          </a>
         )}
         <div className="min-w-0 flex-1">
         <Combobox
           id="pet-picker"
-          onChange={setPetId}
+          onChange={(nextPetId) => {
+            setPetId(nextPetId);
+            void navigate(petPath(nextPetId));
+          }}
           options={petOptions}
           placeholder="Search pets…"
           searchPlaceholder="Search pets…"
@@ -125,12 +132,7 @@ export function PetCalculator() {
       {selected !== null ? (
         <StatSummary pet={selected} options={options} luck={luck} />
       ) : (
-        <Browse
-          browseId={browseId}
-          pets={pets}
-          onBrowse={setBrowseId}
-          onPick={setPetId}
-        />
+        <Browse browseId={browseId} pets={pets} />
       )}
       </div>
     </form>
@@ -218,24 +220,28 @@ export function PetCalculator() {
 const BROWSE_GROUPS = [
   ...EGGS.map((egg) => ({
     id: egg.id,
+    href: eggPath(egg.id),
     icon: egg.icon,
     label: egg.name,
     suffix: egg.eventName,
     suffixColor: egg.eventName === null ? undefined : eventColor(egg.eventName),
   })),
-  { id: "Exclusive", icon: "/exclusive.svg", label: "Exclusive", suffix: null, suffixColor: undefined },
+  {
+    id: "Exclusive",
+    href: "/pets/exclusive",
+    icon: "/exclusive.svg",
+    label: "Exclusive",
+    suffix: null,
+    suffixColor: undefined,
+  },
 ];
 
 function Browse({
   browseId,
   pets,
-  onBrowse,
-  onPick,
 }: {
   readonly browseId: string | null;
   readonly pets: readonly Pet[];
-  readonly onBrowse: (id: string | null) => void;
-  readonly onPick: (id: string) => void;
 }) {
   const group = BROWSE_GROUPS.find((entry) => entry.id === browseId) ?? null;
   const listed =
@@ -247,11 +253,10 @@ function Browse({
       {group === null ? (
         <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-3">
           {BROWSE_GROUPS.map((entry) => (
-            <button
+            <a
               className="flex flex-col items-center justify-center gap-2 rounded-sm border border-border bg-surface-lowest px-3 py-4 text-sm transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+              href={entry.href}
               key={entry.id}
-              onClick={() => onBrowse(entry.id)}
-              type="button"
             >
               <img alt="" className="h-14 w-14 object-contain" src={entry.icon} />
               <span className="text-foreground">{entry.label}</span>
@@ -260,17 +265,16 @@ function Browse({
                   {entry.suffix}
                 </span>
               )}
-            </button>
+            </a>
           ))}
         </div>
       ) : (
         <div className="grid content-start grid-cols-2 gap-2 sm:grid-cols-3">
             {listed.map((entry) => (
-              <button
+              <a
                 className="flex items-center gap-3 rounded-sm border border-border bg-surface-lowest px-3 py-3 text-left text-base transition-colors hover:bg-surface-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                href={petPath(entry.id)}
                 key={entry.id}
-                onClick={() => onPick(entry.id)}
-                type="button"
               >
                 <img alt="" className="h-14 w-14 shrink-0 object-contain" src={entry.icon} />
                 <span className="min-w-0">
@@ -279,7 +283,7 @@ function Browse({
                   </span>
                   <span className="block text-[0.65rem] leading-tight text-muted-foreground/45">{entry.rarity}</span>
                 </span>
-              </button>
+              </a>
             ))}
           </div>
       )}

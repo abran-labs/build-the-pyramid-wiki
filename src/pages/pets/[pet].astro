@@ -1,0 +1,32 @@
+---
+import { PetCalculator } from "@/components/calculator/pet-calculator";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { EGGS, isHatchable, PETS, slug, type Pet } from "@/lib/pets";
+
+export function getStaticPaths() {
+  return PETS.map((entry) => ({
+    params: { pet: slug(entry.id) },
+    props: { petId: entry.id },
+  }));
+}
+
+interface Props {
+  readonly petId: string;
+}
+
+const { petId } = Astro.props;
+const pet: Pet | undefined = PETS.find((entry) => entry.id === petId);
+if (pet === undefined) throw new Error(`Unknown pet: ${petId}`);
+
+const egg = EGGS.find((entry) => entry.id === pet.eggId);
+const description =
+  egg !== undefined && isHatchable(pet)
+    ? `${pet.name} is a ${pet.rarity} pet from the ${egg.name} in Build the Pyramid. See its hatch odds, average hatch time, rewards, and Black Market status.`
+    : `${pet.name} is an ${pet.rarity} pet in Build the Pyramid. See its rewards and Black Market status.`;
+---
+
+<BaseLayout title={`${pet.name} · Pets`} section="Pets" description={description} image={pet.icon}>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 items-start justify-center py-4 md:items-center md:py-8">
+    <PetCalculator client:load initialPetId={pet.id} />
+  </main>
+</BaseLayout>

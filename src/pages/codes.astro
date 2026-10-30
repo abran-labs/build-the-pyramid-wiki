@@ -53,14 +53,14 @@ const codes: CodeEntry[] = [
     { label: "10,000 Speed", image: "/stats/speed.png" },
     { label: "10,000 Strength", image: "/stats/strength.png" },
   ] },
-  { code: "HAPPYHALLOWEEN", rewards: [{ label: "Skeleton Camel Pet", image: "/pets/skeleton-camel.png", href: "/pets" }] },
+  { code: "HAPPYHALLOWEEN", rewards: [{ label: "Skeleton Camel Pet", image: "/pets/skeleton-camel.png", href: "/pets/skeleton-camel" }] },
   { code: "HALLOWEEN", rewards: [{ label: "5,000 Candy Corn", image: "/currency/candy-corn.png" }] },
-  { code: "SECRETBAT", rewards: [{ label: "Bat Pet", image: "/pets/bat.png", href: "/pets" }] },
+  { code: "SECRETBAT", rewards: [{ label: "Bat Pet", image: "/pets/bat.png", href: "/pets/bat" }] },
   { code: "ARISUNA", rewards: [
     { label: "100,000 Candy Corn", image: "/currency/candy-corn.png" },
     { label: "100,000 Coins", image: "/currency/coins.png" },
   ] },
-  { code: "CURSEDSECRET", rewards: [{ label: "Witch's Pot Pet", image: "/pets/witchs-pot.png", href: "/pets" }] },
+  { code: "CURSEDSECRET", rewards: [{ label: "Witch's Pot Pet", image: "/pets/witchs-pot.png", href: "/pets/witchs-pot" }] },
 ];
 ---
 
@@ -77,9 +77,6 @@ const codes: CodeEntry[] = [
           {codes.length} codes listed
         </span>
       </div>
-      <p class="max-w-2xl text-sm leading-6 text-muted-foreground">
-        Redeem these codes in Build the Pyramid for free rewards. Copy a code with one click, then enter it in-game.
-      </p>
     </div>
 
     <section aria-label="Build the Pyramid codes" class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -124,9 +121,6 @@ const codes: CodeEntry[] = [
         </article>
       ))}
     </section>
-    <p class="text-xs leading-5 text-muted-foreground">
-      Code availability and rewards can change after game updates. The Working labels reflect the supplied code list.
-    </p>
   </main>
 </BaseLayout>
 

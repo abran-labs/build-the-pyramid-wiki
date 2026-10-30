@@ -4,7 +4,7 @@ import { fetchState } from "@abran-labs/rolink/client";
 export const ROLINK_BASE = "/api/rolink";
 
 /** State keys browsers may read. */
-export const ROLINK_PUBLIC_STATE = ["global_stats", "black_market"] as const;
+export const ROLINK_PUBLIC_STATE = ["global_stats", "black_market", "codes"] as const;
 
 /** Experience-wide totals the game publishes. Only Ready stats are present. */
 export type GlobalStats = {

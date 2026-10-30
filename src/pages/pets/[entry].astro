@@ -1,0 +1,52 @@
+---
+import { PetCalculator } from "@/components/calculator/pet-calculator";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { EGGS, isHatchable, PETS, slug, type Egg, type Pet } from "@/lib/pets";
+
+export function getStaticPaths() {
+  const paths = [
+    ...PETS.map((entry) => ({ params: { entry: slug(entry.id) }, props: { petId: entry.id } })),
+    ...EGGS.map((entry) => ({ params: { entry: slug(entry.id) }, props: { eggId: entry.id } })),
+  ];
+  const seen = new Set<string>();
+  for (const { params } of paths) {
+    if (seen.has(params.entry)) throw new Error(`Duplicate /pets route: ${params.entry}`);
+    seen.add(params.entry);
+  }
+  return paths;
+}
+
+interface Props {
+  readonly petId?: string;
+  readonly eggId?: string;
+}
+
+const { petId, eggId } = Astro.props;
+const pet: Pet | undefined = PETS.find((entry) => entry.id === petId);
+const egg: Egg | undefined = EGGS.find((entry) => entry.id === eggId);
+
+if (pet === undefined && egg === undefined) {
+  throw new Error(`Unknown /pets entry: ${petId ?? eggId ?? "(none)"}`);
+}
+
+const petEgg = pet === undefined ? undefined : EGGS.find((entry) => entry.id === pet.eggId);
+const article = pet !== undefined && /^[aeiou]/i.test(pet.rarity) ? "an" : "a";
+const title = pet?.name ?? egg?.name ?? "";
+const description =
+  pet !== undefined
+    ? petEgg !== undefined && isHatchable(pet)
+      ? `${pet.name} is ${article} ${pet.rarity} pet from the ${petEgg.name} in Build the Pyramid. See its hatch odds, average hatch time, rewards, and Black Market status.`
+      : `${pet.name} is ${article} ${pet.rarity} pet in Build the Pyramid. See its rewards and Black Market status.`
+    : `Every pet in the ${egg?.name ?? "egg"}: hatch odds, rarities, and the coins and Candy Corn each one drops in Build the Pyramid.`;
+const image = pet?.icon ?? egg?.icon;
+---
+
+<BaseLayout title={`${title} · Pets`} section="Pets" description={description} image={image}>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 items-start justify-center py-4 md:items-center md:py-8">
+    {pet !== undefined ? (
+      <PetCalculator client:load initialPetId={pet.id} />
+    ) : (
+      <PetCalculator client:load initialBrowseId={egg?.id ?? null} />
+    )}
+  </main>
+</BaseLayout>

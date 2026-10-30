@@ -82,9 +82,9 @@ export function petPath(id: string): string {
   return `/pets/${slug(id)}`;
 }
 
-/** Egg page path, e.g. "/pets/eggs/cursed". */
+/** Egg page path, e.g. "/pets/cursed". */
 export function eggPath(id: string): string {
-  return `/pets/eggs/${slug(id)}`;
+  return `/pets/${slug(id)}`;
 }
 
 export const CURRENCY = {

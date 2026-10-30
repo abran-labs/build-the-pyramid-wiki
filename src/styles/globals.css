@@ -94,3 +94,62 @@
     opacity: 0;
   }
 }
+
+/* Codes copy button: the clipboard swaps to a drawn check on success. */
+[data-copy-code] .copy-icon {
+  display: inline-flex;
+}
+
+[data-copy-code] .copy-icon-check {
+  display: none;
+}
+
+[data-copy-code][data-state="copied"] {
+  border-color: rgb(16 185 129 / 0.4);
+  background-color: rgb(16 185 129 / 0.15);
+  color: rgb(52 211 153);
+}
+
+[data-copy-code][data-state="copied"]:hover {
+  border-color: rgb(16 185 129 / 0.45);
+  background-color: rgb(16 185 129 / 0.2);
+}
+
+[data-copy-code][data-state="copied"] .copy-icon-copy {
+  display: none;
+}
+
+[data-copy-code][data-state="copied"] .copy-icon-check {
+  display: inline-flex;
+  animation: copy-check-pop 120ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+[data-copy-code][data-state="copied"] .copy-check-path {
+  stroke-dasharray: 24;
+  animation: copy-check-draw 140ms ease-out both;
+}
+
+@keyframes copy-check-pop {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes copy-check-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-copy-code][data-state="copied"] .copy-icon-check,
+  [data-copy-code][data-state="copied"] .copy-check-path {
+    animation: none;
+  }
+}

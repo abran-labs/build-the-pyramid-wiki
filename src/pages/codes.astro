@@ -1,0 +1,14 @@
+---
+import { CodesBoard } from "@/components/codes/codes-board";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Codes"
+  section="Codes"
+  description="All known Build the Pyramid codes and their rewards."
+>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-4 py-8">
+    <CodesBoard client:load />
+  </main>
+</BaseLayout>

@@ -1,0 +1,15 @@
+---
+import { PetCalculator } from "@/components/calculator/pet-calculator";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Exclusive Pets · Pets"
+  section="Pets"
+  description="Pets in Build the Pyramid that no egg hatches: rewards and Black Market status."
+  image="/exclusive.svg"
+>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 items-start justify-center py-4 md:items-center md:py-8">
+    <PetCalculator client:load initialBrowseId="Exclusive" />
+  </main>
+</BaseLayout>

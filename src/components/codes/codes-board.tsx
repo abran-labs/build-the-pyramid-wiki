@@ -110,17 +110,7 @@ export function CodesBoard() {
   const views = React.useMemo(() => codeViews(live, now), [live, now]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-3xl font-semibold tracking-[-0.02em] text-foreground">Codes</h1>
-          <span className="inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
-            {views.length} codes listed
-          </span>
-        </div>
-      </div>
-
-      <section aria-label="Build the Pyramid codes" className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <section aria-label="Build the Pyramid codes" className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {views.map(({ code, status, rewards }) => (
           <article className="flex flex-col gap-4 rounded-lg border border-border bg-surface-lowest p-5" key={code}>
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -162,7 +152,6 @@ export function CodesBoard() {
             </div>
           </article>
         ))}
-      </section>
-    </div>
+    </section>
   );
 }

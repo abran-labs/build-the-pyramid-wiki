@@ -235,26 +235,20 @@ const codes: CodeEntry[] = [
 
   [data-copy-code][data-state="copied"] .copy-icon-check {
     display: inline-flex;
-    animation: copy-check-pop 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: copy-check-pop 120ms cubic-bezier(0.2, 0, 0, 1) both;
   }
 
   [data-copy-code][data-state="copied"] .copy-check-path {
     stroke-dasharray: 24;
-    animation: copy-check-draw 340ms ease-out both;
+    animation: copy-check-draw 140ms ease-out both;
   }
 
   @keyframes copy-check-pop {
-    0% {
-      transform: scale(0.7);
-      opacity: 0;
+    from {
+      transform: scale(0.8);
     }
-    60% {
-      transform: scale(1.08);
-      opacity: 1;
-    }
-    100% {
+    to {
       transform: scale(1);
-      opacity: 1;
     }
   }
 

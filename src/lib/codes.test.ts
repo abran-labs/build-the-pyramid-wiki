@@ -43,15 +43,15 @@ describe("codeViews", () => {
     expect(views.every((view) => view.status === "Working")).toBe(true);
   });
 
-  test("pairs equal reward counts so each row lines up, then by code name", () => {
+  test("orders tallest reward lists first, then by code name", () => {
     const views = codeViews(null, NOW);
     const codes = views.map((view) => view.code);
     expect(codes.slice(0, 4)).toEqual(["DEADEND", "MAZERUNNER", "UPDATEDELAY3", "WHATISTHISPLACE"]);
     expect(new Set(codes).size).toBe(CODE_ENTRIES.length);
 
     const counts = views.map((view) => view.rewards.length);
-    for (let index = 0; index < counts.length - 2; index += 2) {
-      expect(counts[index]).toBe(counts[index + 1]);
+    for (let index = 1; index < counts.length; index += 1) {
+      expect(counts[index - 1]).toBeGreaterThanOrEqual(counts[index] ?? 0);
     }
   });
 

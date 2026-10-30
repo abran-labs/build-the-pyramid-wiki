@@ -38,9 +38,18 @@ describe("codeViews", () => {
   test("keeps the hardcoded rewards and Working status without a live snapshot", () => {
     const views = codeViews(null, NOW);
     expect(views).toHaveLength(CODE_ENTRIES.length);
-    expect(views[0]?.code).toBe(CODE_ENTRIES[0]?.code);
-    expect(views[0]?.rewards).toEqual(CODE_ENTRIES[0]?.rewards);
+    expect(views[0]?.code).toBe("DEADEND");
+    expect(views[0]?.rewards).toEqual(CODE_ENTRIES.find((entry) => entry.code === "DEADEND")?.rewards);
     expect(views.every((view) => view.status === "Working")).toBe(true);
+  });
+
+  test("orders tallest reward lists first, then by code name", () => {
+    const codes = codeViews(null, NOW).map((view) => view.code);
+    const expected = [...CODE_ENTRIES]
+      .sort((left, right) => right.rewards.length - left.rewards.length || left.code.localeCompare(right.code))
+      .map((entry) => entry.code);
+    expect(codes).toEqual(expected);
+    expect(codes.slice(0, 4)).toEqual(["DEADEND", "MAZERUNNER", "UPDATEDELAY3", "WHATISTHISPLACE"]);
   });
 
   test("ignores live codes the wiki does not list", () => {

@@ -206,7 +206,11 @@ function statusFor(code: LiveCode | undefined, nowSeconds: number): CodeStatus {
 
 /** Joins the handwritten list to the live snapshot by code name. Unknown live codes are ignored. */
 export function codeViews(state: CodesState | null, nowSeconds: number): readonly CodeView[] {
-  return CODE_ENTRIES.map((entry) => {
+  // Tallest cards first so equal-height cards sit together; code name breaks ties.
+  const ordered = [...CODE_ENTRIES].sort(
+    (left, right) => right.rewards.length - left.rewards.length || left.code.localeCompare(right.code),
+  );
+  return ordered.map((entry) => {
     const live = state?.codes[entry.code];
     return {
       code: entry.code,

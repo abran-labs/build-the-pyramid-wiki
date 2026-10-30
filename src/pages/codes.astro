@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-const codes = [
+const codes: { code: string; rewards: readonly string[]; petHref?: string }[] = [
   { code: "MAZERUNNER", rewards: ["35,000 Candy Corn", "3× Luck Potion V", "3× Currency Potion V", "3× Hatch Speed Potion V"] },
   { code: "NEEDMOREBOOST", rewards: ["10× Luck Potion V", "10× Hatch Speed Potion V", "10× Currency Potion V"] },
   { code: "HALLOWEENPART2", rewards: ["10,000 Candy Corn", "Luck Potion V", "Currency Potion V"] },
@@ -20,7 +20,7 @@ const codes = [
   { code: "SECRETBAT", rewards: ["Bat Pet"], petHref: "/pets" },
   { code: "ARISUNA", rewards: ["100,000 Candy Corn", "100,000 Coins"] },
   { code: "CURSEDSECRET", rewards: ["Witch's Pot Pet"], petHref: "/pets" },
-] as const;
+];
 ---
 
 <BaseLayout

@@ -132,23 +132,76 @@ const codes: CodeEntry[] = [
 
 <script>
   document.querySelectorAll<HTMLButtonElement>("[data-copy-code]").forEach((button) => {
+    let resetTimer: number | undefined;
+
     button.addEventListener("click", async () => {
       const code = button.dataset.copyCode;
       if (!code) return;
 
       const originalLabel = button.innerHTML;
+
+      const fallbackCopy = () => {
+        const textarea = document.createElement("textarea");
+        textarea.value = code;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+        const copied = document.execCommand("copy");
+        textarea.remove();
+        return copied;
+      };
+
+      let copied = false;
       try {
-        await navigator.clipboard.writeText(code);
-        button.textContent = "Copied!";
-        button.setAttribute("aria-label", `Copied code ${code}`);
+        if (navigator.clipboard?.writeText && window.isSecureContext) {
+          await navigator.clipboard.writeText(code);
+          copied = true;
+        }
       } catch {
-        button.textContent = "Copy unavailable";
+        // Fall back for browsers or preview environments that block Clipboard API access.
       }
 
-      window.setTimeout(() => {
+      if (!copied) {
+        try {
+          copied = fallbackCopy();
+        } catch {
+          copied = false;
+        }
+      }
+
+      if (resetTimer !== undefined) window.clearTimeout(resetTimer);
+
+      if (copied) {
+        button.textContent = "Copied!";
+        button.classList.remove(
+          "border-border",
+          "bg-surface",
+          "text-foreground",
+          "hover:border-primary/50",
+          "hover:bg-surface-high",
+        );
+        button.classList.add("border-emerald-500/40", "bg-emerald-500/15", "text-emerald-400");
+        button.setAttribute("aria-label", `Copied code ${code}`);
+      } else {
+        button.textContent = "Copy failed";
+        button.setAttribute("aria-label", `Could not copy code ${code}`);
+      }
+
+      resetTimer = window.setTimeout(() => {
         button.innerHTML = originalLabel;
+        button.classList.remove("border-emerald-500/40", "bg-emerald-500/15", "text-emerald-400");
+        button.classList.add(
+          "border-border",
+          "bg-surface",
+          "text-foreground",
+          "hover:border-primary/50",
+          "hover:bg-surface-high",
+        );
         button.setAttribute("aria-label", `Copy code ${code}`);
-      }, 1800);
+      }, 3000);
     });
   });
 </script>

@@ -1,25 +1,66 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-const codes: { code: string; rewards: readonly string[]; petHref?: string }[] = [
-  { code: "MAZERUNNER", rewards: ["35,000 Candy Corn", "3× Luck Potion V", "3× Currency Potion V", "3× Hatch Speed Potion V"] },
-  { code: "NEEDMOREBOOST", rewards: ["10× Luck Potion V", "10× Hatch Speed Potion V", "10× Currency Potion V"] },
-  { code: "HALLOWEENPART2", rewards: ["10,000 Candy Corn", "Luck Potion V", "Currency Potion V"] },
-  { code: "WHATISTHISPLACE", rewards: ["35,000 Candy Corn", "3× Luck Potion V", "3× Currency Potion V", "3× Hatch Speed Potion V"] },
-  { code: "UPDATEDELAY3", rewards: ["15,000 Candy Corn", "Luck Potion V", "Hatch Speed Potion V", "Currency Potion V"] },
-  { code: "DEADEND", rewards: ["35,000 Candy Corn", "3× Luck Potion V", "3× Currency Potion V", "3× Hatch Speed Potion V"] },
-  { code: "PETS", rewards: ["25,000 Coins"] },
-  { code: "SORRYFORDELAY", rewards: ["25,000 or 50,000 Coins"] },
-  { code: "SECRETSPHINX", rewards: ["50,000 Coins"] },
-  { code: "DEADBYMELOL", rewards: ["1 Coin"] },
-  { code: "FREECODE", rewards: ["500 Coins"] },
-  { code: "WELCOME", rewards: ["500 Speed", "500 Strength"] },
-  { code: "JACKVSZED", rewards: ["50,000 Candy Corn", "10,000 Speed", "10,000 Strength"] },
-  { code: "HAPPYHALLOWEEN", rewards: ["Skeleton Camel Pet"], petHref: "/pets" },
-  { code: "HALLOWEEN", rewards: ["5,000 Candy Corn"] },
-  { code: "SECRETBAT", rewards: ["Bat Pet"], petHref: "/pets" },
-  { code: "ARISUNA", rewards: ["100,000 Candy Corn", "100,000 Coins"] },
-  { code: "CURSEDSECRET", rewards: ["Witch's Pot Pet"], petHref: "/pets" },
+type Reward = { label: string; image?: string; href?: string };
+type CodeEntry = { code: string; rewards: Reward[] };
+
+const codes: CodeEntry[] = [
+  { code: "MAZERUNNER", rewards: [
+    { label: "35,000 Candy Corn", image: "/currency/candy-corn.png" },
+    { label: "3× Luck Potion V", image: "/potions/luck-5.png" },
+    { label: "3× Currency Potion V", image: "/potions/currency-5.png" },
+    { label: "3× Hatch Speed Potion V", image: "/potions/hatch-speed-5.png" },
+  ] },
+  { code: "NEEDMOREBOOST", rewards: [
+    { label: "10× Luck Potion V", image: "/potions/luck-5.png" },
+    { label: "10× Hatch Speed Potion V", image: "/potions/hatch-speed-5.png" },
+    { label: "10× Currency Potion V", image: "/potions/currency-5.png" },
+  ] },
+  { code: "HALLOWEENPART2", rewards: [
+    { label: "10,000 Candy Corn", image: "/currency/candy-corn.png" },
+    { label: "Luck Potion V", image: "/potions/luck-5.png" },
+    { label: "Currency Potion V", image: "/potions/currency-5.png" },
+  ] },
+  { code: "WHATISTHISPLACE", rewards: [
+    { label: "35,000 Candy Corn", image: "/currency/candy-corn.png" },
+    { label: "3× Luck Potion V", image: "/potions/luck-5.png" },
+    { label: "3× Currency Potion V", image: "/potions/currency-5.png" },
+    { label: "3× Hatch Speed Potion V", image: "/potions/hatch-speed-5.png" },
+  ] },
+  { code: "UPDATEDELAY3", rewards: [
+    { label: "15,000 Candy Corn", image: "/currency/candy-corn.png" },
+    { label: "Luck Potion V", image: "/potions/luck-5.png" },
+    { label: "Hatch Speed Potion V", image: "/potions/hatch-speed-5.png" },
+    { label: "Currency Potion V", image: "/potions/currency-5.png" },
+  ] },
+  { code: "DEADEND", rewards: [
+    { label: "35,000 Candy Corn", image: "/currency/candy-corn.png" },
+    { label: "3× Luck Potion V", image: "/potions/luck-5.png" },
+    { label: "3× Currency Potion V", image: "/potions/currency-5.png" },
+    { label: "3× Hatch Speed Potion V", image: "/potions/hatch-speed-5.png" },
+  ] },
+  { code: "PETS", rewards: [{ label: "25,000 Coins", image: "/currency/coins.png" }] },
+  { code: "SORRYFORDELAY", rewards: [{ label: "25,000 or 50,000 Coins", image: "/currency/coins.png" }] },
+  { code: "SECRETSPHINX", rewards: [{ label: "50,000 Coins", image: "/currency/coins.png" }] },
+  { code: "DEADBYMELOL", rewards: [{ label: "1 Coin", image: "/currency/coins.png" }] },
+  { code: "FREECODE", rewards: [{ label: "500 Coins", image: "/currency/coins.png" }] },
+  { code: "WELCOME", rewards: [
+    { label: "500 Speed" },
+    { label: "500 Strength" },
+  ] },
+  { code: "JACKVSZED", rewards: [
+    { label: "50,000 Candy Corn", image: "/currency/candy-corn.png" },
+    { label: "10,000 Speed" },
+    { label: "10,000 Strength" },
+  ] },
+  { code: "HAPPYHALLOWEEN", rewards: [{ label: "Skeleton Camel Pet", image: "/pets/skeleton-camel.png", href: "/pets" }] },
+  { code: "HALLOWEEN", rewards: [{ label: "5,000 Candy Corn", image: "/currency/candy-corn.png" }] },
+  { code: "SECRETBAT", rewards: [{ label: "Bat Pet", image: "/pets/bat.png", href: "/pets" }] },
+  { code: "ARISUNA", rewards: [
+    { label: "100,000 Candy Corn", image: "/currency/candy-corn.png" },
+    { label: "100,000 Coins", image: "/currency/coins.png" },
+  ] },
+  { code: "CURSEDSECRET", rewards: [{ label: "Witch's Pot Pet", image: "/pets/witchs-pot.png", href: "/pets" }] },
 ];
 ---
 
@@ -37,27 +78,51 @@ const codes: { code: string; rewards: readonly string[]; petHref?: string }[] = 
         </span>
       </div>
       <p class="max-w-2xl text-sm leading-6 text-muted-foreground">
-        Redeem these codes in Build the Pyramid for free rewards. Each code is shown with its current status and the rewards it provides.
+        Redeem these codes in Build the Pyramid for free rewards. Copy a code with one click, then enter it in-game.
       </p>
     </div>
 
     <section aria-label="Build the Pyramid codes" class="grid grid-cols-1 gap-4 md:grid-cols-2">
-      {codes.map(({ code, rewards, petHref }) => (
+      {codes.map(({ code, rewards }) => (
         <article class="flex flex-col gap-4 rounded-lg border border-border bg-surface-lowest p-5">
           <div class="flex flex-wrap items-center justify-between gap-3">
-            <h2 class="font-mono text-base font-semibold tracking-wide text-foreground">{code}</h2>
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-400">
-              <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              Working
-            </span>
+            <div class="flex min-w-0 flex-wrap items-center gap-3">
+              <h2 class="font-mono text-base font-semibold tracking-wide text-foreground">{code}</h2>
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-400">
+                <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                Working
+              </span>
+            </div>
+            <button
+              type="button"
+              data-copy-code={code}
+              class="inline-flex shrink-0 items-center gap-2 rounded-md border border-border bg-surface px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:border-primary/50 hover:bg-surface-high"
+              aria-label={`Copy code ${code}`}
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4">
+                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+              </svg>
+              Copy code
+            </button>
           </div>
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-3">
             <span class="text-xs font-medium uppercase tracking-wider text-muted-foreground">Rewards</span>
-            <ul class="flex flex-col gap-2 text-sm text-foreground">
-              {rewards.map((reward) => (
-                <li class="flex items-start gap-2">
-                  <span aria-hidden="true" class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></span>
-                  {petHref && reward.endsWith("Pet") ? <a class="underline decoration-border underline-offset-4 transition-colors hover:text-primary" href={petHref}>{reward}</a> : <span>{reward}</span>}
+            <ul class="flex flex-col gap-2.5 text-sm text-foreground">
+              {rewards.map(({ label, image, href }) => (
+                <li class="flex items-center gap-3">
+                  {image ? (
+                    <img src={image} alt="" loading="lazy" class="h-8 w-8 shrink-0 object-contain" />
+                  ) : (
+                    <span aria-hidden="true" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-surface-high text-[10px] font-semibold text-muted-foreground">
+                      {label.includes("Speed") ? "SPD" : "STR"}
+                    </span>
+                  )}
+                  {href ? (
+                    <a class="underline decoration-border underline-offset-4 transition-colors hover:text-primary" href={href}>{label}</a>
+                  ) : (
+                    <span>{label}</span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -70,3 +135,26 @@ const codes: { code: string; rewards: readonly string[]; petHref?: string }[] = 
     </p>
   </main>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-copy-code]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const code = button.dataset.copyCode;
+      if (!code) return;
+
+      const originalLabel = button.innerHTML;
+      try {
+        await navigator.clipboard.writeText(code);
+        button.textContent = "Copied!";
+        button.setAttribute("aria-label", `Copied code ${code}`);
+      } catch {
+        button.textContent = "Copy unavailable";
+      }
+
+      window.setTimeout(() => {
+        button.innerHTML = originalLabel;
+        button.setAttribute("aria-label", `Copy code ${code}`);
+      }, 1800);
+    });
+  });
+</script>

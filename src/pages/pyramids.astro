@@ -1,0 +1,203 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const mainPyramids = [
+  {
+    name: "Basic Pyramid",
+    image: "/pyramids/basic.png",
+    chance: "40%",
+    boost: "2×",
+    rewardLabel: "Coin reward",
+    reward: "1×",
+    blocks: "171,700",
+    price: "N/A",
+    description: "The Basic Pyramid is the standard pyramid type and one of the most frequently selected options. Completing it grants access to Waters of Nu with a 2× training boost.",
+  },
+  {
+    name: "Silver Pyramid",
+    image: "/pyramids/silver.png",
+    chance: "35%",
+    boost: "3×",
+    rewardLabel: "Coin reward",
+    reward: "1.5×",
+    blocks: "240,464",
+    price: "117 Robux",
+    description: "The Silver Pyramid provides a stronger Waters of Nu training boost than the Basic Pyramid, alongside an increased coin reward multiplier.",
+  },
+  {
+    name: "Gold Pyramid",
+    image: "/pyramids/gold.png",
+    chance: "20%",
+    boost: "5×",
+    rewardLabel: "Coin reward",
+    reward: "2×",
+    blocks: "357,760",
+    price: "225 Robux",
+    description: "The Gold Pyramid is a less common option that offers a 5× Waters of Nu training boost and a higher coin reward multiplier.",
+  },
+  {
+    name: "Void Pyramid",
+    image: "/pyramids/void.png",
+    chance: "5%",
+    boost: "10×",
+    rewardLabel: "Coin reward",
+    reward: "4×",
+    blocks: "573,800",
+    price: "630 Robux",
+    description: "The Void Pyramid is the rarest of the current Main World pyramid types. Its 10× Waters of Nu boost is the strongest available from the standard pyramid selection.",
+  },
+];
+
+const halloweenPyramids = [
+  {
+    name: "Haunted Pyramid",
+    image: "/pyramids/haunted.png",
+    chance: "80%",
+    boost: "10×",
+    rewardLabel: "Candy Corn reward",
+    reward: "1×",
+    blocks: "1,002,000",
+    price: "N/A",
+    description: "The Haunted Pyramid was introduced during the Halloween Event and can be found in the Halloween World. It is scheduled to be available until November 1, 2026.",
+  },
+  {
+    name: "Cursed Pyramid",
+    image: "/pyramids/cursed.png",
+    chance: "20%",
+    boost: "25×",
+    rewardLabel: "Candy Corn reward",
+    reward: "2×",
+    blocks: "3,030,000",
+    price: "249 Robux",
+    description: "The Cursed Pyramid was introduced during the Halloween Event and is available in the Halloween World. Its 25× Waters of Nu boost makes it the strongest currently listed Halloween pyramid for training. It is scheduled to be available until November 1, 2026.",
+  },
+  {
+    name: "Demon Lord's Castle",
+    image: "/pyramids/demon-lords-castle.png",
+    chance: "5%",
+    boost: "50×",
+    rewardLabel: "Candy Corn reward",
+    reward: "4×",
+    blocks: "9,980,000",
+    price: "699 Robux",
+    description: "Demon Lord's Castle was added in the Halloween Part 2 update and is available in the Halloween World. It offers the highest listed Waters of Nu boost and Candy Corn reward multiplier. Its availability is expected to end with the Halloween event on November 1, 2026.",
+  },
+];
+---
+
+<BaseLayout
+  title="Pyramids"
+  section="Pyramids"
+  description="Pyramid types, selection chances, Waters of Nu boosts, rewards, block requirements, and pick prices in Build the Pyramid."
+>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-4 py-8">
+    <header class="flex flex-col gap-3">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="rounded-full border border-border bg-surface-lowest px-3 py-1 text-xs font-medium text-muted-foreground">Game reference</span>
+        <span class="text-xs text-muted-foreground">7 pyramid types documented</span>
+      </div>
+      <h1 class="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">Pyramids</h1>
+      <p class="max-w-3xl text-sm leading-6 text-muted-foreground">
+        Pyramids are the main objective in Build the Pyramid. Each type has its own selection chance, block requirement, pick price, and reward multipliers. Completing a pyramid grants a Waters of Nu training boost.
+      </p>
+      <nav aria-label="Pyramid sections" class="flex flex-wrap gap-2 pt-1">
+        <a href="#main-world" class="rounded-md border border-border bg-surface-lowest px-3 py-2 text-sm text-foreground no-underline transition-colors hover:bg-surface">Main World</a>
+        <a href="#halloween-world" class="rounded-md border border-border bg-surface-lowest px-3 py-2 text-sm text-foreground no-underline transition-colors hover:bg-surface">Halloween World</a>
+      </nav>
+    </header>
+
+    <section id="main-world" class="scroll-mt-6 flex flex-col gap-5">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-semibold tracking-tight text-foreground">Main World</h2>
+        <p class="text-sm leading-6 text-muted-foreground">The standard pyramid selection currently contains four types, ranging from the common Basic Pyramid to the rare Void Pyramid.</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        {mainPyramids.map((pyramid) => (
+          <article class="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest">
+            <div class="flex h-48 items-center justify-center border-b border-border bg-black/20 p-4">
+              <img src={pyramid.image} alt={pyramid.name} loading="lazy" class="h-full w-full object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col gap-4 p-5">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="text-lg font-semibold text-foreground">{pyramid.name}</h3>
+                <span class="shrink-0 rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">{pyramid.chance} chance</span>
+              </div>
+              <p class="text-sm leading-6 text-muted-foreground">{pyramid.description}</p>
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 3.5 8v8L12 21l8.5-5V8L12 3Z"/><path d="m3.5 8 8.5 5 8.5-5M12 13v8"/></svg>Waters of Nu</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.boost}</div>
+                  <div class="text-[11px] text-muted-foreground">training boost</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M15 8.5c-.7-.6-1.6-.9-2.8-.9-1.7 0-2.8.8-2.8 2s1.1 1.8 2.8 2.2 2.8 1 2.8 2.2-1.1 2-2.8 2c-1.2 0-2.2-.4-3-1M12 5.5v13"/></svg>{pyramid.rewardLabel}</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.reward}</div>
+                  <div class="text-[11px] text-muted-foreground">multiplier</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>Blocks</div>
+                  <div class="text-base font-semibold tabular-nums text-foreground">{pyramid.blocks}</div>
+                  <div class="text-[11px] text-muted-foreground">required</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
+                <span class="flex items-center gap-2 text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h14l-1.5 16h-11L5 4Z"/><path d="M9 8h6M9 12h6"/></svg>Pick price</span>
+                <span class="font-semibold text-foreground">{pyramid.price}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="halloween-world" class="scroll-mt-6 flex flex-col gap-5">
+      <div class="flex flex-col gap-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <h2 class="text-2xl font-semibold tracking-tight text-foreground">Halloween World</h2>
+          <span class="rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-300">Limited time</span>
+        </div>
+        <p class="text-sm leading-6 text-muted-foreground">Halloween World features event-exclusive pyramids that use Candy Corn reward multipliers instead of the standard coin reward multipliers.</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        {halloweenPyramids.map((pyramid) => (
+          <article class="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest">
+            <div class="flex h-48 items-center justify-center border-b border-border bg-black/20 p-4">
+              <img src={pyramid.image} alt={pyramid.name} loading="lazy" class="h-full w-full object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col gap-4 p-5">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <h3 class="text-lg font-semibold text-foreground">{pyramid.name}</h3>
+                <span class="shrink-0 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300">{pyramid.chance} chance</span>
+              </div>
+              <p class="text-sm leading-6 text-muted-foreground">{pyramid.description}</p>
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 3.5 8v8L12 21l8.5-5V8L12 3Z"/><path d="m3.5 8 8.5 5 8.5-5M12 13v8"/></svg>Waters of Nu</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.boost}</div>
+                  <div class="text-[11px] text-muted-foreground">training boost</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16v13H4z"/><path d="M7 7V4h10v3M8 12h8M8 16h5"/></svg>Candy Corn</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.reward}</div>
+                  <div class="text-[11px] text-muted-foreground">reward multiplier</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>Blocks</div>
+                  <div class="text-base font-semibold tabular-nums text-foreground">{pyramid.blocks}</div>
+                  <div class="text-[11px] text-muted-foreground">required</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
+                <span class="flex items-center gap-2 text-muted-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h14l-1.5 16h-11L5 4Z"/><path d="M9 8h6M9 12h6"/></svg>Pick price</span>
+                <span class="font-semibold text-foreground">{pyramid.price}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="rounded-lg border border-border bg-surface-lowest px-4 py-3 text-xs leading-5 text-muted-foreground">
+        Event availability dates and selection chances are based on the currently supplied game information and may change with future updates.
+      </p>
+    </section>
+  </main>
+</BaseLayout>

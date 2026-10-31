@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-function chanceClasses(chance) {
+function chanceClasses(chance: string) {
   const percentage = Number.parseInt(chance, 10);
   if (percentage <= 5) return "border-red-500/30 bg-red-500/10 text-red-300";
   if (percentage <= 20) return "border-orange-500/30 bg-orange-500/10 text-orange-300";

@@ -108,28 +108,28 @@ const halloweenPyramids = [
             <div class="flex flex-1 flex-col gap-4 p-5">
               <div class="flex items-start justify-between gap-3">
                 <h3 class="text-lg font-semibold text-foreground">{pyramid.name}</h3>
-                <span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}>{pyramid.chance} chance</span>
+                <span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}><span class="number-animation" data-target={pyramid.chance} data-animation="scramble">{pyramid.chance}</span> chance</span>
               </div>
               <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 <div class="rounded-lg border border-border bg-background/50 p-3">
                   <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/stats/speed.png" alt="" class="h-4 w-4 object-contain" /><img src="/stats/strength.png" alt="" class="h-4 w-4 object-contain" />Waters of Nu</div>
-                  <div class="text-base font-semibold text-foreground">{pyramid.boost}</div>
+                  <div class="text-base font-semibold text-foreground"><span class="number-animation" data-target={pyramid.boost} data-animation="scramble">{pyramid.boost}</span></div>
                   <div class="text-[11px] text-muted-foreground">Training Boost</div>
                 </div>
                 <div class="rounded-lg border border-border bg-background/50 p-3">
                   <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/currency/coins.png" alt="" class="h-4 w-4 object-contain" />{pyramid.rewardLabel}</div>
-                  <div class="text-base font-semibold text-foreground">{pyramid.reward}</div>
+                  <div class="text-base font-semibold text-foreground"><span class="number-animation" data-target={pyramid.reward} data-animation="scramble">{pyramid.reward}</span></div>
                   <div class="text-[11px] text-muted-foreground">Reward Multiplier</div>
                 </div>
                 <div class="rounded-lg border border-border bg-background/50 p-3">
                   <div class="mb-1 text-xs text-muted-foreground">Blocks</div>
-                  <div class="text-base font-semibold tabular-nums text-foreground">{pyramid.blocks}</div>
+                  <div class="text-base font-semibold tabular-nums text-foreground"><span class="number-animation" data-target={pyramid.blocks} data-animation="count">{pyramid.blocks}</span></div>
                   <div class="text-[11px] text-muted-foreground">Required</div>
                 </div>
               </div>
               <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
                 <span class="text-muted-foreground">Pick price</span>
-                <span class="font-semibold text-foreground">{pyramid.price}</span>
+                <span class="font-semibold text-foreground">{pyramid.price === "N/A" ? "N/A" : <span class="number-animation" data-target={pyramid.price} data-animation="scramble">{pyramid.price}</span>}</span>
               </div>
             </div>
           </article>
@@ -153,28 +153,28 @@ const halloweenPyramids = [
             <div class="flex flex-1 flex-col gap-4 p-5">
               <div class="flex flex-wrap items-start justify-between gap-3">
                 <h3 class="text-lg font-semibold text-foreground">{pyramid.name}</h3>
-                <span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}>{pyramid.chance} chance</span>
+                <span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}><span class="number-animation" data-target={pyramid.chance} data-animation="scramble">{pyramid.chance}</span> chance</span>
               </div>
               <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
                 <div class="rounded-lg border border-border bg-background/50 p-3">
                   <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/stats/speed.png" alt="" class="h-4 w-4 object-contain" /><img src="/stats/strength.png" alt="" class="h-4 w-4 object-contain" />Waters of Nu</div>
-                  <div class="text-base font-semibold text-foreground">{pyramid.boost}</div>
+                  <div class="text-base font-semibold text-foreground"><span class="number-animation" data-target={pyramid.boost} data-animation="scramble">{pyramid.boost}</span></div>
                   <div class="text-[11px] text-muted-foreground">Training Boost</div>
                 </div>
                 <div class="rounded-lg border border-border bg-background/50 p-3">
                   <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/currency/candy-corn.png" alt="" class="h-4 w-4 object-contain" />Candy Corn</div>
-                  <div class="text-base font-semibold text-foreground">{pyramid.reward}</div>
+                  <div class="text-base font-semibold text-foreground"><span class="number-animation" data-target={pyramid.reward} data-animation="scramble">{pyramid.reward}</span></div>
                   <div class="text-[11px] text-muted-foreground">Reward Multiplier</div>
                 </div>
                 <div class="rounded-lg border border-border bg-background/50 p-3">
                   <div class="mb-1 text-xs text-muted-foreground">Blocks</div>
-                  <div class="text-base font-semibold tabular-nums text-foreground">{pyramid.blocks}</div>
+                  <div class="text-base font-semibold tabular-nums text-foreground"><span class="number-animation" data-target={pyramid.blocks} data-animation="count">{pyramid.blocks}</span></div>
                   <div class="text-[11px] text-muted-foreground">Required</div>
                 </div>
               </div>
               <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
                 <span class="text-muted-foreground">Pick price</span>
-                <span class="font-semibold text-foreground">{pyramid.price}</span>
+                <span class="font-semibold text-foreground">{pyramid.price === "N/A" ? "N/A" : <span class="number-animation" data-target={pyramid.price} data-animation="scramble">{pyramid.price}</span>}</span>
               </div>
             </div>
           </article>
@@ -183,3 +183,56 @@ const halloweenPyramids = [
     </section>
   </main>
 </BaseLayout>
+
+<script>
+  const animatedNumbers = document.querySelectorAll(".number-animation");
+
+  animatedNumbers.forEach((element) => {
+    const target = element.getAttribute("data-target") || "";
+    const mode = element.getAttribute("data-animation");
+    const match = target.match(/(\\d[\\d,]*(?:\\.\\d+)?)/);
+
+    if (!match || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const targetNumber = Number(match[0].replaceAll(",", ""));
+    const prefix = target.slice(0, match.index);
+    const suffix = target.slice((match.index || 0) + match[0].length);
+    const decimals = (match[0].split(".")[1] || "").length;
+    const duration = 2000;
+    const start = performance.now();
+    let lastUpdate = 0;
+
+    const render = (number) => {
+      const formatted = decimals
+        ? number.toFixed(decimals)
+        : Math.round(number).toLocaleString("en-US");
+      element.textContent = prefix + formatted + suffix;
+    };
+
+    const animate = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      if (mode === "count") {
+        render(targetNumber * eased);
+      } else if (progress === 1) {
+        element.textContent = target;
+      } else {
+        const updateInterval = 35 + progress * 260;
+        if (now - lastUpdate >= updateInterval) {
+          lastUpdate = now;
+          const randomValue = Math.random() * Math.max(targetNumber * 1.5, 20);
+          render(randomValue);
+        }
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        element.textContent = target;
+      }
+    };
+
+    requestAnimationFrame(animate);
+  });
+</script>

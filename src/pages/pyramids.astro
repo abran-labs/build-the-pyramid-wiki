@@ -96,8 +96,8 @@ const halloweenPyramids = [
     <header class="flex flex-col gap-3">
     </header>
 
-    <section id="judgment-world" class="scroll-mt-6 flex flex-col gap-3">
-      <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Judgment World</h2>
+    <section id="desert-world" class="scroll-mt-6 flex flex-col gap-3">
+      <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Desert World</h2>
       <div class="grid gap-4 md:grid-cols-2">
         {mainPyramids.map((pyramid) => (
           <article class="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest">
@@ -136,8 +136,8 @@ const halloweenPyramids = [
     <section id="halloween-world" class="scroll-mt-6 flex flex-col gap-3">
       <div class="flex flex-wrap items-baseline gap-2">
         <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Halloween World</h2>
-        <span aria-hidden="true" class="text-xs text-muted-foreground/50">·</span>
-        <span class="text-xs font-semibold" style={`color: ${eventColor(HALLOWEEN_EVENT)}`}>{HALLOWEEN_EVENT}</span>
+        <span aria-hidden="true" class="text-base text-muted-foreground/50">·</span>
+        <span class="text-base font-semibold" style={`color: ${eventColor(HALLOWEEN_EVENT)}`}>{HALLOWEEN_EVENT}</span>
       </div>
       <div class="grid gap-4 md:grid-cols-2">
         {halloweenPyramids.map((pyramid) => (

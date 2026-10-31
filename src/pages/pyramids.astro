@@ -31,7 +31,7 @@ const mainPyramids = [
     rewardLabel: "Coin",
     reward: "1.5×",
     blocks: "240,464",
-    price: "129 Robux",
+    price: "129",
   },
   {
     name: "Gold Pyramid",
@@ -42,7 +42,7 @@ const mainPyramids = [
     rewardLabel: "Coin",
     reward: "2×",
     blocks: "357,760",
-    price: "249 Robux",
+    price: "249",
   },
   {
     name: "Void Pyramid",
@@ -53,7 +53,7 @@ const mainPyramids = [
     rewardLabel: "Coin",
     reward: "4×",
     blocks: "573,800",
-    price: "699 Robux",
+    price: "699",
   },
 ];
 
@@ -78,7 +78,7 @@ const halloweenPyramids = [
     rewardLabel: "Candy Corn reward",
     reward: "2×",
     blocks: "3,030,000",
-    price: "249 Robux",
+    price: "249",
   },
   {
     name: "Demon Lords Castle",
@@ -89,7 +89,7 @@ const halloweenPyramids = [
     rewardLabel: "Candy Corn reward",
     reward: "4×",
     blocks: "9,980,000",
-    price: "699 Robux",
+    price: "699",
   },
 ];
 ---
@@ -132,7 +132,7 @@ const halloweenPyramids = [
               </div>
               <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
                 <span class="text-muted-foreground">Pick price</span>
-                <span class={pyramid.price === "N/A" ? "font-semibold text-foreground" : "font-semibold text-[#39ff14]"}>{pyramid.price}</span>
+                {pyramid.price === "N/A" ? <span class="font-semibold text-foreground">N/A</span> : <span class="inline-flex items-center gap-1.5 font-semibold text-[#39ff14]"><span aria-hidden="true" class="inline-block h-4 w-4 bg-current" style="mask-image:url(/currency/robux.webp);-webkit-mask-image:url(/currency/robux.webp);mask-size:contain;-webkit-mask-size:contain;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;mask-position:center;-webkit-mask-position:center"></span>{pyramid.price}</span>}
               </div>
             </div>
           </article>
@@ -173,7 +173,7 @@ const halloweenPyramids = [
               </div>
               <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
                 <span class="text-muted-foreground">Pick price</span>
-                <span class={pyramid.price === "N/A" ? "font-semibold text-foreground" : "font-semibold text-[#39ff14]"}>{pyramid.price}</span>
+                {pyramid.price === "N/A" ? <span class="font-semibold text-foreground">N/A</span> : <span class="inline-flex items-center gap-1.5 font-semibold text-[#39ff14]"><span aria-hidden="true" class="inline-block h-4 w-4 bg-current" style="mask-image:url(/currency/robux.webp);-webkit-mask-image:url(/currency/robux.webp);mask-size:contain;-webkit-mask-size:contain;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;mask-position:center;-webkit-mask-position:center"></span>{pyramid.price}</span>}
               </div>
             </div>
           </article>

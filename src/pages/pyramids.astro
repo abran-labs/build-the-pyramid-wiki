@@ -190,7 +190,7 @@ const halloweenPyramids = [
   animatedNumbers.forEach((element) => {
     const target = element.getAttribute("data-target") || "";
     const mode = element.getAttribute("data-animation");
-    const match = target.match(/(\\d[\\d,]*(?:\\.\\d+)?)/);
+    const match = target.match(/(\d[\d,]*(?:\.\d+)?)/);
 
     if (!match || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 

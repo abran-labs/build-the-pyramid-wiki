@@ -202,14 +202,14 @@ const halloweenPyramids = [
     const start = performance.now();
     let lastUpdate = 0;
 
-    const render = (number) => {
+    const render = (number: number) => {
       const formatted = decimals
         ? number.toFixed(decimals)
         : Math.round(number).toLocaleString("en-US");
       element.textContent = prefix + formatted + suffix;
     };
 
-    const animate = (now) => {
+    const animate = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
 

@@ -66,15 +66,15 @@ const RARITY_RANK: Record<Rarity, number> = {
 };
 
 export const EGGS: readonly Egg[] = [
-  { id: "Basic", name: "Basic Egg", icon: "/eggs/basic.png", world: "desert", eventName: null },
-  { id: "Sacred", name: "Sacred Egg", icon: "/eggs/sacred.png", world: "desert", eventName: null },
-  { id: "Nile", name: "Nile Egg", icon: "/eggs/nile.png", world: "desert", eventName: null },
-  { id: "Cursed", name: "Cursed Egg", icon: "/eggs/cursed.png", world: "halloween", eventName: HALLOWEEN_EVENT },
+  { id: "Basic", name: "Basic Egg", icon: "/eggs/basic.webp", world: "desert", eventName: null },
+  { id: "Sacred", name: "Sacred Egg", icon: "/eggs/sacred.webp", world: "desert", eventName: null },
+  { id: "Nile", name: "Nile Egg", icon: "/eggs/nile.webp", world: "desert", eventName: null },
+  { id: "Cursed", name: "Cursed Egg", icon: "/eggs/cursed.webp", world: "halloween", eventName: HALLOWEEN_EVENT },
 ];
 
 export const CURRENCY = {
-  Coins: { label: "Coins", icon: "/currency/coins.png", color: "rgb(255, 215, 0)" },
-  CandyCorn: { label: "Candy Corn", icon: "/currency/candy-corn.png", color: "rgb(255, 140, 40)" },
+  Coins: { label: "Coins", icon: "/currency/coins.webp", color: "rgb(255, 215, 0)" },
+  CandyCorn: { label: "Candy Corn", icon: "/currency/candy-corn.webp", color: "rgb(255, 140, 40)" },
 } as const;
 
 function pet(
@@ -109,30 +109,30 @@ const dragonOfRaWeight = 10000 / 4999999;
 const cursedTotal = 10000 / (1 - 1 / 5000000 - 1 / 50000000);
 
 export const PETS: readonly Pet[] = [
-  pet("Cat", "Cat", "Common", "Basic", "/pets/cat.png", 5800, 0.1),
-  pet("Tumbleweed", "Tumbleweed", "Uncommon", "Basic", "/pets/tumbleweed.png", 2800, 0.2),
-  pet("Cobra", "Cobra", "Rare", "Basic", "/pets/cobra.png", 1000, 0.4),
-  pet("HermitCrab", "Hermit Crab", "Epic", "Basic", "/pets/hermit-crab.png", 400, 1, null, false, true),
-  pet("Apophis", "Apophis", "Secret", "Basic", "/pets/apophis.png", apophisWeight, 119, null, false, true),
-  pet("Cactus", "Cactus", "Uncommon", "Sacred", "/pets/cactus.png", 6880, 0.3),
-  pet("OilLamp", "Oil Lamp", "Rare", "Sacred", "/pets/oil-lamp.png", 2800, 0.7),
-  pet("Ankh", "Ankh", "Epic", "Sacred", "/pets/ankh.png", 300, 2),
-  pet("Sarcophagus", "Sarcophagus", "Legendary", "Sacred", "/pets/sarcophagus.png", 20, 5, null, false, true),
-  pet("SandCastle", "Sand Castle", "Uncommon", "Nile", "/pets/sand-castle.png", 6997.8, 0.9),
-  pet("Mummy", "Mummy", "Rare", "Nile", "/pets/mummy.png", 2800, 1.3),
-  pet("Scorpion", "Scorpion", "Epic", "Nile", "/pets/scorpion.png", 200, 3.3),
-  pet("Anubis", "Anubis", "Legendary", "Nile", "/pets/anubis.png", 2, 16, null, false, true),
-  pet("Mimic", "Mimic", "Mythic", "Nile", "/pets/mimic.png", 0.2, 35, null, false, true),
-  pet("DragonOfRa", "Dragon of Ra", "Secret", "Nile", "/pets/dragon-of-ra.png", dragonOfRaWeight, 74, null, false, true),
-  pet("Scarab", "Scarab", "Uncommon", "Cursed", "/pets/scarab.png", 7997.76, 1, 0.2, true),
-  pet("Sandstorm", "Sandstorm", "Rare", "Cursed", "/pets/sandstorm.png", 1700, 1.5, 0.5, true),
-  pet("SkeletonCamel", "Skeleton Camel", "Epic", "Cursed", "/pets/skeleton-camel.png", 300, 4, 1.2, true),
-  pet("WitchsPot", "Witch's Pot", "Legendary", "Cursed", "/pets/witchs-pot.png", 2, 9, 4, true, true),
-  pet("GhostMummy", "Ghost Mummy", "Legendary", "Cursed", "/pets/ghost-mummy.png", 0.2, 21, 11, true, true),
-  pet("Scarecrow", "Scarecrow", "Mythic", "Cursed", "/pets/scarecrow.png", 0.04, 44, 24, true, true),
-  pet("Osiris", "Osiris", "Secret", "Cursed", "/pets/osiris.png", cursedTotal / 5000000, 99, 49, true, true),
-  pet("GrimReaper", "Grim Reaper", "Secret", "Cursed", "/pets/grim-reaper.png", cursedTotal / 50000000, 199, 89, true, true),
-  pet("Bat", "Bat", "Exclusive", "Exclusive", "/pets/bat.png", 0, 2.75, 0.85, true),
+  pet("Cat", "Cat", "Common", "Basic", "/pets/cat.webp", 5800, 0.1),
+  pet("Tumbleweed", "Tumbleweed", "Uncommon", "Basic", "/pets/tumbleweed.webp", 2800, 0.2),
+  pet("Cobra", "Cobra", "Rare", "Basic", "/pets/cobra.webp", 1000, 0.4),
+  pet("HermitCrab", "Hermit Crab", "Epic", "Basic", "/pets/hermit-crab.webp", 400, 1, null, false, true),
+  pet("Apophis", "Apophis", "Secret", "Basic", "/pets/apophis.webp", apophisWeight, 119, null, false, true),
+  pet("Cactus", "Cactus", "Uncommon", "Sacred", "/pets/cactus.webp", 6880, 0.3),
+  pet("OilLamp", "Oil Lamp", "Rare", "Sacred", "/pets/oil-lamp.webp", 2800, 0.7),
+  pet("Ankh", "Ankh", "Epic", "Sacred", "/pets/ankh.webp", 300, 2),
+  pet("Sarcophagus", "Sarcophagus", "Legendary", "Sacred", "/pets/sarcophagus.webp", 20, 5, null, false, true),
+  pet("SandCastle", "Sand Castle", "Uncommon", "Nile", "/pets/sand-castle.webp", 6997.8, 0.9),
+  pet("Mummy", "Mummy", "Rare", "Nile", "/pets/mummy.webp", 2800, 1.3),
+  pet("Scorpion", "Scorpion", "Epic", "Nile", "/pets/scorpion.webp", 200, 3.3),
+  pet("Anubis", "Anubis", "Legendary", "Nile", "/pets/anubis.webp", 2, 16, null, false, true),
+  pet("Mimic", "Mimic", "Mythic", "Nile", "/pets/mimic.webp", 0.2, 35, null, false, true),
+  pet("DragonOfRa", "Dragon of Ra", "Secret", "Nile", "/pets/dragon-of-ra.webp", dragonOfRaWeight, 74, null, false, true),
+  pet("Scarab", "Scarab", "Uncommon", "Cursed", "/pets/scarab.webp", 7997.76, 1, 0.2, true),
+  pet("Sandstorm", "Sandstorm", "Rare", "Cursed", "/pets/sandstorm.webp", 1700, 1.5, 0.5, true),
+  pet("SkeletonCamel", "Skeleton Camel", "Epic", "Cursed", "/pets/skeleton-camel.webp", 300, 4, 1.2, true),
+  pet("WitchsPot", "Witch's Pot", "Legendary", "Cursed", "/pets/witchs-pot.webp", 2, 9, 4, true, true),
+  pet("GhostMummy", "Ghost Mummy", "Legendary", "Cursed", "/pets/ghost-mummy.webp", 0.2, 21, 11, true, true),
+  pet("Scarecrow", "Scarecrow", "Mythic", "Cursed", "/pets/scarecrow.webp", 0.04, 44, 24, true, true),
+  pet("Osiris", "Osiris", "Secret", "Cursed", "/pets/osiris.webp", cursedTotal / 5000000, 99, 49, true, true),
+  pet("GrimReaper", "Grim Reaper", "Secret", "Cursed", "/pets/grim-reaper.webp", cursedTotal / 50000000, 199, 89, true, true),
+  pet("Bat", "Bat", "Exclusive", "Exclusive", "/pets/bat.webp", 0, 2.75, 0.85, true),
 ];
 
 export type BlackMarketListing = {

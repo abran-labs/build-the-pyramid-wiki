@@ -1,0 +1,176 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { eventColor, HALLOWEEN_EVENT } from "@/lib/pets";
+
+function chanceClasses(chance: string) {
+  const percentage = Number.parseInt(chance, 10);
+  if (percentage <= 5) return "border-red-500/30 bg-red-500/10 text-red-300";
+  if (percentage <= 20) return "border-orange-500/30 bg-orange-500/10 text-orange-300";
+  if (percentage <= 35) return "border-yellow-500/30 bg-yellow-500/10 text-yellow-300";
+  return "border-green-500/30 bg-green-500/10 text-green-300";
+}
+
+const mainPyramids = [
+  {
+    name: "Basic Pyramid",
+    image: "/pyramids/basic.webp",
+    icon: "/pyramids/icons/basic.webp",
+    chance: "40%",
+    boost: "2×",
+    rewardLabel: "Coin",
+    reward: "1×",
+    blocks: "171,700",
+    price: "N/A",
+  },
+  {
+    name: "Silver Pyramid",
+    image: "/pyramids/silver.webp",
+    icon: "/pyramids/icons/silver.webp",
+    chance: "35%",
+    boost: "3×",
+    rewardLabel: "Coin",
+    reward: "1.5×",
+    blocks: "240,464",
+    price: "129",
+  },
+  {
+    name: "Gold Pyramid",
+    image: "/pyramids/gold.webp",
+    icon: "/pyramids/icons/gold.webp",
+    chance: "20%",
+    boost: "5×",
+    rewardLabel: "Coin",
+    reward: "2×",
+    blocks: "357,760",
+    price: "249",
+  },
+  {
+    name: "Void Pyramid",
+    image: "/pyramids/void.webp",
+    icon: "/pyramids/icons/void.webp",
+    chance: "5%",
+    boost: "10×",
+    rewardLabel: "Coin",
+    reward: "4×",
+    blocks: "573,800",
+    price: "699",
+  },
+];
+
+const halloweenPyramids = [
+  {
+    name: "Haunted Pyramid",
+    image: "/pyramids/haunted.webp",
+    icon: "/pyramids/icons/haunted.webp",
+    chance: "80%",
+    boost: "10×",
+    rewardLabel: "Candy Corn reward",
+    reward: "1×",
+    blocks: "1,002,000",
+    price: "N/A",
+  },
+  {
+    name: "Cursed Pyramid",
+    image: "/pyramids/cursed.webp",
+    icon: "/pyramids/icons/cursed.webp",
+    chance: "20%",
+    boost: "25×",
+    rewardLabel: "Candy Corn reward",
+    reward: "2×",
+    blocks: "3,030,000",
+    price: "249",
+  },
+  {
+    name: "Demon Lords Castle",
+    image: "/pyramids/demon-lords-castle.webp",
+    icon: "/pyramids/icons/demon-castle.webp",
+    chance: "5%",
+    boost: "50×",
+    rewardLabel: "Candy Corn reward",
+    reward: "4×",
+    blocks: "9,980,000",
+    price: "699",
+  },
+];
+---
+
+<BaseLayout
+  title="Pyramids"
+  section="Pyramids"
+  description="Pyramid types, selection chances, Waters of Nu boosts, rewards, block requirements, and pick prices in Build the Pyramid."
+>
+  <main class="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-4 px-4 py-8">
+    <header class="flex flex-col gap-3">
+    </header>
+
+    <section id="desert-world" class="scroll-mt-6 flex flex-col gap-3">
+      <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Desert World</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        {mainPyramids.map((pyramid) => (
+          <article class="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest">
+            <div class="flex h-48 items-center justify-center border-b border-border bg-black/20 p-4">
+              <img src={pyramid.image} alt={pyramid.name} loading="lazy" class="h-full w-full object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col gap-4 p-5">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <h3 class="flex min-w-0 items-center gap-2.5 text-lg font-semibold text-foreground"><img src={pyramid.icon} alt="" class="h-7 w-7 shrink-0 object-contain" />{pyramid.name}</h3>
+                <div class="flex shrink-0 items-center gap-2">{pyramid.price !== "N/A" && <span class="inline-flex items-center gap-1 rounded-full border border-[#39ff14]/30 bg-[#39ff14]/10 px-2.5 py-1 text-xs font-semibold text-[#39ff14]"><span aria-hidden="true" class="inline-block h-3.5 w-3.5 bg-current" style="mask-image:url(/currency/robux.webp);-webkit-mask-image:url(/currency/robux.webp);mask-size:contain;-webkit-mask-size:contain;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;mask-position:center;-webkit-mask-position:center"></span>{pyramid.price}</span>}<span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}>{pyramid.chance} chance</span></div>
+              </div>
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/stats/boost.webp" alt="" class="h-4 w-auto object-contain" />Waters of Nu</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.boost}</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/currency/coins.webp" alt="" class="h-4 w-4 object-contain" />{pyramid.rewardLabel}</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.reward}</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/currency/blocks.webp" alt="" class="h-4 w-4 object-contain" />Blocks</div>
+                  <div class="text-base font-semibold tabular-nums text-foreground">{pyramid.blocks}</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="halloween-world" class="scroll-mt-6 flex flex-col gap-3">
+      <div class="flex flex-wrap items-baseline gap-2">
+        <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Halloween World</h2>
+        <span aria-hidden="true" class="text-base text-muted-foreground/50">·</span>
+        <span class="text-base font-semibold" style={`color: ${eventColor(HALLOWEEN_EVENT)}`}>{HALLOWEEN_EVENT}</span>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        {halloweenPyramids.map((pyramid) => (
+          <article class="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest">
+            <div class="flex h-48 items-center justify-center border-b border-border bg-black/20 p-4">
+              <img src={pyramid.image} alt={pyramid.name} loading="lazy" class="h-full w-full object-contain" />
+            </div>
+            <div class="flex flex-1 flex-col gap-4 p-5">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <h3 class="flex min-w-0 items-center gap-2.5 text-lg font-semibold text-foreground"><img src={pyramid.icon} alt="" class="h-7 w-7 shrink-0 object-contain" />{pyramid.name}</h3>
+                <div class="flex shrink-0 items-center gap-2">{pyramid.price !== "N/A" && <span class="inline-flex items-center gap-1 rounded-full border border-[#39ff14]/30 bg-[#39ff14]/10 px-2.5 py-1 text-xs font-semibold text-[#39ff14]"><span aria-hidden="true" class="inline-block h-3.5 w-3.5 bg-current" style="mask-image:url(/currency/robux.webp);-webkit-mask-image:url(/currency/robux.webp);mask-size:contain;-webkit-mask-size:contain;mask-repeat:no-repeat;-webkit-mask-repeat:no-repeat;mask-position:center;-webkit-mask-position:center"></span>{pyramid.price}</span>}<span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}>{pyramid.chance} chance</span></div>
+              </div>
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/stats/boost.webp" alt="" class="h-4 w-auto object-contain" />Waters of Nu</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.boost}</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/currency/candy-corn.webp" alt="" class="h-4 w-4 object-contain" />Candy Corn</div>
+                  <div class="text-base font-semibold text-foreground">{pyramid.reward}</div>
+                </div>
+                <div class="rounded-lg border border-border bg-background/50 p-3">
+                  <div class="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground"><img src="/currency/blocks.webp" alt="" class="h-4 w-4 object-contain" />Blocks</div>
+                  <div class="text-base font-semibold tabular-nums text-foreground">{pyramid.blocks}</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

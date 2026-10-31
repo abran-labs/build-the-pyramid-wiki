@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { eventColor, HALLOWEEN_EVENT } from "@/lib/pets";
 
 function chanceClasses(chance: string) {
   const percentage = Number.parseInt(chance, 10);
@@ -95,8 +96,8 @@ const halloweenPyramids = [
     <header class="flex flex-col gap-3">
     </header>
 
-    <section id="main-world" class="scroll-mt-6 flex flex-col gap-3">
-      <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Main World</h2>
+    <section id="judgment-world" class="scroll-mt-6 flex flex-col gap-3">
+      <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Judgment World</h2>
       <div class="grid gap-4 md:grid-cols-2">
         {mainPyramids.map((pyramid) => (
           <article class="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest">
@@ -133,9 +134,10 @@ const halloweenPyramids = [
     </section>
 
     <section id="halloween-world" class="scroll-mt-6 flex flex-col gap-3">
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-wrap items-baseline gap-2">
         <h2 class="text-lg font-semibold tracking-[-0.01em] text-foreground">Halloween World</h2>
-        <span class="rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-300">Limited time</span>
+        <span aria-hidden="true" class="text-xs text-muted-foreground/50">·</span>
+        <span class="text-xs font-semibold" style={`color: ${eventColor(HALLOWEEN_EVENT)}`}>{HALLOWEEN_EVENT}</span>
       </div>
       <div class="grid gap-4 md:grid-cols-2">
         {halloweenPyramids.map((pyramid) => (

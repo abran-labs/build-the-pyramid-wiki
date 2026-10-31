@@ -14,6 +14,7 @@ const mainPyramids = [
   {
     name: "Basic Pyramid",
     image: "/pyramids/basic.webp",
+    icon: "/pyramids/icons/basic.webp",
     chance: "40%",
     boost: "2×",
     rewardLabel: "Coin",
@@ -24,32 +25,35 @@ const mainPyramids = [
   {
     name: "Silver Pyramid",
     image: "/pyramids/silver.webp",
+    icon: "/pyramids/icons/silver.webp",
     chance: "35%",
     boost: "3×",
     rewardLabel: "Coin",
     reward: "1.5×",
     blocks: "240,464",
-    price: "104 Robux",
+    price: "129 Robux",
   },
   {
     name: "Gold Pyramid",
     image: "/pyramids/gold.webp",
+    icon: "/pyramids/icons/gold.webp",
     chance: "20%",
     boost: "5×",
     rewardLabel: "Coin",
     reward: "2×",
     blocks: "357,760",
-    price: "200 Robux",
+    price: "249 Robux",
   },
   {
     name: "Void Pyramid",
     image: "/pyramids/void.webp",
+    icon: "/pyramids/icons/void.webp",
     chance: "5%",
     boost: "10×",
     rewardLabel: "Coin",
     reward: "4×",
     blocks: "573,800",
-    price: "560 Robux",
+    price: "699 Robux",
   },
 ];
 
@@ -57,6 +61,7 @@ const halloweenPyramids = [
   {
     name: "Haunted Pyramid",
     image: "/pyramids/haunted.webp",
+    icon: "/pyramids/icons/haunted.webp",
     chance: "80%",
     boost: "10×",
     rewardLabel: "Candy Corn reward",
@@ -67,22 +72,24 @@ const halloweenPyramids = [
   {
     name: "Cursed Pyramid",
     image: "/pyramids/cursed.webp",
+    icon: "/pyramids/icons/cursed.webp",
     chance: "20%",
     boost: "25×",
     rewardLabel: "Candy Corn reward",
     reward: "2×",
     blocks: "3,030,000",
-    price: "200 Robux",
+    price: "249 Robux",
   },
   {
     name: "Demon Lords Castle",
     image: "/pyramids/demon-lords-castle.webp",
+    icon: "/pyramids/icons/demon-castle.webp",
     chance: "5%",
     boost: "50×",
     rewardLabel: "Candy Corn reward",
     reward: "4×",
     blocks: "9,980,000",
-    price: "560 Robux",
+    price: "699 Robux",
   },
 ];
 ---
@@ -106,7 +113,7 @@ const halloweenPyramids = [
             </div>
             <div class="flex flex-1 flex-col gap-4 p-5">
               <div class="flex items-start justify-between gap-3">
-                <h3 class="text-lg font-semibold text-foreground">{pyramid.name}</h3>
+                <h3 class="flex min-w-0 items-center gap-2.5 text-lg font-semibold text-foreground"><img src={pyramid.icon} alt="" class="h-7 w-7 shrink-0 object-contain" />{pyramid.name}</h3>
                 <span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}>{pyramid.chance} chance</span>
               </div>
               <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -125,7 +132,7 @@ const halloweenPyramids = [
               </div>
               <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
                 <span class="text-muted-foreground">Pick price</span>
-                <span class="font-semibold text-foreground">{pyramid.price}</span>
+                <span class={pyramid.price === "N/A" ? "font-semibold text-foreground" : "font-semibold text-[#39ff14]"}>{pyramid.price}</span>
               </div>
             </div>
           </article>
@@ -147,7 +154,7 @@ const halloweenPyramids = [
             </div>
             <div class="flex flex-1 flex-col gap-4 p-5">
               <div class="flex flex-wrap items-start justify-between gap-3">
-                <h3 class="text-lg font-semibold text-foreground">{pyramid.name}</h3>
+                <h3 class="flex min-w-0 items-center gap-2.5 text-lg font-semibold text-foreground"><img src={pyramid.icon} alt="" class="h-7 w-7 shrink-0 object-contain" />{pyramid.name}</h3>
                 <span class={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-medium ${chanceClasses(pyramid.chance)}`}>{pyramid.chance} chance</span>
               </div>
               <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -166,7 +173,7 @@ const halloweenPyramids = [
               </div>
               <div class="flex items-center justify-between border-t border-border pt-3 text-sm">
                 <span class="text-muted-foreground">Pick price</span>
-                <span class="font-semibold text-foreground">{pyramid.price}</span>
+                <span class={pyramid.price === "N/A" ? "font-semibold text-foreground" : "font-semibold text-[#39ff14]"}>{pyramid.price}</span>
               </div>
             </div>
           </article>

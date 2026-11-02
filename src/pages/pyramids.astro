@@ -143,8 +143,8 @@ const halloweenPyramids = [
         <span class="text-base font-semibold" style={`color: ${eventColor(HALLOWEEN_EVENT)}`}>{HALLOWEEN_EVENT}</span>
       </div>
       <div class="grid gap-4 md:grid-cols-2">
-        {halloweenPyramids.map((pyramid) => (
-          <article class="flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest">
+        {halloweenPyramids.map((pyramid, index) => (
+          <article class={`flex min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-surface-lowest ${index === halloweenPyramids.length - 1 ? "md:col-span-2 md:w-[calc(50%-0.5rem)] md:justify-self-center" : ""}`}>
             <div class="flex h-48 items-center justify-center border-b border-border bg-black/20 p-4">
               <img src={pyramid.image} alt={pyramid.name} loading="lazy" class="h-full w-full object-contain" />
             </div>
